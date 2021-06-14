@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar class="large-title-fix">
+    <ion-title>MyLinkedin</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="Applicant" >
+        <ion-label>Applicant</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Offeror">
+        <ion-label>Offeror</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Company">
+        <ion-label>Company</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-sign-up-applicant *ngIf="type==='Applicant'"></app-sign-up-applicant>
+
+  <app-sign-up-offeror *ngIf="type==='Offeror'"></app-sign-up-offeror>
+
+  <app-sign-up-company *ngIf="type==='Company'"></app-sign-up-company>
+</ion-content>
+

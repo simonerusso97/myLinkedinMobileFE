@@ -1,0 +1,50 @@
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="ion-text-center">Iscriviti</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item>
+      <ion-label position="stacked"
+                 [(ngModel)]="company.name"
+                 name="name"
+      >Nome</ion-label>
+      <ion-input required type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">password</ion-label>
+      <ion-input required type="password"
+                 [(ngModel)]="company.password"
+                 name="password"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Conferma password</ion-label>
+      <ion-input required type="password"
+                 [(ngModel)]="confirmPassword"
+                 name="confirmPassword"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Settore</ion-label>
+      <ion-input required type="text"
+                 [(ngModel)]="company.sector"
+                 name="sector"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Descrizione</ion-label>
+      <ion-textarea required
+                    [(ngModel)]="company.description"
+                    name="description"
+      ></ion-textarea>
+    </ion-item>
+
+
+  </ion-card-content>
+</ion-card>
