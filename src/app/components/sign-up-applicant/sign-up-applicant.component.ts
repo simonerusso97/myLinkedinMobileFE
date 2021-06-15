@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Applicant} from '../../models/applicant';
-import {UserService} from "../../services/user.service";
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-applicant',
@@ -12,8 +13,9 @@ export class SignUpApplicantComponent implements OnInit {
   applicant: Applicant = {} as Applicant;
   confirmPassword: string;
   pwdError = false;
+  regError = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private routes: Router) { }
 
   ngOnInit() {}
 
@@ -23,8 +25,13 @@ export class SignUpApplicantComponent implements OnInit {
     }
     else{
       this.pwdError = false;
-      this.userService.createApplicant(this.applicant).subscribe();
-
+      this.userService.createApplicant(this.applicant).subscribe(
+        response => {
+          this.routes.navigateByUrl('login');
+        },
+        error => {
+          this.regError = true;
+        });
     }
 
   }

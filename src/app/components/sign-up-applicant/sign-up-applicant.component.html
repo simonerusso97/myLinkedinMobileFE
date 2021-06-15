@@ -3,6 +3,9 @@
     <ion-card-title class="ion-text-center">Iscriviti</ion-card-title>
   </ion-card-header>
 
+  <div class="alert alert-danger m-3" role="alert" *ngIf="regError">
+    Si è verificato un errore
+  </div>
   <ion-card-content>
     <form (ngSubmit)="onSubmit()">
       <ion-item>
