@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar class="large-title-fix">
     <ion-title>MyLinkedin</ion-title>
+    <ion-icon></ion-icon>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type">
@@ -17,13 +18,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll="true" >
+<ion-content [fullscreen]="true">
   <app-sign-up-applicant *ngIf="type==='Applicant'"></app-sign-up-applicant>
 
   <app-sign-up-offeror *ngIf="type==='Offeror'"></app-sign-up-offeror>
 
   <app-sign-up-company *ngIf="type==='Company'"></app-sign-up-company>
-
   <div style="margin: 200px"></div>
+
 </ion-content>
 

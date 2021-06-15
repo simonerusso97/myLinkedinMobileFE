@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Company} from '../models/company';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,16 @@ export class CompanyService {
       'Content-Type':  'application/json',
     })
   };
+  company: Company;
 
   constructor(private http: HttpClient) { }
 
 
-  createCompany(company: Company) {
+  createCompany(company: Company): Observable<Company> {
     return this.http.post<Company>('http://localhost:8080/company/createCompany', company, this.httpOptions);
+  }
+
+  findByEmailAndPassword(company: Company): Observable<Company> {
+    return this.http.post<Company>('http://localhost:8080/company/findByEmailAndPassword', company, this.httpOptions);
   }
 }
