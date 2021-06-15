@@ -15,4 +15,6 @@ export class SignUpApplicantComponent implements OnInit {
 
   ngOnInit() {}
 
+  onSubmit(){}
+
 }

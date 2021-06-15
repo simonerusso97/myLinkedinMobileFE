@@ -17,11 +17,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content scroll="true">
   <app-sign-up-applicant *ngIf="type==='Applicant'"></app-sign-up-applicant>
 
   <app-sign-up-offeror *ngIf="type==='Offeror'"></app-sign-up-offeror>
 
   <app-sign-up-company *ngIf="type==='Company'"></app-sign-up-company>
+
+  <div style="margin: 100px"></div>
 </ion-content>
 

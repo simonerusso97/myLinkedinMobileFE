@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Offeror} from '../../models/offeror';
+import {Company} from "../../models/company";
 
 @Component({
   selector: 'app-sign-up-offeror',
@@ -10,7 +11,9 @@ export class SignUpOfferorComponent implements OnInit {
 
   offeror: Offeror = {} as Offeror;
   confirmPassword: string;
-  constructor() { }
+  constructor() {
+    this.offeror.company = {} as Company;
+  }
 
   ngOnInit() {}
 
