@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Company} from '../models/company';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CompanyService {
     return this.http.post<Company>('http://localhost:8080/company/createCompany', company, this.httpOptions);
   }
 
-  findByEmailAndPassword(company: Company): Observable<Company> {
-    return this.http.post<Company>('http://localhost:8080/company/findByEmailAndPassword', company, this.httpOptions);
+  login(comapny: Company): Observable<Company> {
+    return this.http.post<Company>('http://localhost:8080/company/login', comapny, this.httpOptions);
   }
 }
