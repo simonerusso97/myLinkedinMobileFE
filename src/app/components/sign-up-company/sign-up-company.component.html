@@ -29,6 +29,10 @@
         ></ion-input>
       </ion-item>
 
+      <div class="alert alert-danger m-3" role="alert" *ngIf="pwdError">
+        Le password non coincidono
+      </div>
+
       <ion-item>
         <ion-label position="stacked">Settore</ion-label>
         <ion-input required type="text"

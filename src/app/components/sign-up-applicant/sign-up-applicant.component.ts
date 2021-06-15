@@ -10,11 +10,14 @@ export class SignUpApplicantComponent implements OnInit {
 
   applicant: Applicant = {} as Applicant;
   confirmPassword: string;
+  pwdError = false;
 
   constructor() { }
 
   ngOnInit() {}
 
-  onSubmit(){}
+  onSubmit(){
+
+  }
 
 }
