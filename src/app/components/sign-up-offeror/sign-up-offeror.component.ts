@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Offeror} from '../../models/offeror';
-import {Company} from "../../models/company";
+import {Company} from '../../models/company';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-sign-up-offeror',
@@ -11,13 +12,21 @@ export class SignUpOfferorComponent implements OnInit {
 
   offeror: Offeror = {} as Offeror;
   confirmPassword: string;
-  constructor() {
+  pwdError = false;
+  constructor(private userService: UserService) {
     this.offeror.company = {} as Company;
   }
 
   ngOnInit() {}
 
   submit() {
-    console.log(this.offeror);
+    if (this.offeror.password !== this.confirmPassword){
+      this.pwdError = true;
+    }
+    else{
+      this.pwdError = false;
+      this.userService.createOfferor(this.offeror).subscribe();
+
+    }
   }
 }

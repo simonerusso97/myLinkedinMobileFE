@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Applicant} from '../../models/applicant';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-sign-up-applicant',
@@ -12,11 +13,19 @@ export class SignUpApplicantComponent implements OnInit {
   confirmPassword: string;
   pwdError = false;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {}
 
   onSubmit(){
+    if (this.applicant.password !== this.confirmPassword){
+      this.pwdError = true;
+    }
+    else{
+      this.pwdError = false;
+      this.userService.createApplicant(this.applicant).subscribe();
+
+    }
 
   }
 
