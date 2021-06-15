@@ -7,6 +7,12 @@
   <div class="alert alert-danger m-3" role="alert" *ngIf="loginError">
     Email o password errati
   </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="disabledError">
+    L'amministratore non ha ancora abilitato il tuo account
+  </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="bannedError">
+    Sei stato bannato temporaneamente
+  </div>
   <ion-card-content>
     <form (ngSubmit)="onSubmit()">
       <ion-item>

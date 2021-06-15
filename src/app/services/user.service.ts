@@ -32,4 +32,9 @@ export class UserService {
   findByEmailAndPasswor(regular: Regular): Observable<Offeror> {
     return this.http.post<Offeror>('http://localhost:8080/user/createOfferor', regular, this.httpOptions);
   }
+
+  login(regular: Regular): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/user/login', regular, this.httpOptions);
+
+  }
 }

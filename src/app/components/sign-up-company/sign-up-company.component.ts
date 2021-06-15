@@ -18,7 +18,7 @@ export class SignUpCompanyComponent implements OnInit {
   ngOnInit() {}
 
   submit() {
-    if (this.company.password !== this.confirmPassword){
+    if (this.company.pwd !== this.confirmPassword){
       this.pwdError = true;
     }
     else{
