@@ -22,11 +22,11 @@ export class UserService {
 
 
   createApplicant(applicant: Applicant): Observable<Applicant> {
-    return this.http.post<Applicant>('http://localhost:8080/user/createApplicant', applicant, this.httpOptions);
+    return this.http.post<Applicant>('http://localhost:8080/user/registrationApplicant', applicant, this.httpOptions);
   }
 
   createOfferor(offeror: Offeror): Observable<Offeror> {
-    return this.http.post<Offeror>('http://localhost:8080/user/createOfferor', offeror, this.httpOptions);
+    return this.http.post<Offeror>('http://localhost:8080/user/registrationOfferor', offeror, this.httpOptions);
   }
 
   findByEmailAndPasswor(regular: Regular): Observable<Offeror> {

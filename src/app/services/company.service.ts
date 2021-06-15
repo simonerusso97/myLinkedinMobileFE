@@ -19,7 +19,7 @@ export class CompanyService {
 
 
   createCompany(company: Company): Observable<Company> {
-    return this.http.post<Company>('http://localhost:8080/company/createCompany', company, this.httpOptions);
+    return this.http.post<Company>('http://localhost:8080/company/registrationCompany', company, this.httpOptions);
   }
 
   login(comapny: Company): Observable<Company> {
