@@ -12,6 +12,7 @@ export class HomePage {
   user: Offeror | Applicant;
   constructor() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(this.user);
   }
 
 }
