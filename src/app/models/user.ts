@@ -5,6 +5,7 @@ export interface User {
   email: string;
   birthDate: Date;
   password: string;
+  type: string;
   //TODO messageList?: Message;
 
 }

@@ -1,14 +1,10 @@
-<ion-header [translucent]="true">
-  <ion-toolbar class="large-title-fix">
-    <ion-title>
-      MyLinkedin
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-toolbar></app-toolbar>
+
+
 
 <ion-content [fullscreen]="true">
 
-    <ion-card *ngFor="let item of postList" class="m-2 mb-3">
+    <ion-card *ngFor="let item of postList" class="m-2 mb-3" button="true" color="light" (click)="goToPost(item)">
       <ion-card-header class="text-center">
         <ion-card-title>{{item.name}}</ion-card-title>
         <ion-card-subtitle>{{item.createdBy.name}} {{item.createdBy.surname}} ({{item.company.name}}) {{item.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
@@ -17,6 +13,30 @@
       <ion-card-content>
 
       </ion-card-content>
-      
+
+
+      <ion-row class="card-footer">
+        <ion-col>
+          <div class="text-center">
+            <ion-icon name="save-outline"></ion-icon><br>
+            Salva
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="text-center">
+            <ion-icon name="chatbox-ellipses-outline"></ion-icon><br>
+            Commenta
+          </div>
+        </ion-col>
+        <ion-col *ngIf="user.type === 'applicant'">
+          <div class="text-center">
+            <ion-icon name="today-outline"></ion-icon><br>
+            Candidati
+          </div>
+        </ion-col>
+
+      </ion-row>
+
     </ion-card>
 </ion-content>
+

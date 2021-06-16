@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Post} from '../../models/post';
 import {Company} from '../../models/company';
 import {Structure} from '../../models/structure';
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomePage implements OnInit{
 
   company: Company = {} as Company;
   structure: Structure = {} as Structure;
-  constructor(private routes: Router) {
+  constructor(private routes: Router, private postService: PostService) {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
       this.routes.navigateByUrl('login');
@@ -78,7 +79,13 @@ export class HomePage implements OnInit{
     this.postList.unshift(this.post);
     this.postList.unshift(this.post2);
     this.postList.unshift(this.post3);
+    this.postList.unshift(this.post);
+
+
   }
 
 
+  goToPost(post: Post) {
+
+  }
 }

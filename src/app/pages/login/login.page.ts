@@ -12,7 +12,7 @@ export class LoginPage implements OnInit {
   constructor(private routes: Router) {
     this.type = 'User';
     if(sessionStorage.getItem('user') != null) {
-      routes.navigateByUrl('home');
+      routes.navigateByUrl('tab');
     }
   }
 
