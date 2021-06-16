@@ -11,7 +11,8 @@ export interface Post {
   report: number;
   name: string;
   structure: Structure;
-  jsonDocument: string;
+  //TODO: togliere ?
+  jsonDocument?: string;
   company: Company;
   interestedUserList?: Regular[];
   candidationUserList?: Applicant[];

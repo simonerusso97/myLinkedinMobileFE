@@ -7,14 +7,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-card *ngFor="let item of postList" class="m-2 mb-3">
+      <ion-card-header class="text-center">
+        <ion-card-title>{{item.name}}</ion-card-title>
+        <ion-card-subtitle>{{item.createdBy.name}} {{item.createdBy.surname}} ({{item.company.name}}) {{item.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+
+      </ion-card-content>
+      
+    </ion-card>
 </ion-content>
