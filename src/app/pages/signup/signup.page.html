@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar class="large-title-fix">
     <ion-title>MyLinkedin</ion-title>
     <ion-icon></ion-icon>
@@ -17,14 +17,20 @@
     </ion-segment>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
+
+
+
+  <div id="container">
   <app-sign-up-applicant *ngIf="type==='Applicant'"></app-sign-up-applicant>
 
   <app-sign-up-offeror *ngIf="type==='Offeror'"></app-sign-up-offeror>
 
   <app-sign-up-company *ngIf="type==='Company'"></app-sign-up-company>
+  </div>
+<!--
   <div style="margin: 200px"></div>
+-->
 
 </ion-content>
 

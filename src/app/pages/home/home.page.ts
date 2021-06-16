@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Offeror} from "../../models/offeror";
+import {Applicant} from "../../models/applicant";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,9 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  user: Offeror | Applicant;
+  constructor() {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+  }
 
 }

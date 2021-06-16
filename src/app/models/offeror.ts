@@ -5,4 +5,7 @@ export interface Offeror extends Regular{
   position: string;
   verified?: boolean;
   company: Company;
+
+
 }
+
