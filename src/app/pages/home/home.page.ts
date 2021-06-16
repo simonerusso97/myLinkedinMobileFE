@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {Post} from '../../models/post';
 import {Company} from '../../models/company';
 import {Structure} from '../../models/structure';
-import {PostService} from "../../services/post.service";
+import {PostService} from '../../services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -86,6 +86,7 @@ export class HomePage implements OnInit{
 
 
   goToPost(post: Post) {
-
+    this.postService.post = post;
+    this.routes.navigateByUrl('postDetails');
   }
 }

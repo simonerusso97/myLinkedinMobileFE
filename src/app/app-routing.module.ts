@@ -24,18 +24,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule)
   },
   {
-    path: 'create-post',
+    path: 'createPost',
     loadChildren: () => import('./pages/create-post/create-post.module').then( m => m.CreatePostPageModule)
   },
   {
-    path: 'saved-post',
+    path: 'savedPost',
     loadChildren: () => import('./pages/saved-post/saved-post.module').then( m => m.SavedPostPageModule)
   },
   {
     path: 'chat',
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'postDetails',
+    loadChildren: () => import('./pages/post-details/post-details.module').then( m => m.PostDetailsPageModule)
   }
-
 ];
 
 @NgModule({
