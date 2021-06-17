@@ -1,5 +1,7 @@
 {
   "name": "myLinkedinMobileFE",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
