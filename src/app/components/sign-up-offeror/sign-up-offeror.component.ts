@@ -29,7 +29,7 @@ export class SignUpOfferorComponent implements OnInit {
       this.pwdError = false;
       this.userService.createOfferor(this.offeror).subscribe(
         response => {
-          this.routes.navigateByUrl('login');
+          this.routes.navigateByUrl('tabs');
         },
         error => {
           this.regError = true;

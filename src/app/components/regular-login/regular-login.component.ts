@@ -33,7 +33,7 @@ export class RegularLoginComponent implements OnInit {
         }
         else{
           sessionStorage.setItem('user', JSON.stringify(response));
-          this.routes.navigateByUrl('home');
+          this.routes.navigateByUrl('tabs');
         }
       },
       error => {

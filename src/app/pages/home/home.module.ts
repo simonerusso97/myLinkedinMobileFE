@@ -9,12 +9,15 @@ import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule
+    ],
+    exports: [
+        ToolbarComponent
+    ],
     declarations: [HomePage, ToolbarComponent]
 })
 export class HomePageModule {}

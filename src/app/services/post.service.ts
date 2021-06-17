@@ -23,4 +23,12 @@ export class PostService {
     return this.http.post<Post[]>('http://localhost:8080/post/findAll', user, this.httpOptions);
 
   }
+
+  updateInterested(post: Post): Observable<Post> {
+    return this.http.post<Post>('http://localhost:8080/post/updateInterestedList', post, this.httpOptions);
+  }
+
+  updateCandidation(post: Post): Observable<Post> {
+    return this.http.post<Post>('http://localhost:8080/post/updateCandidation', post, this.httpOptions);
+  }
 }

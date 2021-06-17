@@ -22,7 +22,7 @@ export class CompanyLoginComponent implements OnInit {
       response => {
         this.loginError = false;
         sessionStorage.setItem('company', JSON.stringify(response));
-        this.routes.navigateByUrl('home');
+        this.routes.navigateByUrl('tabs');
       },
     error => {
         this.loginError = true;
