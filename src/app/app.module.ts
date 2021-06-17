@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {SignupPageModule} from './pages/signup/signup.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
