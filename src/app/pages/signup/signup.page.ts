@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -8,13 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class SignupPage implements OnInit {
   type: any;
 
-  constructor() {
+  constructor(private routes: Router) {
     this.type = 'Applicant';
+    if(sessionStorage.getItem('user') != null) {
+      routes.navigateByUrl('tab');
+    }
   }
 
   ngOnInit() {
-  }
-
-  submit() {
   }
 }

@@ -1,0 +1,33 @@
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="ion-text-center">Login</ion-card-title>
+    <ion-card-subtitle class="m-4">oppure <a class="blue" href="signup">registrati</a></ion-card-subtitle>
+  </ion-card-header>
+
+  <div class="alert alert-danger m-3" role="alert" *ngIf="loginError">
+    Email o password errati
+  </div>
+  <ion-card-content>
+    <form (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input required type="email"
+                   [(ngModel)]="comapny.name"
+                   name="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">password</ion-label>
+        <ion-input required type="password"
+                   [(ngModel)]="comapny.pwd"
+                   name="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button size="block" type="submit" style="margin-top: 30px">ACCEDI</ion-button>
+
+    </form>
+  </ion-card-content>
+</ion-card>

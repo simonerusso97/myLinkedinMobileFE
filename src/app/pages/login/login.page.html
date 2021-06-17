@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="large-title-fix">
+    <ion-title>MyLinkedin</ion-title>
+    <ion-icon></ion-icon>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="User" >
+        <ion-label>User</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Company">
+        <ion-label>Company</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-regular-login *ngIf="type==='User'"></app-regular-login>
+
+  <app-company-login *ngIf="type==='Company'"></app-company-login>
+
+</ion-content>
+

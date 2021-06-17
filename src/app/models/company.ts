@@ -1,7 +1,7 @@
 export interface Company {
   id: number;
   name: string;
-  password: string;
+  pwd: string;
   sector: string;
   description: string;
 }

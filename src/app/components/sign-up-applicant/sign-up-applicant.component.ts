@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Applicant} from '../../models/applicant';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-applicant',
@@ -10,9 +12,28 @@ export class SignUpApplicantComponent implements OnInit {
 
   applicant: Applicant = {} as Applicant;
   confirmPassword: string;
+  pwdError = false;
+  regError = false;
 
-  constructor() { }
+  constructor(private userService: UserService, private routes: Router) { }
 
   ngOnInit() {}
+
+  onSubmit(){
+    if (this.applicant.password !== this.confirmPassword){
+      this.pwdError = true;
+    }
+    else{
+      this.pwdError = false;
+      this.userService.createApplicant(this.applicant).subscribe(
+        response => {
+          this.routes.navigateByUrl('login');
+        },
+        error => {
+          this.regError = true;
+        });
+    }
+
+  }
 
 }
