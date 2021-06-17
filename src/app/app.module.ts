@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {SignupPageModule} from './pages/signup/signup.module';
 import {HttpClientModule} from '@angular/common/http';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
