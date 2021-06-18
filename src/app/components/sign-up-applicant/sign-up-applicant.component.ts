@@ -27,7 +27,7 @@ export class SignUpApplicantComponent implements OnInit {
       this.pwdError = false;
       this.userService.createApplicant(this.applicant).subscribe(
         response => {
-          this.routes.navigateByUrl('login');
+          this.routes.navigateByUrl('tabs');
         },
         error => {
           this.regError = true;

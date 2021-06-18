@@ -19,7 +19,7 @@ export class ToolbarComponent implements OnInit {
 
   logout(){
     sessionStorage.clear();
-    this.routes.navigateByUrl("/login");
+    this.routes.navigateByUrl('/login');
 
   }
 
