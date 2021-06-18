@@ -28,8 +28,8 @@ export class RegularLoginComponent implements OnInit {
     }).then((data)=>{
         this.lat=data.coords.latitude;
         this.long=data.coords.longitude;
-        console.log(this.lat);
-        console.log(this.long);
+        sessionStorage.setItem("latitude", String(this.lat));
+        sessionStorage.setItem("longitude", String(this.long));
       }).catch((error)=>{
       console.log(error);
     });

@@ -7,10 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+  lat:String='';
+  long:String='';
 
   constructor(private routes: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.lat=sessionStorage.getItem("latitude");
+    this.long=sessionStorage.getItem("longitude");
+  }
 
   logout(){
     sessionStorage.clear();
