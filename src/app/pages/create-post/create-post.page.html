@@ -19,6 +19,9 @@
   <ion-card>
     <ion-card-content>
       <form (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
 
         <ion-item *ngFor="let attribute of attributeList; let myIndex = index">
           <ion-label position="stacked"
