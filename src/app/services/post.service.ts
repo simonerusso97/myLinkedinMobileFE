@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Applicant} from "../models/applicant";
 import {Observable} from "rxjs";
 import {Regular} from "../models/regular";
+import {JsonDocument} from "../models/json-document";
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class PostService {
 
   updateCandidation(post: Post): Observable<Post> {
     return this.http.post<Post>('http://localhost:8080/post/updateCandidation', post, this.httpOptions);
+  }
+
+  createPost(jsonDocument: string): Observable<JsonDocument> {
+    return this.http.post<Post>('http://localhost:8080/post/createPost', jsonDocument, this.httpOptions);
   }
 }
