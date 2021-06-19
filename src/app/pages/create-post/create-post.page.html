@@ -4,14 +4,44 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-item>
-        <ion-label>Gender</ion-label>
-        <ion-select placeholder="Select One">
-          <ion-select-option value="f">Female</ion-select-option>
-          <ion-select-option value="m">Male</ion-select-option>
+        <ion-label>Tipo di post</ion-label>
+        <ion-select placeholder="------" #select (ionChange)="showAttribute(select.value)">
+          <ion-select-option
+            *ngFor="let structure of structureList"
+            [value]="structure"
+          >{{structure.name}}</ion-select-option>
         </ion-select>
       </ion-item>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
+  <ion-card>
+    <ion-card-content>
+      <form (ngSubmit)="onSubmit()">
+
+        <ion-item *ngFor="let attribute of attributeList; let myIndex = index">
+          <ion-label position="stacked"
+                     [(ngModel)]="attributeValueList[myIndex].name"
+                     name="name"
+          >{{attribute.name}}</ion-label>
+          <ion-input required type="text" *ngIf="attribute.type === 'string'"
+                     [(ngModel)]="attributeValueList[myIndex].value"
+                     name="value"
+          ></ion-input>
+          <ion-input required type="number" *ngIf="attribute.type === 'number'"
+                     [(ngModel)]="attributeValueList[myIndex].value"
+                     name="value"
+          ></ion-input>
+          <ion-label *ngIf="attribute.type === 'date'">MM DD YY</ion-label>
+          <ion-datetime displayFormat="MM DD YY" placeholder="Data" *ngIf="attribute.type === 'date'"
+                        [(ngModel)]="attributeValueList[myIndex].value"
+                        name="value"
+          ></ion-datetime>
+        </ion-item>
+
+        <ion-button size="block" type="submit" style="margin-top: 30px">CREA POST</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
