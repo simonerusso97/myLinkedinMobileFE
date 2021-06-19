@@ -5,7 +5,7 @@
   <ion-toolbar>
     <ion-item>
         <ion-label>Tipo di post</ion-label>
-        <ion-select placeholder="------" #select (ionChange)="showAttribute(select.value)">
+        <ion-select placeholder="------" #structureSelect (ionChange)="showAttribute(structureSelect.value)">
           <ion-select-option
             *ngFor="let structure of structureList"
             [value]="structure"
@@ -20,7 +20,11 @@
     <ion-card-content>
       <form (ngSubmit)="onSubmit()">
         <ion-item>
-          <ion-label></ion-label>
+          <ion-label position="stacked"> Titolo</ion-label>
+          <ion-input required type="text"
+                     [(ngModel)]="post.name"
+                     name="name"
+          ></ion-input>
         </ion-item>
 
         <ion-item *ngFor="let attribute of attributeList; let myIndex = index">
@@ -44,7 +48,29 @@
         </ion-item>
 
         <ion-button size="block" type="submit" style="margin-top: 30px">CREA POST</ion-button>
+
+        <ion-label position="stacked">Skill</ion-label>
+        <ion-select placeholder="---skill---" #skillSelect (ionChange)="enable()">
+          <ion-select-option
+            *ngFor="let skill of skillList; let myIndex = index"
+            [value]="myIndex"
+          >{{skill.name}}</ion-select-option>
+        </ion-select>
+        <ion-button size="block" [disabled]="!button"  (click)="addSkill(skillSelect.value)" style="margin-top: 30px">Aggiugni skill</ion-button>
       </form>
+
+      <div>
+        <h3>
+          Skill
+        </h3>
+        <div *ngFor="let postSkill of postSkillList; let postSkillIndex = index">
+          <ion-card>
+            <ion-content>
+              Nome: {{postSkill.name}} <ion-icon name="trash-outline" (click)="removeSkill(postSkillIndex)"></ion-icon>
+            </ion-content>
+          </ion-card>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

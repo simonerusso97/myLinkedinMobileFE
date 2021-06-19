@@ -20,23 +20,23 @@ export class HomePage implements OnInit{
   err = false;
   private message: string;
 
-  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {
+  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {}
+
+  ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
       this.routes.navigateByUrl('login');
     }
-
-  }
-
-  ngOnInit(): void {
-    this.postService.getPost(this.user).subscribe(
-      response => {
-        this.postList = response;
-        this.err = false;
-      },
-      error => {
-        this.err = true;
-      });
+    else {
+      this.postService.getPost(this.user).subscribe(
+        response => {
+          this.postList = response;
+          this.err = false;
+        },
+        error => {
+          this.err = true;
+        });
+    }
   }
 
 
