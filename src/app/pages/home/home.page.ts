@@ -6,7 +6,7 @@ import {Post} from '../../models/post';
 import {Company} from '../../models/company';
 import {Structure} from '../../models/structure';
 import {PostService} from '../../services/post.service';
-import {ToastController} from "@ionic/angular";
+import {ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +18,6 @@ export class HomePage implements OnInit{
   user: Offeror | Applicant;
   postList: Post[] = [];
   err = false;
-  candidateDisabled = false;
-  saveDisabled = false;
   private message: string;
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {
@@ -27,6 +25,7 @@ export class HomePage implements OnInit{
     if(this.user == null){
       this.routes.navigateByUrl('login');
     }
+
   }
 
   ngOnInit(): void {
@@ -38,7 +37,6 @@ export class HomePage implements OnInit{
       error => {
         this.err = true;
       });
-
   }
 
 
@@ -48,16 +46,22 @@ export class HomePage implements OnInit{
   }
 
   save(post: Post) {
-    post.interestedUserList.unshift(this.user);
-    this.postService.updateInterested(post).subscribe(
-      response => {
-        this.message = 'Post salvato con successo';
-        this.presentToast();
-      },
-      error => {
-        this.message = 'Si è verificato un errore';
-        this.presentToast();
-      });
+    if( !this.user.interestedPostList.includes(post)) {
+      post.interestedUserList.unshift(this.user);
+      this.postService.updateInterested(post).subscribe(
+        response => {
+          this.message = 'Post salvato con successo';
+          this.presentToast();
+        },
+        error => {
+          this.message = 'Si è verificato un errore';
+          this.presentToast();
+        });
+    }
+    else {
+      this.message = 'Hai già salvato questo post';
+      this.presentToast();
+    }
   }
 
   goToComment(item: Post) {
@@ -65,16 +69,22 @@ export class HomePage implements OnInit{
   }
 
   candidate(post: Post) {
-    post.candidationUserList.unshift(this.user);
-    this.postService.updateCandidation(post).subscribe(
-      response => {
-        this.message = 'Candidatura inviate con successo';
-        this.presentToast();
-      },
-      error => {
-        this.message = 'Si è verificato un errore';
-        this.presentToast();
-      });
+    if( !post.candidationUserList.includes(this.user)) {
+      post.candidationUserList.unshift(this.user);
+      this.postService.updateCandidation(post).subscribe(
+        response => {
+          this.message = 'Candidatura inviate con successo';
+          this.presentToast();
+        },
+        error => {
+          this.message = 'Si è verificato un errore';
+          this.presentToast();
+        });
+    }
+    else {
+      this.message = 'Hai già inviato la tua candidatura a questo post';
+      this.presentToast();
+    }
   }
 
   async presentToast() {
