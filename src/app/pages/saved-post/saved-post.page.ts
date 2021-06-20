@@ -14,6 +14,9 @@ export class SavedPostPage implements OnInit {
 
   ngOnInit() {
     this.post = {
+      candidationUserList: [],
+      interestedUserList: [],
+      jsonDocument: "",
       company: undefined,
       createdBy: undefined,
       hide: false,
@@ -25,6 +28,9 @@ export class SavedPostPage implements OnInit {
     };
     this.postList.unshift(this.post);
     this.post = {
+      candidationUserList: [],
+      interestedUserList: [],
+      jsonDocument: "",
       company: undefined,
       createdBy: undefined,
       hide: false,
@@ -36,6 +42,9 @@ export class SavedPostPage implements OnInit {
     };
     this.postList.unshift(this.post);
     this.post = {
+      candidationUserList: [],
+      interestedUserList: [],
+      jsonDocument: null,
       company: undefined,
       createdBy: undefined,
       hide: false,

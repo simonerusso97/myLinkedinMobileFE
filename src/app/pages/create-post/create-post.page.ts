@@ -9,6 +9,7 @@ import {AttributeValue} from '../../models/attribute-value';
 import {ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
+import {stringify} from "querystring";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class CreatePostPage implements OnInit {
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
+  skillTODELETE: Skill;
   private message: string;
 
 
@@ -69,6 +71,17 @@ export class CreatePostPage implements OnInit {
       name: 'prova4',
       userType: 'offeror'
     };
+    this.skillTODELETE = {
+      description: "",
+      id: 0,
+      name: 'prova1'};
+    this.skillList.unshift(this.skillTODELETE);
+    this.skillTODELETE = {
+      description: "",
+      id: 0,
+      name: 'prova2'
+    };
+    this.skillList.unshift(this.skillTODELETE);
   }
 
   showAttribute(structure: Structure) {
@@ -90,6 +103,7 @@ export class CreatePostPage implements OnInit {
     this.post.jsonDocument = JSON.stringify(this.attributeValueList);
     this.post.createdBy = this.user;
     this.post.skillList = this.postSkillList;
+    this.post.pubblicationDate = new Date();
     this.postService.createPost(this.post).subscribe(
       response  => {
         this.routes.navigateByUrl('tabs');

@@ -34,6 +34,6 @@ export class PostService {
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8080/post/createPost', post, this.httpOptions);
+    return this.http.post<Post>('http://localhost:8080/post/save', post, this.httpOptions);
   }
 }

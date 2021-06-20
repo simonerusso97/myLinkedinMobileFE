@@ -64,11 +64,7 @@
           Skill
         </h3>
         <div *ngFor="let postSkill of postSkillList; let postSkillIndex = index">
-          <ion-card>
-            <ion-content>
-              Nome: {{postSkill.name}} <ion-icon name="trash-outline" (click)="removeSkill(postSkillIndex)"></ion-icon>
-            </ion-content>
-          </ion-card>
+          Nome: {{postSkill.name}} <ion-icon name="trash-outline" (click)="removeSkill(postSkillIndex)"></ion-icon>
         </div>
       </div>
     </ion-card-content>
