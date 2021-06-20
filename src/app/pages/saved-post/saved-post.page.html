@@ -2,6 +2,73 @@
   <app-toolbar></app-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
-</ion-content>
+  <ion-card *ngFor="let item of showingPostList; let myindex=index" class="m-2 mb-3" button="true" color="light">
+    <ion-card-header class="text-center" >
+      <ion-card-title>{{item.name}}</ion-card-title>
+      <ion-card-subtitle> {{item.name}} </ion-card-subtitle>
+    </ion-card-header>
+
+    
+
+
+    <ion-row class="card-footer">
+      <ion-col>
+        <div class="text-center"  *ngIf="user.type == 'applicant'">
+          <ion-button fill="clear" size="small" (click)="unsavePost(item)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button><br>
+         Elimina
+        </div>
+
+      </ion-col>
+      
+      
+      <ion-col >
+        <div class="text-center">
+          <ion-button fill="clear" size="small">
+            <ion-icon name="today-outline"></ion-icon>
+          </ion-button><br>
+          Candidati
+        </div>
+      </ion-col>
+  </ion-row>
+  </ion-card>
+  </ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<ion-content [fullscreen]="true">
+
+  <ion-card *ngFor="let item of postList" class="m-2 mb-3" button="true" color="light">
+    
+      <ion-card-title>{{item.name}}</ion-card-title>
+      <ion-card-subtitle>{{item.name}}  ({{item.company.name}}) </ion-card-subtitle>
+      <ion-button size="small">Rimuovi</ion-button>
+      <div *ngIf="user.type !== 'offeror'"> 
+        <ion-button size="small">Candidati</ion-button>
+
+      </div>
+    
+    </ion-card>
+  </ion-content>
+-->
