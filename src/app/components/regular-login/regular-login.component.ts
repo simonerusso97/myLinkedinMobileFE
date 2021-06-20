@@ -12,6 +12,7 @@ export class RegularLoginComponent implements OnInit {
   loginError = false;
   disabledError = false;
   bannedError = false;
+  adminError = false;
   regular: Regular = {} as Regular;
 
   constructor(private userService: UserService, private routes: Router) { }
@@ -30,6 +31,9 @@ export class RegularLoginComponent implements OnInit {
         }
         else if(response.banned){
           this.bannedError = true;
+        }
+        else if(response.type === 'admin'){
+         this.adminError = true;
         }
         else{
           sessionStorage.setItem('user', JSON.stringify(response));
