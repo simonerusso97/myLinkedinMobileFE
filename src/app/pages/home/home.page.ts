@@ -3,8 +3,6 @@ import {Offeror} from '../../models/offeror';
 import {Applicant} from '../../models/applicant';
 import {Router} from '@angular/router';
 import {Post} from '../../models/post';
-import {Company} from '../../models/company';
-import {Structure} from '../../models/structure';
 import {PostService} from '../../services/post.service';
 import {ToastController} from '@ionic/angular';
 

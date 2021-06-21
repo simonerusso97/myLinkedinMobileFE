@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Company} from '../../models/company';
-import {CompanyService} from "../../services/company.service";
-import {Router} from "@angular/router";
-import {stringify} from "querystring";
+import {CompanyService} from '../../services/company.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-company-login',

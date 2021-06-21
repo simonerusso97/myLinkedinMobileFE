@@ -9,8 +9,6 @@ import {AttributeValue} from '../../models/attribute-value';
 import {ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
-import {stringify} from "querystring";
-
 
 @Component({
   selector: 'app-create-post',
@@ -36,6 +34,7 @@ export class CreatePostPage implements OnInit {
   }
 
   ngOnInit() {
+    //TODO FINIRE
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
       this.routes.navigateByUrl('login');

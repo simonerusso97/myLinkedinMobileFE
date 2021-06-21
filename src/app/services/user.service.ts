@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Regular} from '../models/regular';
 import {Offeror} from '../models/offeror';
 import {Observable, of} from 'rxjs';
-import {Company} from '../models/company';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +12,7 @@ export class UserService {
 
   httpOptions = {
     headers: new HttpHeaders({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'Content-Type':  'application/json',
     })
   };

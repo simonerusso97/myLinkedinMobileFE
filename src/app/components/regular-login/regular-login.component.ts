@@ -15,28 +15,27 @@ export class RegularLoginComponent implements OnInit {
   bannedError = false;
   adminError = false;
   regular: Regular = {} as Regular;
+  lat: number;
+  long: number;
 
   constructor(private userService: UserService, private routes: Router, private geo: Geolocation) { }
-  lat:number=0;
-  long:number=0;
+
   ngOnInit() {}
 
   onSubmit() {
-    
+
     this.geo.getCurrentPosition({
       timeout:1000,
       enableHighAccuracy:true
     }).then((data)=>{
         this.lat=data.coords.latitude;
         this.long=data.coords.longitude;
-        sessionStorage.setItem("latitude", String(this.lat));
-        sessionStorage.setItem("longitude", String(this.long));
+        sessionStorage.setItem('latitude', String(this.lat));
+        sessionStorage.setItem('longitude', String(this.long));
       }).catch((error)=>{
       console.log(error);
     });
-    
-    
-    
+
     this.userService.login(this.regular).subscribe(
       response => {
         this.loginError = false;

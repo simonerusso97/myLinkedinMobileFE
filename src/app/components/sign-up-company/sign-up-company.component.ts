@@ -30,7 +30,6 @@ export class SignUpCompanyComponent implements OnInit {
         error => {
           this.regError = true;
         });
-
     }
   }
 }
