@@ -11,11 +11,10 @@ export interface Post {
   report: number;
   name: string;
   structure: Structure;
-  //TODO: togliere ?
-  jsonDocument?: string;
+  jsonDocument: any;
   company: Company;
-  interestedUserList?: Regular[];
-  candidationUserList?: Applicant[];
+  interestedUserList: Regular[];
+  candidationUserList: Applicant[];
   skillList?: Skill[];
   createdBy: Regular;
 }
