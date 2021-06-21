@@ -34,8 +34,8 @@ export class PostService {
     return this.http.post<Post>('http://localhost:8080/post/updateCandidation', post, this.httpOptions);
   }
 
-  createPost(jsonDocument: string): Observable<JsonDocument> {
-    return this.http.post<Post>('http://localhost:8080/post/createPost', jsonDocument, this.httpOptions);
+  createPost(post: Post): Observable<Post> {
+    return this.http.post<Post>('http://localhost:8080/post/save', post, this.httpOptions);
   }
 
   getPostSaved(user:Regular):Observable<Post[]>{

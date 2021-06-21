@@ -20,23 +20,23 @@ export class HomePage implements OnInit{
   err = false;
   private message: string;
 
-  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {
+  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {}
+
+  ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
       this.routes.navigateByUrl('login');
     }
-
-  }
-
-  ngOnInit(): void {
-    this.postService.getPost(this.user).subscribe(
-      response => {
-        this.postList = response;
-        this.err = false;
-      },
-      error => {
-        this.err = true;
-      });
+    else {
+      this.postService.getPost(this.user).subscribe(
+        response => {
+          this.postList = response;
+          this.err = false;
+        },
+        error => {
+          this.err = true;
+        });
+    }
   }
 
 
@@ -46,7 +46,7 @@ export class HomePage implements OnInit{
   }
 
   save(post: Post) {
-    if( !this.user.interestedPostList.includes(post)) {
+    if( typeof this.user.interestedPostList === 'undefined' || !this.user.interestedPostList.includes(post)) {
       post.interestedUserList.unshift(this.user);
       this.postService.updateInterested(post).subscribe(
         response => {
@@ -69,7 +69,7 @@ export class HomePage implements OnInit{
   }
 
   candidate(post: Post) {
-    if( !post.candidationUserList.includes(this.user)) {
+    if( typeof post.candidationUserList === 'undefined' || !post.candidationUserList.includes(this.user)) {
       post.candidationUserList.unshift(this.user);
       this.postService.updateCandidation(post).subscribe(
         response => {

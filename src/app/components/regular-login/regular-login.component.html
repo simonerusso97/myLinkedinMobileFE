@@ -13,6 +13,9 @@
   <div class="alert alert-danger m-3" role="alert" *ngIf="bannedError">
     Sei stato bannato temporaneamente
   </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="adminError">
+    Non è consentito l'accesso agli amministratori da questa interfaccia
+  </div>
   <ion-card-content>
     <form (ngSubmit)="onSubmit()">
       <ion-item>
