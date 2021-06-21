@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Post} from '../../models/post';
 import {PostService} from '../../services/post.service';
 import {ToastController} from '@ionic/angular';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +17,12 @@ export class HomePage implements OnInit{
   user: Offeror | Applicant;
   postList: Post[] = [];
   err = false;
+  lat: number;
+  long: number;
   private message: string;
 
-  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {}
+  constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
+              private geo: Geolocation) {}
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -34,6 +38,17 @@ export class HomePage implements OnInit{
         error => {
           this.err = true;
         });
+      this.geo.getCurrentPosition({
+        timeout:3000,
+        enableHighAccuracy:true
+      }).then((data)=>{
+        this.lat=data.coords.latitude;
+        this.long=data.coords.longitude;
+        sessionStorage.setItem('latitude', String(this.lat));
+        sessionStorage.setItem('longitude', String(this.long));
+      }).catch((error)=>{
+        console.log(error);
+      });
     }
   }
 
