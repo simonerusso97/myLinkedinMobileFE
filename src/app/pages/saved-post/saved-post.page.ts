@@ -38,52 +38,7 @@ export class SavedPostPage implements OnInit {
       });
 
     
-  constructor() { }
-
-  ngOnInit() {
-    this.post = {
-      candidationUserList: [],
-      interestedUserList: [],
-      jsonDocument: "",
-      company: undefined,
-      createdBy: undefined,
-      hide: false,
-      id: 0,
-      name: "",
-      pubblicationDate: undefined,
-      report: 0,
-      structure: undefined
-    };
-    this.postList.unshift(this.post);
-    this.post = {
-      candidationUserList: [],
-      interestedUserList: [],
-      jsonDocument: "",
-      company: undefined,
-      createdBy: undefined,
-      hide: false,
-      id: 0,
-      name: "",
-      pubblicationDate: undefined,
-      report: 0,
-      structure: undefined
-    };
-    this.postList.unshift(this.post);
-    this.post = {
-      candidationUserList: [],
-      interestedUserList: [],
-      jsonDocument: null,
-      company: undefined,
-      createdBy: undefined,
-      hide: false,
-      id: 0,
-      name: "",
-      pubblicationDate: undefined,
-      report: 0,
-      structure: undefined
-    };
-    this.postList.unshift(this.post);
-  }
+  
 
 unsavePost(item:Post):void{
   this.postService.unsave(item).subscribe(
