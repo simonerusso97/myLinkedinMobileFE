@@ -45,6 +45,9 @@ unsavePost(item:Post):void{
     response => {
       this.postList = this.postList.filter(data => data.id !== item.id);
         this.showingPostList = this.postList;
+      },
+      error=>{
+        this.err=true;
       });
       }
   
