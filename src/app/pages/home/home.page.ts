@@ -65,6 +65,11 @@ export class HomePage implements OnInit{
         response => {
           this.message = 'Post salvato con successo';
           this.presentToast();
+          this.postList.find(item => {
+            if(item.id === post.id){
+            item.interestedUserList.unshift(this.user);
+              }
+          });
         },
         error => {
           this.message = 'Si è verificato un errore';
@@ -88,6 +93,11 @@ export class HomePage implements OnInit{
         response => {
           this.message = 'Candidatura inviate con successo';
           this.presentToast();
+          this.postList.find(item => {
+            if(item.id === post.id){
+              item.candidationUserList.unshift(this.user);
+            }
+          });
         },
         error => {
           this.message = 'Si è verificato un errore';

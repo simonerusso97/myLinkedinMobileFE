@@ -57,6 +57,11 @@ export class SavedPostPage implements OnInit {
         response => {
           this.message = 'Candidatura inviate con successo';
           this.presentToast();
+          this.postList.find(item => {
+            if(item.id === post.id){
+              item.candidationUserList.unshift(this.user);
+            }
+          });
         },
         error => {
           this.message = 'Si è verificato un errore';
