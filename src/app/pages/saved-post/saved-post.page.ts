@@ -19,7 +19,9 @@ export class SavedPostPage implements OnInit {
   showingPostList: Post[]=[];
   user: Offeror | Applicant;
   err = false;
-  constructor(private routes: Router, private postService: PostService) { 
+  private message: string;
+  
+  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) { 
     this.user = JSON.parse(sessionStorage.getItem('user'));
   
     
@@ -37,11 +39,10 @@ export class SavedPostPage implements OnInit {
         this.err = true;
       });
 
-    
-  
+    }
 
 unsavePost(item:Post):void{
-  this.postService.unsave(item).subscribe(
+   this.postService.unsave(item).subscribe(
     response => {
       this.postList = this.postList.filter(data => data.id !== item.id);
         this.showingPostList = this.postList;
@@ -51,8 +52,34 @@ unsavePost(item:Post):void{
       });
       }
   
-  
+candidate(post:Post){
+  if( typeof post.candidationUserList === 'undefined' || !post.candidationUserList.includes(this.user)) {
+    post.candidationUserList.unshift(this.user);
+    this.postService.updateCandidation(post).subscribe(
+      response => {
+        this.message = 'Candidatura inviate con successo';
+        this.presentToast();
+      },
+      error => {
+        this.message = 'Si è verificato un errore';
+        this.presentToast();
+      });
+  }
+  else {
+    this.message = 'Hai già inviato la tua candidatura a questo post';
+    this.presentToast();
+  }
 
+}
+
+
+async presentToast() {
+  const toast = await this.toastController.create({
+    message: this.message,
+    duration: 2000
+  });
+  toast.present();
+}
 }
 
 
