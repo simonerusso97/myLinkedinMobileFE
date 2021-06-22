@@ -30,6 +30,12 @@ export class HomePage implements OnInit{
       this.routes.navigateByUrl('login');
     }
     else {
+      if (this.user.type === 'applicant'){
+        this.user = this.user as Applicant;
+      }
+      else{
+        this.user = this.user as Offeror;
+      }
       this.postService.getPost(this.user).subscribe(
         response => {
           this.postList = response;
@@ -59,7 +65,8 @@ export class HomePage implements OnInit{
   }
 
   save(post: Post) {
-    if( typeof this.user.interestedPostList === 'undefined' || !this.user.interestedPostList.includes(post)) {
+
+    if( typeof post.interestedUserList === 'undefined' || !post.interestedUserList.includes(this.user)) {
       post.interestedUserList.unshift(this.user);
       this.postService.updateInterested(post).subscribe(
         response => {
