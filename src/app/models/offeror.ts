@@ -3,7 +3,7 @@ import {Company} from './company';
 
 export interface Offeror extends Regular{
   position: string;
-  verified?: boolean;
+  verified: boolean;
   company: Company;
 
 }

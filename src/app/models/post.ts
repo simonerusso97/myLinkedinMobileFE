@@ -3,18 +3,17 @@ import {Company} from './company';
 import {Regular} from './regular';
 import {Applicant} from './applicant';
 import {Skill} from './skill';
+import {JsonDocument} from "./json-document";
 
 export interface Post {
   id: number;
   hide: boolean;
   pubblicationDate: Date;
-  report: number;
   name: string;
   structure: Structure;
-  jsonDocument: any;
-  company: Company;
-  interestedUserList: Regular[];
-  candidationUserList: Applicant[];
-  skillList?: Skill[];
-  createdBy: Regular;
+  jsonDocument: JsonDocument[];
+  candidateUserList: Applicant[];
+  skillList: Skill[];
+  cratedBy: Regular;
+  commentList: Comment[];
 }

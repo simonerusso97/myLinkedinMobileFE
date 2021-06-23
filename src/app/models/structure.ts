@@ -6,6 +6,5 @@ export interface Structure {
   name: string;
   description: string;
   userType: string;
-  postList?: Post[];
-  attributeList?: Attribute[];
+  attributeList: Attribute[];
 }

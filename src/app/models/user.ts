@@ -1,3 +1,5 @@
+import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+
 export interface User {
   id: number;
   name: string;
@@ -6,6 +8,6 @@ export interface User {
   birthDate: Date;
   password: string;
   type: string;
-  //TODO messageList?: Message;
+  messageList: Message[];
 
 }

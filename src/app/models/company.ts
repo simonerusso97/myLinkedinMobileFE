@@ -1,7 +1,10 @@
+import {Offeror} from './offeror';
+
 export interface Company {
   id: number;
   name: string;
-  pwd: string;
+  password: string;
   sector: string;
   description: string;
+  offerorList: Offeror[];
 }
