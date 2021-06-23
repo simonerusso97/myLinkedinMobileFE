@@ -5,6 +5,7 @@ import { Applicant } from 'src/app/models/applicant';
 import { Offeror } from 'src/app/models/offeror';
 import { PostService } from 'src/app/services/post.service';
 import {Post} from '../../models/post';
+import {UserService} from '../../services/user.service';
 
 
 @Component({
@@ -21,28 +22,22 @@ export class SavedPostPage implements OnInit {
   err = false;
   private message: string;
 
-  constructor(private routes: Router, private postService: PostService, public toastController: ToastController) {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
+  constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
+              private userService: UserService) {
   }
 
-  ngOnInit() { //user però deve essere un regular per il method nel backend
-
-    this.postService.getPostSaved(this.user).subscribe(
-      response => {
-        this.postList = response;
-        this.err = false;
-        this.showingPostList = response;
-      },
-      error => {
-        this.err = true;
-      });
-
+  ngOnInit() {
+    if(this.user == null){
+      this.routes.navigateByUrl('login');
+    }
   }
 
-  unsavePost(item: Post): void {
-    this.postService.unsave(this.user, item).subscribe(
+  unsavePost(post: Post): void {
+    this.user.interestedPostList.filter(item => item.id !== post.id);
+
+    this.userService.unsavePost(this.user, post.id).subscribe(
       response => {
-        this.postList = this.postList.filter(data => data.id !== item.id);
+        this.postList = this.postList.filter(data => data.id !== post.id);
         this.showingPostList = this.postList;
       },
       error => {
@@ -50,28 +45,25 @@ export class SavedPostPage implements OnInit {
       });
   }
 
-  candidate(post: Post): void {
-    if (typeof post.candidationUserList === 'undefined' || !post.candidationUserList.includes(this.user)) {
-      post.candidationUserList.unshift(this.user);
-      this.postService.updateCandidation(post).subscribe(
+  //TODO: da verificare
+  candidate(post: Post) {
+    this.user = this.user as Applicant;
+    if(  !this.user.candidationList.includes(post)) {
+      this.user.candidationList.unshift(post);
+      this.userService.updateCandidation(this.user, post.id).subscribe(
         response => {
           this.message = 'Candidatura inviate con successo';
           this.presentToast();
-          this.postList.find(item => {
-            if(item.id === post.id){
-              item.candidationUserList.unshift(this.user);
-            }
-          });
         },
         error => {
           this.message = 'Si è verificato un errore';
           this.presentToast();
         });
-    } else {
+    }
+    else {
       this.message = 'Hai già inviato la tua candidatura a questo post';
       this.presentToast();
     }
-
   }
 
 

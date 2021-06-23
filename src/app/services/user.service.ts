@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Regular} from '../models/regular';
 import {Offeror} from '../models/offeror';
 import {Observable, of} from 'rxjs';
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,17 @@ export class UserService {
 
   login(regular: Regular): Observable<Offeror | Applicant> {
     return this.http.post<Offeror | Applicant>('http://localhost:8080/user/login', regular, this.httpOptions);
+  }
 
+  updateInterested(user: Regular, idPost: number): Observable<User> {
+    return this.http.post<User>('http://localhost:8080/post/updateInterestedList/'+idPost, user, this.httpOptions);
+  }
+
+  updateCandidation(user: Regular, idPost: number): Observable<User> {
+    return this.http.post<User>('http://localhost:8080/post/updateCandidation/'+idPost, user, this.httpOptions);
+  }
+
+  unsavePost(user: Offeror | Applicant, idPost: number): Observable<Regular> {
+    return this.http.post<Regular>('http://localhost:8080/post/unsavePost/'+idPost, user, this.httpOptions);
   }
 }

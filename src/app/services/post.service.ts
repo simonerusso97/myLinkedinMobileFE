@@ -5,6 +5,9 @@ import {Applicant} from '../models/applicant';
 import {Observable} from 'rxjs';
 import {Regular} from '../models/regular';
 import {Offeror} from '../models/offeror';
+import {User} from '../models/user';
+import {Structure} from '../models/structure';
+import {Skill} from "../models/skill";
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +29,6 @@ export class PostService {
 
   }
 
-  updateInterested(post: Post): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8080/post/updateInterestedList', post, this.httpOptions);
-  }
-
-  updateCandidation(post: Post): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8080/post/updateCandidation', post, this.httpOptions);
-  }
-
   createPost(post: Post): Observable<Post> {
     return this.http.post<Post>('http://localhost:8080/post/save', post, this.httpOptions);
   }
@@ -48,4 +43,11 @@ export class PostService {
   }
 
 
+  findAllStructure(userType: string): Observable<Structure[]> {
+    return this.http.get<Structure[]>('http://localhost:8080/structure/getByType/'+userType,);
+  }
+
+  findAllSkill(): Observable<Skill[]> {
+    return this.http.get<Skill[]>('http://localhost:8080/post/getAllSkill/');
+  }
 }

@@ -34,11 +34,12 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Data di nascita</ion-label>
-        <ion-input required type="date"
-                   [(ngModel)]="offeror.birthDate"
-                   name="birthDate"
-        ></ion-input>
+
+      <ion-label position="stacked">Data di nascita</ion-label>
+      <ion-datetime displayFormat="D-M-YYYY" value=""
+                    required type="date"
+                    [(ngModel)]="offeror.birthDate"
+                    name="birthDate"></ion-datetime>
       </ion-item>
 
       <ion-item>

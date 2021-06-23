@@ -25,6 +25,8 @@ export class SignUpApplicantComponent implements OnInit {
     }
     else{
       this.pwdError = false;
+      this.applicant.banned=false;
+      this.applicant.disabled=false;
       this.userService.createApplicant(this.applicant).subscribe(
         response => {
           this.routes.navigateByUrl('tabs');

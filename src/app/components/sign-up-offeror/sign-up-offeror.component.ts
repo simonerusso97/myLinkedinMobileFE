@@ -27,6 +27,9 @@ export class SignUpOfferorComponent implements OnInit {
     }
     else{
       this.pwdError = false;
+      this.offeror.banned=false;
+      this.offeror.disabled=false;
+      this.offeror.verified=false;
       this.userService.createOfferor(this.offeror).subscribe(
         response => {
           this.routes.navigateByUrl('tabs');

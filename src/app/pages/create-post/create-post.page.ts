@@ -9,6 +9,8 @@ import {AttributeValue} from '../../models/attribute-value';
 import {ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
+import {JsonDocument} from '../../models/json-document';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-create-post',
@@ -17,16 +19,14 @@ import {Skill} from '../../models/skill';
 })
 export class CreatePostPage implements OnInit {
   user: Offeror | Applicant;
-  structureTODELETE: Structure = {} as Structure;
   structure: Structure = {} as Structure;
   structureList: Structure[] = [];
   attributeList: Attribute[] = [];
-  attributeValueList: AttributeValue[] = [];
+  jsonDocuments: JsonDocument[] = [];
   post: Post = {} as Post;
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
-  skillTODELETE: Skill;
   private message: string;
 
 
@@ -34,53 +34,33 @@ export class CreatePostPage implements OnInit {
   }
 
   ngOnInit() {
-    //TODO FINIRE
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
       this.routes.navigateByUrl('login');
     }
-    else{}
+    else {
 
-    this.structureTODELETE = {description: 'prova1',
-      id: 0,
-      name: 'prova0',
-      userType: 'offeror'
-    };
-    this.structureList.unshift(this.structureTODELETE);
-    this.structureTODELETE = {description: 'prova1',
-      id: 1,
-      name: 'prova1',
-      userType: 'offeror'
-    };
-    this.structureList.unshift(this.structureTODELETE);
-    this.structureTODELETE = {description: 'prova1',
-      id: 2,
-      name: 'prova2',
-      userType: 'offeror'
-    };
-    this.structureList.unshift(this.structureTODELETE);
-    this.structureTODELETE = {description: 'prova1',
-      id: 3,
-      name: 'prova3',
-      userType: 'offeror'
-    };
-    this.structureList.unshift(this.structureTODELETE);
-    this.structureTODELETE = {description: 'prova1',
-      id: 0,
-      name: 'prova4',
-      userType: 'offeror'
-    };
-    this.skillTODELETE = {
-      description: "",
-      id: 0,
-      name: 'prova1'};
-    this.skillList.unshift(this.skillTODELETE);
-    this.skillTODELETE = {
-      description: "",
-      id: 0,
-      name: 'prova2'
-    };
-    this.skillList.unshift(this.skillTODELETE);
+      this.postService.findAllStructure(this.user.type).subscribe(
+        response => {
+          this.structureList = response;
+        },
+        error => {
+          this.message = 'Si è verificato un errore, riprova';
+          this.presentToast();
+        }
+      );
+
+      this.postService.findAllSkill().subscribe(
+        response => {
+          this.skillList = response;
+        },
+        error => {
+          this.message = 'Si è verificato un errore, riprova';
+          this.presentToast();
+        }
+      );
+    }
+
   }
 
   showAttribute(structure: Structure) {
@@ -88,7 +68,7 @@ export class CreatePostPage implements OnInit {
     this.attributeList = structure.attributeList;
     this.attributeList.forEach(
       attr => {
-        this.attributeValueList.unshift({
+        this.jsonDocuments.unshift({
           name: '',
           value: null,
         }) ;
@@ -98,8 +78,7 @@ export class CreatePostPage implements OnInit {
   onSubmit() {
     this.post.structure = this.structure;
     this.post.hide = false;
-    this.post.report = 0;
-    this.post.jsonDocument = JSON.stringify(this.attributeValueList);
+    this.post.jsonDocument = this.jsonDocuments;
     this.post.createdBy = this.user;
     this.post.skillList = this.postSkillList;
     this.post.pubblicationDate = new Date();

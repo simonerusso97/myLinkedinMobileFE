@@ -28,20 +28,20 @@
 
         <ion-item *ngFor="let attribute of attributeList; let myIndex = index">
           <ion-label position="stacked"
-                     [(ngModel)]="attributeValueList[myIndex].name"
+                     [(ngModel)]="jsonDocuments[myIndex].name"
                      name="name"
           >{{attribute.name}}</ion-label>
           <ion-input required type="text" *ngIf="attribute.type === 'string'"
-                     [(ngModel)]="attributeValueList[myIndex].value"
+                     [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
           <ion-input required type="number" *ngIf="attribute.type === 'number'"
-                     [(ngModel)]="attributeValueList[myIndex].value"
+                     [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
           <ion-label *ngIf="attribute.type === 'date'">MM DD YY</ion-label>
           <ion-datetime displayFormat="MM DD YY" placeholder="Data" *ngIf="attribute.type === 'date'"
-                        [(ngModel)]="attributeValueList[myIndex].value"
+                        [(ngModel)]="jsonDocuments[myIndex].value"
                         name="value"
           ></ion-datetime>
         </ion-item>

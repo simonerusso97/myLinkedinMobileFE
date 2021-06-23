@@ -15,7 +15,6 @@ export class SignupPage implements OnInit {
       routes.navigateByUrl('tab');
     }
   }
-
   ngOnInit() {
   }
 }
