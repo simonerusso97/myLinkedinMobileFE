@@ -3,6 +3,7 @@ import {Regular} from '../../models/regular';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import {Post} from "../../models/post";
 
 @Component({
   selector: 'app-regular-login',

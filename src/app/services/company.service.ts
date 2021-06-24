@@ -26,4 +26,8 @@ export class CompanyService {
   login(comapny: Company): Observable<Company> {
     return this.http.post<Company>('http://localhost:8080/company/login', comapny, this.httpOptions);
   }
+
+  findAll(): Observable<Company[]> {
+    return this.http.get<Company[]>('http://localhost:8080/company/findAll');
+  }
 }

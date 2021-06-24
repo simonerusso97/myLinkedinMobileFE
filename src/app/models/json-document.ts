@@ -1,4 +1,4 @@
 export interface JsonDocument {
-  name: string;
+  nameAttribute: string;
   value: any;
 }

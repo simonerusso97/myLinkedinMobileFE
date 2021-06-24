@@ -3,6 +3,8 @@ import {Offeror} from '../../models/offeror';
 import {Company} from '../../models/company';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
+import {CompanyService} from "../../services/company.service";
+import {ToastController} from "@ionic/angular";
 
 @Component({
   selector: 'app-sign-up-offeror',
@@ -13,13 +15,26 @@ export class SignUpOfferorComponent implements OnInit {
 
   offeror: Offeror = {} as Offeror;
   confirmPassword: string;
+  companyList: Company[];
   pwdError = false;
   regError = false;
-  constructor(private userService: UserService, private routes: Router) {
-    this.offeror.company = {} as Company;
+  private message: string;
+
+  constructor(private userService: UserService, private routes: Router, private companyService: CompanyService,
+              public toastController: ToastController) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.companyService.findAll().subscribe(
+      response => {
+        this.companyList = response;
+      },
+      error => {
+        this.message = 'Si è verificato un errore, riprova';
+        this.presentToast();
+      }
+    );
+  }
 
   submit() {
     if (this.offeror.password !== this.confirmPassword){
@@ -28,7 +43,7 @@ export class SignUpOfferorComponent implements OnInit {
     else{
       this.pwdError = false;
       this.offeror.banned=false;
-      this.offeror.disabled=false;
+      this.offeror.disabled=true;
       this.offeror.verified=false;
       this.userService.createOfferor(this.offeror).subscribe(
         response => {
@@ -39,5 +54,18 @@ export class SignUpOfferorComponent implements OnInit {
         });
 
     }
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: this.message,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  setCompany(company: any) {
+    this.offeror.company = company;
+
   }
 }

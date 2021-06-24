@@ -13,7 +13,7 @@ import {UserService} from "../../services/user.service";
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
   user: Offeror | Applicant;
   postList: Post[] = [];
@@ -23,16 +23,15 @@ export class HomePage implements OnInit{
   private message: string;
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
-              private geo: Geolocation, private userService: UserService) {}
+              private geo: Geolocation, private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
 
-    if(this.user == null){
+    if (this.user == null) {
       this.routes.navigateByUrl('login');
-    }
-
-    else {
+    } else {
       this.postService.getPost(this.user).subscribe(
         response => {
           this.postList = response;
@@ -42,14 +41,14 @@ export class HomePage implements OnInit{
           this.err = true;
         });
       this.geo.getCurrentPosition({
-        timeout:3000,
-        enableHighAccuracy:true
-      }).then((data)=>{
-        this.lat=data.coords.latitude;
-        this.long=data.coords.longitude;
+        timeout: 3000,
+        enableHighAccuracy: true
+      }).then((data) => {
+        this.lat = data.coords.latitude;
+        this.long = data.coords.longitude;
         sessionStorage.setItem('latitude', String(this.lat));
         sessionStorage.setItem('longitude', String(this.long));
-      }).catch((error)=>{
+      }).catch((error) => {
         console.log(error);
       });
     }
@@ -64,7 +63,7 @@ export class HomePage implements OnInit{
   save(post: Post) {
 
     //TODO: verificare
-    if( !this.user.interestedPostList.includes(post)) {
+    if ((typeof this.user.interestedPostList) == 'undefined' && !this.user.interestedPostList.includes(post)) {
       this.user.interestedPostList.unshift(post);
       this.userService.updateInterested(this.user, post.id).subscribe(
         response => {
@@ -75,8 +74,7 @@ export class HomePage implements OnInit{
           this.message = 'Si è verificato un errore';
           this.presentToast();
         });
-    }
-    else {
+    } else {
       this.message = 'Hai già salvato questo post';
       this.presentToast();
     }
@@ -89,7 +87,7 @@ export class HomePage implements OnInit{
   //TODO da verificare
   candidate(post: Post) {
     this.user = this.user as Applicant;
-    if(  !this.user.candidationList.includes(post)) {
+    if (!this.user.candidationList.includes(post)) {
       this.user.candidationList.unshift(post);
       this.userService.updateCandidation(this.user, post.id).subscribe(
         response => {
@@ -100,8 +98,7 @@ export class HomePage implements OnInit{
           this.message = 'Si è verificato un errore';
           this.presentToast();
         });
-    }
-    else {
+    } else {
       this.message = 'Hai già inviato la tua candidatura a questo post';
       this.presentToast();
     }
@@ -113,6 +110,5 @@ export class HomePage implements OnInit{
       duration: 2000
     });
     toast.present();
-    this.user.messageList[0].sendingUser
-
+  }
 }

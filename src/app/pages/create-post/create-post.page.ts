@@ -69,7 +69,7 @@ export class CreatePostPage implements OnInit {
     this.attributeList.forEach(
       attr => {
         this.jsonDocuments.unshift({
-          name: '',
+          nameAttribute: attr.name,
           value: null,
         }) ;
       });
@@ -84,7 +84,7 @@ export class CreatePostPage implements OnInit {
     this.post.pubblicationDate = new Date();
     this.postService.createPost(this.post).subscribe(
       response  => {
-        this.routes.navigateByUrl('tabs');
+        //this.routes.navigateByUrl('tabs');
       },
       error => {
         this.message = 'Si è verificato un errore, riprova';

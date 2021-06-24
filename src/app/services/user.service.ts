@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Regular} from '../models/regular';
 import {Offeror} from '../models/offeror';
 import {Observable, of} from 'rxjs';
-import {User} from "../models/user";
+import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,6 @@ export class UserService {
   };
 
   constructor(private http: HttpClient) { }
-
-
 
   createApplicant(applicant: Applicant): Observable<Applicant> {
     return this.http.post<Applicant>('http://localhost:8080/user/registrationApplicant', applicant, this.httpOptions);

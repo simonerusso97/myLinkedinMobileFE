@@ -27,11 +27,9 @@
         </ion-item>
 
         <ion-item *ngFor="let attribute of attributeList; let myIndex = index">
-          <ion-label position="stacked"
-                     [(ngModel)]="jsonDocuments[myIndex].name"
-                     name="name"
-          >{{attribute.name}}</ion-label>
-          <ion-input required type="text" *ngIf="attribute.type === 'string'"
+          <ion-label position="stacked">{{attribute.name}}</ion-label>
+
+          <ion-input required type="text" *ngIf="attribute.type === 'String'"
                      [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
