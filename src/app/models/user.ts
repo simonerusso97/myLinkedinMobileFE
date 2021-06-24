@@ -1,4 +1,5 @@
-import {Message} from '@angular/compiler/src/i18n/i18n_ast';
+import {Message} from "./message";
+
 
 export interface User {
   id: number;

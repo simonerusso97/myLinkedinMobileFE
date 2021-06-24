@@ -113,5 +113,6 @@ export class HomePage implements OnInit{
       duration: 2000
     });
     toast.present();
-  }
+    this.user.messageList[0].sendingUser
+
 }
