@@ -6,7 +6,7 @@ import {Post} from '../../models/post';
 import {PostService} from '../../services/post.service';
 import {ToastController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {UserService} from "../../services/user.service";
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +32,14 @@ export class HomePage implements OnInit {
     if (this.user == null) {
       this.routes.navigateByUrl('login');
     } else {
+      if((typeof this.user.interestedPostList) == 'undefined'){
+        this.user.interestedPostList = [];
+      }
+      if(this.user.type === 'applicant'){
+        if((typeof (this.user as Applicant).candidationList) == 'undefined'){
+          (this.user as Applicant).candidationList = [];
+        }
+      }
       this.postService.getPost(this.user).subscribe(
         response => {
           this.postList = response;
@@ -62,8 +70,7 @@ export class HomePage implements OnInit {
 
   save(post: Post) {
 
-    //TODO: verificare
-    if ((typeof this.user.interestedPostList) == 'undefined' && !this.user.interestedPostList.includes(post)) {
+    if (!this.user.interestedPostList.includes(post)) {
       this.user.interestedPostList.unshift(post);
       this.userService.updateInterested(this.user, post.id).subscribe(
         response => {

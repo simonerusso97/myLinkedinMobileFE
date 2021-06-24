@@ -6,11 +6,12 @@ import {PostService} from '../../services/post.service';
 import {Structure} from '../../models/structure';
 import {Attribute} from '../../models/attribute';
 import {AttributeValue} from '../../models/attribute-value';
-import {ToastController} from '@ionic/angular';
+import {IonSelect, ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
 import {JsonDocument} from '../../models/json-document';
 import {UserService} from '../../services/user.service';
+import {zip} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
@@ -75,7 +76,7 @@ export class CreatePostPage implements OnInit {
       });
   }
 
-  onSubmit() {
+  onSubmit(structureSelect: IonSelect) {
     this.post.structure = this.structure;
     this.post.hide = false;
     this.post.jsonDocument = this.jsonDocuments;
@@ -84,7 +85,12 @@ export class CreatePostPage implements OnInit {
     this.post.pubblicationDate = new Date();
     this.postService.createPost(this.post).subscribe(
       response  => {
-        //this.routes.navigateByUrl('tabs');
+        this.message = 'Post creato con successo';
+        this.presentToast();
+        this.attributeList = [];
+        structureSelect.value=null;
+        this.post = {} as Post;
+
       },
       error => {
         this.message = 'Si è verificato un errore, riprova';

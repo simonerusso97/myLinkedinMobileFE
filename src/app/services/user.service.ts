@@ -37,11 +37,11 @@ export class UserService {
   }
 
   updateInterested(user: Regular, idPost: number): Observable<User> {
-    return this.http.post<User>('http://localhost:8080/post/updateInterestedList/'+idPost, user, this.httpOptions);
+    return this.http.post<User>('http://localhost:8080/user/updateInterestedList/'+idPost, user, this.httpOptions);
   }
 
   updateCandidation(user: Regular, idPost: number): Observable<User> {
-    return this.http.post<User>('http://localhost:8080/post/updateCandidation/'+idPost, user, this.httpOptions);
+    return this.http.post<User>('http://localhost:8080/user/updateCandidation/'+idPost, user, this.httpOptions);
   }
 
   unsavePost(user: Offeror | Applicant, idPost: number): Observable<Regular> {

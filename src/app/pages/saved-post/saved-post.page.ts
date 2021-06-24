@@ -27,9 +27,24 @@ export class SavedPostPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.user == null){
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+
+    if (this.user == null) {
       this.routes.navigateByUrl('login');
     }
+    else {
+      if ((typeof this.user.interestedPostList) == 'undefined') {
+        this.user.interestedPostList = [];
+      }
+      if (this.user.type === 'applicant') {
+        if ((typeof (this.user as Applicant).candidationList) == 'undefined') {
+          (this.user as Applicant).candidationList = [];
+        }
+      }
+      this.postList = this.user.interestedPostList;
+    }
+
+
   }
 
   unsavePost(post: Post): void {
