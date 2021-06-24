@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
-
+    console.log(this.user);
     if (this.user == null) {
       this.routes.navigateByUrl('login');
     } else {

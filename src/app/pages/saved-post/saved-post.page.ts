@@ -31,8 +31,7 @@ export class SavedPostPage implements OnInit {
 
     if (this.user == null) {
       this.routes.navigateByUrl('login');
-    }
-    else {
+    } else {
       if ((typeof this.user.interestedPostList) == 'undefined') {
         this.user.interestedPostList = [];
       }
@@ -43,7 +42,6 @@ export class SavedPostPage implements OnInit {
       }
       this.postList = this.user.interestedPostList;
     }
-
 
   }
 
@@ -63,7 +61,7 @@ export class SavedPostPage implements OnInit {
   //TODO: da verificare
   candidate(post: Post) {
     this.user = this.user as Applicant;
-    if(  !this.user.candidationList.includes(post)) {
+    if (!this.user.candidationList.includes(post)) {
       this.user.candidationList.unshift(post);
       this.userService.updateCandidation(this.user, post.id).subscribe(
         response => {
@@ -74,8 +72,7 @@ export class SavedPostPage implements OnInit {
           this.message = 'Si è verificato un errore';
           this.presentToast();
         });
-    }
-    else {
+    } else {
       this.message = 'Hai già inviato la tua candidatura a questo post';
       this.presentToast();
     }

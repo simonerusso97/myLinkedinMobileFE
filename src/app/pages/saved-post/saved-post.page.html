@@ -8,20 +8,15 @@
       <ion-card-title>{{item.name}}</ion-card-title>
     </ion-card-header>
 
-
-
-
     <ion-row class="card-footer">
       <ion-col>
-        <div class="text-center"  *ngIf="user.type == 'applicant'">
+        <div class="text-center">
           <ion-button fill="clear" size="small" (click)="unsavePost(item)">
             <ion-icon name="trash"></ion-icon>
           </ion-button><br>
          Elimina
         </div>
-
       </ion-col>
-
 
       <ion-col *ngIf="user.type === 'applicant'">
         <div class="text-center" (click)="candidate(item)">

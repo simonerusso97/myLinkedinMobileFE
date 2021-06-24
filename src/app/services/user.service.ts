@@ -45,6 +45,6 @@ export class UserService {
   }
 
   unsavePost(user: Offeror | Applicant, idPost: number): Observable<Regular> {
-    return this.http.post<Regular>('http://localhost:8080/post/unsavePost/'+idPost, user, this.httpOptions);
+    return this.http.post<Regular>('http://localhost:8080/user/unsavePost/'+idPost, user, this.httpOptions);
   }
 }
