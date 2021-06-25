@@ -76,9 +76,10 @@ export class HomePage implements OnInit {
       }}
 
     if (!includes) {
-      this.user.interestedPostList.unshift(post);
       this.userService.updateInterested(this.user, post.id).subscribe(
         response => {
+          this.user.interestedPostList.unshift(post);
+
           this.message = 'Post salvato con successo';
           this.presentToast();
         },
