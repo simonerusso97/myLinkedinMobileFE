@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
         error => {
           this.err = true;
         });
-      this.geo.getCurrentPosition({
+      /*this.geo.getCurrentPosition({
         timeout: 3000,
         enableHighAccuracy: true
       }).then((data) => {
@@ -58,7 +58,7 @@ export class HomePage implements OnInit {
         sessionStorage.setItem('longitude', String(this.long));
       }).catch((error) => {
         console.log(error);
-      });
+      });*/
     }
   }
 
@@ -69,8 +69,13 @@ export class HomePage implements OnInit {
   }
 
   save(post: Post) {
+    let includes=false;
+    for(let p of this.user.interestedPostList) {
+      if(p.id === post.id){
+        includes = true;
+      }}
 
-    if (!this.user.interestedPostList.includes(post)) {
+    if (!includes) {
       this.user.interestedPostList.unshift(post);
       this.userService.updateInterested(this.user, post.id).subscribe(
         response => {

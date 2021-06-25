@@ -5,7 +5,7 @@
     <ion-card *ngFor="let post of postList" class="m-2 mb-3" button="true" color="light">
       <ion-card-header class="text-center" (click)="goToPost(post)">
         <ion-card-title>{{post.name}}</ion-card-title>
-        <ion-card-subtitle>{{post.createdBy.name}} {{post.createdBy.surname}} <p *ngIf="post.createdBy.company !== null">{{post.createdBy.company}}</p> {{post.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{post.createdBy.name}} {{post.createdBy.surname}} <p *ngIf="post.createdBy.company !== null">{{post.createdBy.company.name}}</p> {{post.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
 
       </ion-card-header>
       <ion-card-content (click)="goToPost(post)">
@@ -24,7 +24,7 @@
 
         </ion-col>
         <ion-col>
-          <div class="text-center" (click)="goToComment(item)">
+          <div class="text-center" (click)="goToComment(post)">
             <ion-button fill="clear" size="small">
               <ion-icon name="chatbox-ellipses-outline"></ion-icon><br>
             </ion-button><br>
@@ -32,7 +32,7 @@
           </div>
         </ion-col>
         <ion-col *ngIf="user.type === 'applicant'">
-          <div class="text-center" (click)="candidate(item)">
+          <div class="text-center" (click)="candidate(post)">
             <ion-button fill="clear" size="small">
               <ion-icon name="today-outline"></ion-icon>
             </ion-button><br>
