@@ -40,10 +40,6 @@ export class UserService {
     return this.http.post<User>('http://localhost:8080/user/updateInterestedList/'+idPost, user, this.httpOptions);
   }
 
-  updateCandidation(user: Regular, idPost: number): Observable<User> {
-    return this.http.post<User>('http://localhost:8080/user/updateCandidation/'+idPost, user, this.httpOptions);
-  }
-
   unsavePost(user: Offeror | Applicant, idPost: number): Observable<Regular> {
     return this.http.post<Regular>('http://localhost:8080/user/unsavePost/'+idPost, user, this.httpOptions);
   }

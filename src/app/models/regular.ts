@@ -7,6 +7,4 @@ export interface Regular extends User{
   disabled: boolean;
   degree: string;
   interestedPostList: Post[];
-  postList: Post[];
-
 }

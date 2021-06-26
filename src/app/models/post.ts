@@ -13,7 +13,7 @@ export interface Post {
   name: string;
   structure: Structure;
   jsonDocument: JsonDocument[];
-  candidateUserList: Applicant[];
+  interestedUserList: Applicant[];
   skillList: Skill[];
   createdBy: Applicant | Offeror;
   commentList: Comment[];

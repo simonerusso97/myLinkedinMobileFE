@@ -35,11 +35,6 @@ export class HomePage implements OnInit {
       if((typeof this.user.interestedPostList) == 'undefined'){
         this.user.interestedPostList = [];
       }
-      if(this.user.type === 'applicant'){
-        if((typeof (this.user as Applicant).candidationList) == 'undefined'){
-          (this.user as Applicant).candidationList = [];
-        }
-      }
       this.postService.getPost(this.user).subscribe(
         response => {
           this.postList = response;
@@ -79,7 +74,7 @@ export class HomePage implements OnInit {
       this.userService.updateInterested(this.user, post.id).subscribe(
         response => {
           this.user.interestedPostList.unshift(post);
-
+          sessionStorage.setItem('user', JSON.stringify(this.user));
           this.message = 'Post salvato con successo';
           this.presentToast();
         },
@@ -95,26 +90,6 @@ export class HomePage implements OnInit {
 
   goToComment(item: Post) {
     //TODO: Implementare
-  }
-
-  //TODO da verificare
-  candidate(post: Post) {
-    this.user = this.user as Applicant;
-    if (!this.user.candidationList.includes(post)) {
-      this.user.candidationList.unshift(post);
-      this.userService.updateCandidation(this.user, post.id).subscribe(
-        response => {
-          this.message = 'Candidatura inviate con successo';
-          this.presentToast();
-        },
-        error => {
-          this.message = 'Si è verificato un errore';
-          this.presentToast();
-        });
-    } else {
-      this.message = 'Hai già inviato la tua candidatura a questo post';
-      this.presentToast();
-    }
   }
 
   async presentToast() {

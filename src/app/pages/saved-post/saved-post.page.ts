@@ -16,8 +16,6 @@ import {UserService} from '../../services/user.service';
 export class SavedPostPage implements OnInit {
 
   post: Post = {} as Post;
-  postList: Post[] = [];
-  showingPostList: Post[] = [];
   user: Offeror | Applicant;
   err = false;
   private message: string;
@@ -35,49 +33,29 @@ export class SavedPostPage implements OnInit {
       if ((typeof this.user.interestedPostList) == 'undefined') {
         this.user.interestedPostList = [];
       }
-      if (this.user.type === 'applicant') {
-        if ((typeof (this.user as Applicant).candidationList) == 'undefined') {
-          (this.user as Applicant).candidationList = [];
-        }
-      }
-      this.postList = this.user.interestedPostList;
     }
 
   }
 
   unsavePost(post: Post): void {
-    this.user.interestedPostList.filter(item => item.id !== post.id);
-
+    console.log(post.id);
+    this.user.interestedPostList.forEach(item =>{
+      console.log(item.id);
+    });
+    console.log(this.user.interestedPostList);
     this.userService.unsavePost(this.user, post.id).subscribe(
       response => {
-        this.postList = this.postList.filter(data => data.id !== post.id);
-        this.showingPostList = this.postList;
+        this.user.interestedPostList = this.user.interestedPostList.filter(item => item.id != post.id);
+        sessionStorage.setItem('user', JSON.stringify(this.user));
+        this.message='Operazione completata';
+        this.presentToast();
       },
       error => {
         this.err = true;
+        this.message = 'Si è verificato un errore, riprova';
+        this.presentToast();
       });
   }
-
-  //TODO: da verificare
-  candidate(post: Post) {
-    this.user = this.user as Applicant;
-    if (!this.user.candidationList.includes(post)) {
-      this.user.candidationList.unshift(post);
-      this.userService.updateCandidation(this.user, post.id).subscribe(
-        response => {
-          this.message = 'Candidatura inviate con successo';
-          this.presentToast();
-        },
-        error => {
-          this.message = 'Si è verificato un errore';
-          this.presentToast();
-        });
-    } else {
-      this.message = 'Hai già inviato la tua candidatura a questo post';
-      this.presentToast();
-    }
-  }
-
 
   async presentToast() {
     const toast = await this.toastController.create({
