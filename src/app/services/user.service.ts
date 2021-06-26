@@ -43,4 +43,8 @@ export class UserService {
   unsavePost(user: Regular, idPost: number): Observable<Regular> {
     return this.http.post<Regular>('http://localhost:8080/user/unsavePost/'+idPost, user, this.httpOptions);
   }
+
+  findAll(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:8080/user/findAll');
+  }
 }

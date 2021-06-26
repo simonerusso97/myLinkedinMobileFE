@@ -26,11 +26,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'chat',
+        path: 'chatHub',
         children:[
           {
             path: '',
-            loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule)
+            loadChildren: () => import('../chat-hub/chat-hub.module').then( m => m.ChatHubPageModule)
           }
         ]
       },
