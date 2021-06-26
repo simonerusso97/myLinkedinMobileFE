@@ -1,23 +1,33 @@
-<app-toolbar></app-toolbar>
+<ion-header [translucent]="true">
+  <app-toolbar></app-toolbar>
+</ion-header>
 
 
 <ion-content [fullscreen]="true">
-
+  <ion-button (click)="generatePDF()">Genera PDF</ion-button>
   <ion-card *ngFor="let item of user.interestedPostList; let myindex=index" class="m-2 mb-3" button="true" color="light">
-    <ion-card-header class="text-center" >
-      <ion-card-title>{{item.name}}</ion-card-title>
-    </ion-card-header>
-
-    <ion-row class="card-footer">
-      <ion-col>
-        <div class="text-center">
-          <ion-button fill="clear" size="small" (click)="unsavePost(item)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button><br>
-         Elimina
-        </div>
+    <ion-row>
+      <ion-col size="auto" class="ion-align-self-center" >
+        <ion-checkbox (ionChange)="check(myindex)"></ion-checkbox>
       </ion-col>
-  </ion-row>
+
+      <ion-col>
+        <ion-card-header class="text-center" >
+          <ion-card-title>{{item.name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-row class="card-footer">
+          <ion-col>
+            <div class="text-center">
+              <ion-button fill="clear" size="small" (click)="unsavePost(item)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button><br>
+              Elimina
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
   </ion-card>
   </ion-content>
 

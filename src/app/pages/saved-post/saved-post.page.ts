@@ -18,6 +18,7 @@ export class SavedPostPage implements OnInit {
   post: Post = {} as Post;
   user: Offeror | Applicant;
   err = false;
+  checkecdList: Post[];
   private message: string;
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
@@ -63,6 +64,16 @@ export class SavedPostPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  check(index: number) {
+    if(this.checkecdList.includes(this.user.interestedPostList[index])){
+      this.checkecdList = this.checkecdList.filter(post => post.id != this.user.interestedPostList[index].id)
+    }
+    else{
+      this.checkecdList.unshift(this.user.interestedPostList[index]);
+
+    }
   }
 }
 

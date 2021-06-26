@@ -4,9 +4,10 @@ import {Applicant} from '../../models/applicant';
 import {Router} from '@angular/router';
 import {Post} from '../../models/post';
 import {PostService} from '../../services/post.service';
-import {ToastController} from '@ionic/angular';
+import {IonSelect, ToastController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {UserService} from '../../services/user.service';
+import {Skill} from "../../models/skill";
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,14 @@ export class HomePage implements OnInit {
 
   user: Offeror | Applicant;
   postList: Post[] = [];
+  showingPostList: Post[] = [];
+  skillList: Skill[] = [];
   err = false;
   lat: number;
-  long: number;
+  long: number;x
   private message: string;
+  startDate: Date;
+  endDate: Date = new Date();
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
               private geo: Geolocation, private userService: UserService) {
@@ -38,11 +43,22 @@ export class HomePage implements OnInit {
       this.postService.getPost(this.user).subscribe(
         response => {
           this.postList = response;
+          this.showingPostList = response;
           this.err = false;
         },
         error => {
-          this.err = true;
+          this.message = 'Si è verificato un errore';
+          this.presentToast();
         });
+      this.postService.findAllSkill().subscribe(
+        response => {
+          this.skillList = response;
+        },
+        error => {
+          this.message = 'Si è verificato un errore';
+          this.presentToast();
+        }
+      );
       /*this.geo.getCurrentPosition({
         timeout: 3000,
         enableHighAccuracy: true
@@ -98,5 +114,42 @@ export class HomePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  getItems(ev: any) {
+    const val = ev.target.value;
+    if (val && val.trim() !== ''){
+      this.showingPostList = this.postList.filter(post =>
+        (post.createdBy.name +' '+ post.createdBy.surname).toUpperCase().includes(val.toUpperCase())
+      );
+    }
+    else{
+      this.showingPostList = this.postList;
+    }
+  }
+
+
+  fiterByDate() {
+    this.showingPostList = this.postList.filter(post => post.pubblicationDate > this.startDate || post.pubblicationDate<this.endDate )
+  }
+
+  filter(skillSelect: IonSelect) {
+    this.showingPostList = [];
+    if (skillSelect.value.length == 0){
+      this.showingPostList = this.postList;
+    }
+    else {
+      skillSelect.value.forEach(
+        v => {
+          this.postList.forEach( post => {
+            post.skillList.forEach( s => {
+              if(s.name === v.name && !this.showingPostList.includes(post)){
+                this.showingPostList.unshift(post);
+              }
+            });
+          });
+        }
+      );
+    }
   }
 }
