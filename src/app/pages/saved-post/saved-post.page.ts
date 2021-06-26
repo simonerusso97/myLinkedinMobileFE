@@ -6,6 +6,7 @@ import { Offeror } from 'src/app/models/offeror';
 import { PostService } from 'src/app/services/post.service';
 import {Post} from '../../models/post';
 import {UserService} from '../../services/user.service';
+import {PDFGenerator} from "@ionic-native/pdf-generator/ngx";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class SavedPostPage implements OnInit {
   private message: string;
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
-              private userService: UserService) {
+              private userService: UserService, private pdfGenerator: PDFGenerator) {
   }
 
   ngOnInit() {
@@ -74,6 +75,10 @@ export class SavedPostPage implements OnInit {
       this.checkecdList.unshift(this.user.interestedPostList[index]);
 
     }
+  }
+
+  generatePDF() {
+//todo: implementare
   }
 }
 

@@ -8,6 +8,7 @@ import {Offeror} from '../models/offeror';
 import {User} from '../models/user';
 import {Structure} from '../models/structure';
 import {Skill} from "../models/skill";
+import {Commento} from "../models/commento";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class PostService {
       'Content-Type':  'application/json',
     })
   };
+
 
   constructor(private http: HttpClient) { }
 
@@ -49,5 +51,9 @@ export class PostService {
 
   findAllSkill(): Observable<Skill[]> {
     return this.http.get<Skill[]>('http://localhost:8080/post/getAllSkill/');
+  }
+
+  sendComment(comment: Commento, post: Post) {
+    return this.http.post<Commento>('http://localhost:8080/post/UpdateCommentList/'+post.id, comment, this.httpOptions);
   }
 }
