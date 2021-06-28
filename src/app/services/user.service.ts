@@ -3,8 +3,9 @@ import {Applicant} from '../models/applicant';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Regular} from '../models/regular';
 import {Offeror} from '../models/offeror';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {User} from '../models/user';
+import {Message} from "../models/message";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class UserService {
       'Content-Type':  'application/json',
     })
   };
+  user: User = {} as User;
 
   constructor(private http: HttpClient) { }
 
@@ -47,4 +49,18 @@ export class UserService {
   findAll(): Observable<User[]> {
     return this.http.get<User[]>('http://localhost:8080/user/findAll');
   }
+
+  sendMessage(message: Message): Observable<Message> {
+    return this.http.post<Message>('http://localhost:8080/user/sendMessage', message, this.httpOptions);
+
+  }
+
+  findMessage(user: User, userChat: User): Observable<Message[]> {
+    return this.http.post<Message[]>('http://localhost:8080/user/findMessage/'+userChat.id, user, this.httpOptions);
+  }
+
+  findAllMessages(user: User): Observable<Message[]> {
+    return this.http.post<Message[]>('http://localhost:8080/user/findMessage', user, this.httpOptions);
+  }
+
 }

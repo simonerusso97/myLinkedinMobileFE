@@ -30,8 +30,9 @@ export class SavedPostPage implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('user'));
 
     if (this.user == null) {
-      this.routes.navigateByUrl('login');
-    } else {
+      this.routes.navigateByUrl('/login',{
+        replaceUrl : true
+      });      } else {
       if ((typeof this.user.interestedPostList) == 'undefined') {
         this.user.interestedPostList = [];
       }

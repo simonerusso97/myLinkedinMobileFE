@@ -1,22 +1,60 @@
-<app-toolbar></app-toolbar>
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label>Input</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Toggle</ion-label>
-      <ion-toggle slot="end"></ion-toggle>
-    </ion-item>
-    <ion-item>
-      <ion-label>Radio</ion-label>
-      <ion-radio slot="end"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Checkbox</ion-label>
-      <ion-checkbox slot="start"></ion-checkbox>
-    </ion-item>
-  </ion-list>
+<ion-header>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{userChat.name + ' ' + userChat.surname}}</ion-title>
+      <ion-button size="small" (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
 
+    </ion-toolbar>
+  </ion-header>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let mess of messageList">
+
+      <ion-col *ngIf="userChat.id == mess.sendingUser.id" class="message other-message">
+        <span> {{mess.text}}</span>
+        <div class="time" text-left><br>
+          {{mess.date | date:'short'}}
+        </div>
+      </ion-col >
+
+      <ion-col *ngIf="user.id == mess.sendingUser.id" class="message my-message">
+        <span> {{mess.text}}</span>
+        <div class="time" text-right><br>
+          {{mess.date | date:'short'}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row align-items-center no-padding>
+      <ion-col size="10">
+
+        <ion-item>
+          <ion-textarea placeholder="Enter a message"
+                        [(ngModel)]="message.text"
+                        name="text"
+          ></ion-textarea>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="2">
+        <ion-button expand="block" fill="clear" color="primary" [disabled]="message === ''" class="msg-btn" (click)="sendMessage()">
+          <ion-icon name="send" slot="icon-only"> </ion-icon>
+        </ion-button>
+
+
+      </ion-col>
+
+
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+

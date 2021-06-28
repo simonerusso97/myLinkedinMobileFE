@@ -35,6 +35,24 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'chat',
+        children:[
+          {
+            path: '',
+            loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule)
+          }
+        ]
+      },
+      {
+        path: 'postDetails',
+        children:[
+          {
+            path: '',
+            loadChildren: () => import('../post-details/post-details.module').then( m => m.PostDetailsPageModule)
+          }
+        ]
+      },
+      {
         path: 'createPost',
         children:[
           {

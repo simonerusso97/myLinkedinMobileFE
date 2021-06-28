@@ -29,15 +29,17 @@ export class PostDetailsPage implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if(this.user == null){
-      this.routes.navigateByUrl('login');
-    }
+      this.routes.navigateByUrl('/login',{
+        replaceUrl : true
+      });      }
     this.post=this.postService.post;
   }
 
 
   back(){
-    this.routes.navigateByUrl('tabs');
-  }
+    this.routes.navigateByUrl('/tabs/home',{
+      replaceUrl : true
+    });    }
 
   sendComment(){
     this.comment.date = new Date();

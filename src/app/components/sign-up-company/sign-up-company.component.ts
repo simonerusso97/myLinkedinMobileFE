@@ -25,7 +25,9 @@ export class SignUpCompanyComponent implements OnInit {
       this.pwdError = false;
       this.companyService.createCompany(this.company).subscribe(
         response => {
-          this.routes.navigateByUrl('tabs');
+          this.routes.navigateByUrl('/tabs',{
+            replaceUrl : true
+          });
         },
         error => {
           this.regError = true;

@@ -12,8 +12,9 @@ export class SignupPage implements OnInit {
   constructor(private routes: Router) {
     this.type = 'Applicant';
     if(sessionStorage.getItem('user') != null) {
-      routes.navigateByUrl('tab');
-    }
+      this.routes.navigateByUrl('/tabs',{
+        replaceUrl : true
+      });      }
   }
   ngOnInit() {
   }

@@ -21,7 +21,9 @@ export class CompanyLoginComponent implements OnInit {
       response => {
         this.loginError = false;
         sessionStorage.setItem('company', JSON.stringify(response));
-        this.routes.navigateByUrl('tabs');
+        this.routes.navigateByUrl('/tabs',{
+          replaceUrl : true
+        });
       },
     error => {
         this.loginError = true;

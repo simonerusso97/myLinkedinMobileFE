@@ -47,8 +47,9 @@ export class SignUpOfferorComponent implements OnInit {
       this.offeror.verified=false;
       this.userService.createOfferor(this.offeror).subscribe(
         response => {
-          this.routes.navigateByUrl('tabs');
-        },
+          this.routes.navigateByUrl('/tabs',{
+            replaceUrl : true
+          });          },
         error => {
           this.regError = true;
         });

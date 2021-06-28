@@ -40,7 +40,9 @@ export class RegularLoginComponent implements OnInit {
         }
         else{
           sessionStorage.setItem('user', JSON.stringify(response));
-          this.routes.navigateByUrl('tabs');
+          this.routes.navigateByUrl('/tabs',{
+            replaceUrl : true
+          });
         }
       },
       error => {

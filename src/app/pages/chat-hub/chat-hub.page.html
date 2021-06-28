@@ -7,12 +7,10 @@
 
 <ion-content>
   <ion-list inset="true">
-    <ion-item button="true" (click)="openChat()" *ngFor="let us of chatUser">
+    <ion-item button="true" *ngFor="let us of showingList" (click)="openChat(us)" >
       <ion-label>
         <h1>{{us.name + ' ' + us.surname}}</h1>
-        <ion-note>messaggio</ion-note>
       </ion-label>
-
 
     </ion-item>
   </ion-list>

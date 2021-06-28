@@ -35,8 +35,9 @@ export class HomePage implements OnInit {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     console.log(this.user);
     if (this.user == null) {
-      this.routes.navigateByUrl('login');
-    } else {
+      this.routes.navigateByUrl('/login',{
+        replaceUrl : true
+      });      } else {
       if((typeof this.user.interestedPostList) == 'undefined'){
         this.user.interestedPostList = [];
       }
@@ -76,8 +77,9 @@ export class HomePage implements OnInit {
 
   goToPost(post: Post) {
     this.postService.post = post;
-    this.routes.navigateByUrl('postDetails');
-  }
+    this.routes.navigateByUrl('/postDetails',{
+      replaceUrl : true
+    });    }
 
   save(post: Post) {
     let includes=false;

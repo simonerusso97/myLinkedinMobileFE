@@ -29,8 +29,9 @@ export class SignUpApplicantComponent implements OnInit {
       this.applicant.disabled=true;
       this.userService.createApplicant(this.applicant).subscribe(
         response => {
-          this.routes.navigateByUrl('tabs');
-        },
+          this.routes.navigateByUrl('/tabs',{
+            replaceUrl : true
+          });          },
         error => {
           this.regError = true;
         });
