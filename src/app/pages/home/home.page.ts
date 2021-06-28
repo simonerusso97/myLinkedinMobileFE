@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   endDate: Date = new Date();
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
-              private geo: Geolocation, private userService: UserService) {
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -60,17 +60,6 @@ export class HomePage implements OnInit {
           this.presentToast();
         }
       );
-      /*this.geo.getCurrentPosition({
-        timeout: 3000,
-        enableHighAccuracy: true
-      }).then((data) => {
-        this.lat = data.coords.latitude;
-        this.long = data.coords.longitude;
-        sessionStorage.setItem('latitude', String(this.lat));
-        sessionStorage.setItem('longitude', String(this.long));
-      }).catch((error) => {
-        console.log(error);
-      });*/
     }
   }
 
