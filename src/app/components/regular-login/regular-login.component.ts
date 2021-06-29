@@ -4,6 +4,7 @@ import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {Post} from "../../models/post";
+import {LoadingController} from "@ionic/angular";
 
 @Component({
   selector: 'app-regular-login',
@@ -15,10 +16,14 @@ export class RegularLoginComponent implements OnInit {
   disabledError = false;
   bannedError = false;
   adminError = false;
+  localizationError = false;
   regular: Regular = {} as Regular;
+  private lat: any;
+  private long: any;
 
 
-  constructor(private userService: UserService, private routes: Router) { }
+  constructor(private userService: UserService, private routes: Router, public loadingController: LoadingController,
+              private geo: Geolocation) { }
 
   ngOnInit() {}
 
@@ -40,13 +45,40 @@ export class RegularLoginComponent implements OnInit {
         }
         else{
           sessionStorage.setItem('user', JSON.stringify(response));
-          this.routes.navigateByUrl('/tabs',{
-            replaceUrl : true
-          });
+          this.presentLoading()
         }
       },
       error => {
         this.loginError = true;
       });
   }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Attendi localizzazione',
+    });
+    await loading.present();
+
+    this.geo.getCurrentPosition({
+      timeout: 10000,
+      enableHighAccuracy: true
+    }).then((data) => {
+      this.lat = data.coords.latitude;
+      this.long = data.coords.longitude;
+      sessionStorage.setItem('latitude', String(this.lat));
+      sessionStorage.setItem('longitude', String(this.long));
+      loading.dismiss();
+      this.routes.navigateByUrl('/tabs',{
+        replaceUrl : true
+      });
+
+    }).catch((error) => {
+      loading.dismiss();
+      this.localizationError = true;
+      sessionStorage.clear();
+      console.log(error);
+    });
+
+  }
+
 }
