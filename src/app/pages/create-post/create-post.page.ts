@@ -70,7 +70,7 @@ export class CreatePostPage implements OnInit {
     this.attributeList = structure.attributeList;
     this.attributeList.forEach(
       attr => {
-        this.jsonDocuments.unshift({
+        this.jsonDocuments.push({
           nameAttribute: attr.name,
           value: null,
         }) ;

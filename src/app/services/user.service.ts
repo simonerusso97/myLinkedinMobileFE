@@ -6,6 +6,7 @@ import {Offeror} from '../models/offeror';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
 import {Message} from "../models/message";
+import {Company} from "../models/company";
 
 @Injectable({
   providedIn: 'root'
@@ -63,4 +64,11 @@ export class UserService {
     return this.http.post<Message[]>('http://localhost:8080/user/findMessage', user, this.httpOptions);
   }
 
+  findAllNotVerifiedUser(company: Company): Observable<Offeror[]> {
+    return this.http.get<Offeror[]>('http://localhost:8080/user/findAllNotVerifiedUser/'+company.id);
+  }
+
+  verifyUser(user: User): Observable<User> {
+    return this.http.get<User>('http://localhost:8080/user/verifyUser/'+user.id);
+  }
 }
