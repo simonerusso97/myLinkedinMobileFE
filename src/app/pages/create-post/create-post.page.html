@@ -50,12 +50,12 @@
           ></ion-input>
 
 
-          <ion-input required type="number" *ngIf="attribute.type === 'Image'"
+          <ion-input required type="file" accept="Image/*" *ngIf="attribute.type === 'Image'"
                      [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
 
-          <ion-input required type="number" *ngIf="attribute.type === 'PDF'"
+          <ion-input required type="file" accept="PDF/*" *ngIf="attribute.type === 'PDF'"
                      [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
