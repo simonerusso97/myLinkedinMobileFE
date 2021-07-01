@@ -84,19 +84,26 @@ export class CreatePostPage implements OnInit {
     this.post.createdBy = this.user;
     this.post.skillList = this.postSkillList;
     this.post.pubblicationDate = new Date();
-    this.postService.createPost(this.post).subscribe(
-      response  => {
-        this.message = 'Post creato con successo';
-        this.presentToast();
-        this.attributeList = [];
-        structureSelect.value=null;
-        this.post = {} as Post;
+    if(this.post.skillList.length ==0 && (this.structure.name == 'job offer' || this.structure.name == 'job request')){
+      this.message = 'Devi aggiunge almeno una skill';
+      this.presentToast();
+    }
+    else{
+      this.postService.createPost(this.post).subscribe(
+        response  => {
+          this.message = 'Post creato con successo';
+          this.presentToast();
+          this.attributeList = [];
+          structureSelect.value=null;
+          this.post = {} as Post;
 
-      },
-      error => {
-        this.message = 'Si è verificato un errore, riprova';
-        this.presentToast();
-      });
+        },
+        error => {
+          this.message = 'Si è verificato un errore, riprova';
+          this.presentToast();
+        });
+    }
+
   }
   async presentToast() {
     const toast = await this.toastController.create({

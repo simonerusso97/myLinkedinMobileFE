@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
   skillList: Skill[] = [];
   err = false;
   lat: number;
-  long: number;x
+  long: number;
   private message: string;
   startDate: Date;
   endDate: Date = new Date();

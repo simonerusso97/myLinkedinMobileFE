@@ -33,15 +33,34 @@
                      [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
-          <ion-input required type="number" *ngIf="attribute.type === 'number'"
+          <ion-input required type="number" *ngIf="attribute.type === 'Number'"
                      [(ngModel)]="jsonDocuments[myIndex].value"
                      name="value"
           ></ion-input>
-          <ion-label *ngIf="attribute.type === 'date'">MM DD YY</ion-label>
-          <ion-datetime displayFormat="MM DD YY" placeholder="Data" *ngIf="attribute.type === 'date'"
+
+          <ion-label *ngIf="attribute.type === 'Date'">MM DD YY</ion-label>
+          <ion-datetime displayFormat="MM DD YY" placeholder="Data" *ngIf="attribute.type === 'Date'"
                         [(ngModel)]="jsonDocuments[myIndex].value"
                         name="value"
           ></ion-datetime>
+
+          <ion-input required type="text" *ngIf="attribute.type === 'Position'"
+                     [(ngModel)]="jsonDocuments[myIndex].value"
+                     name="value"
+          ></ion-input>
+
+
+          <ion-input required type="number" *ngIf="attribute.type === 'Image'"
+                     [(ngModel)]="jsonDocuments[myIndex].value"
+                     name="value"
+          ></ion-input>
+
+          <ion-input required type="number" *ngIf="attribute.type === 'PDF'"
+                     [(ngModel)]="jsonDocuments[myIndex].value"
+                     name="value"
+          ></ion-input>
+
+
         </ion-item>
 
         <ion-button size="block" type="submit" style="margin-top: 30px">CREA POST</ion-button>
