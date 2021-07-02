@@ -85,7 +85,7 @@ export class CreatePostPage implements OnInit {
     this.post.skillList = this.postSkillList;
     this.post.pubblicationDate = new Date();
     if(this.post.skillList.length ==0 && (this.structure.name == 'job offer' || this.structure.name == 'job request')){
-      this.message = 'Devi aggiunge almeno una skill';
+      this.message = 'Devi aggiunge almeno una skillpost';
       this.presentToast();
     }
     else{
