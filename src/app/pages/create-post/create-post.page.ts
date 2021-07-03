@@ -29,6 +29,7 @@ export class CreatePostPage implements OnInit {
   postSkillList: Skill[] = [];
   button = false;
   private message: string;
+  private verfiedError = false;
 
 
   constructor(private routes: Router, private postService: PostService,  public toastController: ToastController) {
@@ -41,26 +42,32 @@ export class CreatePostPage implements OnInit {
         replaceUrl : true
       });      }
     else {
-
-      this.postService.findAllStructure(this.user.type).subscribe(
-        response => {
-          this.structureList = response;
-        },
-        error => {
-          this.message = 'Si è verificato un errore, riprova';
-          this.presentToast();
+      if (this.user.type == 'offeror') {
+        if (!(this.user as Offeror).verified) {
+          this.verfiedError = true;
         }
-      );
+      }
+      else if (this.user.type != 'offeror' || (this.user.type == 'offeror' && (this.user as Offeror).verified)) {
+        this.postService.findAllStructure(this.user.type).subscribe(
+          response => {
+            this.structureList = response;
+          },
+          error => {
+            this.message = 'Si è verificato un errore, riprova';
+            this.presentToast();
+          }
+        );
 
-      this.postService.findAllSkill().subscribe(
-        response => {
-          this.skillList = response;
-        },
-        error => {
-          this.message = 'Si è verificato un errore, riprova';
-          this.presentToast();
-        }
-      );
+        this.postService.findAllSkill().subscribe(
+          response => {
+            this.skillList = response;
+          },
+          error => {
+            this.message = 'Si è verificato un errore, riprova';
+            this.presentToast();
+          }
+        );
+      }
     }
 
   }

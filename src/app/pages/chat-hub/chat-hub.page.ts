@@ -34,7 +34,6 @@ export class ChatHubPage implements OnInit {
           this.presentToast();
         }
       );
-
       this.userService.findAllMessages(this.user).subscribe(
         response => {
           this.user.messageList = response
@@ -55,7 +54,7 @@ export class ChatHubPage implements OnInit {
         }
       });
 
-      this.chatUser= this.chatUser.filter((user, index, list) =>
+      this.chatUser = this.chatUser.filter((user, index, list) =>
         index === list.findIndex((t) => (
         t.id === user.id   ))
       );

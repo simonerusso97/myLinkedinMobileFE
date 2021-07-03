@@ -43,8 +43,9 @@ export class HomePage implements OnInit {
       }
       this.postService.getPost(this.user).subscribe(
         response => {
-          this.postList = response;
-          this.showingPostList = response;
+
+          this.postList = response.filter( p => p.hide = true);
+          this.showingPostList = response.filter( p => p.hide = true);
           this.err = false;
         },
         error => {
