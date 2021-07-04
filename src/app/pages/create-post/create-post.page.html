@@ -1,4 +1,5 @@
-<div  *ngIf="!verfiedError">
+
+
   <ion-header [translucent]="true">
     <app-toolbar></app-toolbar>
 
@@ -14,6 +15,14 @@
       </ion-item>
     </ion-toolbar>
   </ion-header>
+
+    <ion-content *ngIf="verfiedError">
+      <ion-item color="danger">
+        <ion-label>
+          Non puoi creare post finchè la tua società non verifica il tuo profilo.
+        </ion-label>
+      </ion-item>
+    </ion-content>
 
   <ion-content *ngIf="!verfiedError">
     <ion-card>
@@ -58,6 +67,7 @@
 
             <ion-input required type="file" accept="PDF/*" *ngIf="attribute.type === 'PDF'"
                        [(ngModel)]="jsonDocuments[myIndex].value"
+
                        name="value"
             ></ion-input>
 
@@ -87,17 +97,4 @@
       </ion-card-content>
     </ion-card>
   </ion-content>
-</div>
 
-<div *ngIf="verfiedError">
-  <ion-header [translucent]="true">
-    <app-toolbar></app-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-item color="danger">
-      <ion-label>
-        Non puoi creare post finchè la tua società non verifica il tuo profilo.
-      </ion-label>
-    </ion-item>
-  </ion-content>
-</div>
