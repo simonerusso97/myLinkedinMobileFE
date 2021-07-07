@@ -61,7 +61,7 @@
 
 
             <ion-input required type="file" accept="Image/*" *ngIf="attribute.type === 'Image'"
-                       [(ngModel)]="jsonDocuments[myIndex].value"
+                       (change)="onFileChange($event)"
                        name="value"
             ></ion-input>
 

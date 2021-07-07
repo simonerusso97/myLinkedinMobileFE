@@ -28,6 +28,7 @@ export class CreatePostPage implements OnInit {
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
+  file: File;
   private message: string;
   private verfiedError = false;
 
@@ -135,5 +136,25 @@ export class CreatePostPage implements OnInit {
     this.skillList.unshift(this.postSkillList[index]);
     this.postSkillList.splice(index, 1);
 
+  }
+
+  onFileChange(event: Event) {
+    console.log('catturato');
+    this.file = (event.target as HTMLInputElement).files[0];
+    this.saveFile();
+  }
+
+  async saveFile(){
+    let formData = new FormData();
+    formData.append("photo", this.file, this.file.name);
+    this.postService.saveImage(formData).subscribe(
+      repsonse => {
+        console.log('savata');
+      },
+      error => {
+        console.log('fallito');
+
+      }
+    )
   }
 }

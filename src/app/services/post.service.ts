@@ -56,4 +56,8 @@ export class PostService {
   sendComment(comment: Commento, post: Post) {
     return this.http.post<Commento>('http://localhost:8080/post/UpdateCommentList/'+post.id, comment, this.httpOptions);
   }
+
+  saveImage(formData: FormData): Observable<FormData>{
+    return this.http.post<FormData>('http://localhost:8080/post/saveImage', formData)
+  }
 }
