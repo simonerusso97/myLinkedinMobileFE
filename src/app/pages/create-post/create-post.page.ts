@@ -5,13 +5,13 @@ import {Router} from '@angular/router';
 import {PostService} from '../../services/post.service';
 import {Structure} from '../../models/structure';
 import {Attribute} from '../../models/attribute';
-import {AttributeValue} from '../../models/attribute-value';
 import {IonSelect, ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
 import {JsonDocument} from '../../models/json-document';
-import {UserService} from '../../services/user.service';
-import {zip} from "rxjs";
+import {HttpResponse} from '@angular/common/http';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
 
 @Component({
   selector: 'app-create-post',
@@ -28,12 +28,13 @@ export class CreatePostPage implements OnInit {
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
-  file: File;
+  file: any;
   private message: string;
   private verfiedError = false;
 
 
-  constructor(private routes: Router, private postService: PostService,  public toastController: ToastController) {
+  constructor(private routes: Router, private postService: PostService,  public toastController: ToastController,
+  private camera: Camera) {
   }
 
   ngOnInit() {
@@ -43,12 +44,32 @@ export class CreatePostPage implements OnInit {
         replaceUrl : true
       });      }
     else {
-      if (this.user.type == 'offeror') {
+      if (this.user.type === 'offeror') {
         if (!(this.user as Offeror).verified) {
           this.verfiedError = true;
         }
+        else{
+          this.postService.findAllStructure(this.user.type).subscribe(
+            response => {
+              this.structureList = response;
+            },
+            error => {
+              this.message = 'Si è verificato un errore, riprova';
+              this.presentToast();
+            }
+          );
+          this.postService.findAllSkill().subscribe(
+            response => {
+              this.skillList = response;
+            },
+            error => {
+              this.message = 'Si è verificato un errore, riprova';
+              this.presentToast();
+            }
+          );
+        }
       }
-      else if (this.user.type != 'offeror' || (this.user.type == 'offeror' && (this.user as Offeror).verified)) {
+      else if (this.user.type === 'applicant') {
         this.postService.findAllStructure(this.user.type).subscribe(
           response => {
             this.structureList = response;
@@ -92,7 +113,7 @@ export class CreatePostPage implements OnInit {
     this.post.createdBy = this.user;
     this.post.skillList = this.postSkillList;
     this.post.pubblicationDate = new Date();
-    if(this.post.skillList.length ==0 && (this.structure.name == 'job offer' || this.structure.name == 'job request')){
+    if(this.post.skillList.length === 0 && (this.structure.name === 'job offer' || this.structure.name === 'job request')){
       this.message = 'Devi aggiunge almeno una skillpost';
       this.presentToast();
     }
@@ -138,23 +159,33 @@ export class CreatePostPage implements OnInit {
 
   }
 
-  onFileChange(event: Event) {
-    console.log('catturato');
-    this.file = (event.target as HTMLInputElement).files[0];
-    this.saveFile();
+  uploadPhoto() {
+    this.postService.update(this.file).subscribe(event => {
+      console.log(event);
+      if (event instanceof HttpResponse) {
+        console.log('OK');
+      }
+    }, err => {
+      console.log('Could not upload the file!');
+      console.log(err.message);
+    });
   }
 
-  async saveFile(){
-    let formData = new FormData();
-    formData.append("photo", this.file, this.file.name);
-    this.postService.saveImage(formData).subscribe(
-      repsonse => {
-        console.log('savata');
-      },
-      error => {
-        console.log('fallito');
+  getPhotoFromLib() {
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum: false
+    };
 
-      }
-    )
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.file = 'data:image/jpeg;base64,' + imageData;
+      this.uploadPhoto();
+    }, (err) => {
+      // Handle error
+    });
   }
 }

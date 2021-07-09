@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import {Component, OnInit} from '@angular/core';
 import {Offeror} from '../../models/offeror';
 import {Applicant} from '../../models/applicant';
@@ -7,7 +8,8 @@ import {PostService} from '../../services/post.service';
 import {IonSelect, ToastController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {UserService} from '../../services/user.service';
-import {Skill} from "../../models/skill";
+import {Skill} from '../../models/skill';
+import {NativeGeocoder, NativeGeocoderOptions, NativeGeocoderResult} from '@ionic-native/native-geocoder/ngx';
 
 @Component({
   selector: 'app-home',
@@ -23,12 +25,20 @@ export class HomePage implements OnInit {
   err = false;
   lat: number;
   long: number;
-  private message: string;
   startDate: Date;
   endDate: Date = new Date();
+  options: NativeGeocoderOptions = {
+    useLocale: true,
+    maxResults: 1
+  };
+
+  degreeToRad: number = Math.PI/180;
+
+  private message: string;
+
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
-              private userService: UserService) {
+              private userService: UserService, private nativeGeocoder: NativeGeocoder) {
   }
 
   ngOnInit(): void {
@@ -45,6 +55,7 @@ export class HomePage implements OnInit {
         response => {
 
           this.postList = response.filter( p => p.hide = true);
+          this.postList.sort((p1, p2) => this.comparePost(p1, p2));
           this.showingPostList = response.filter( p => p.hide = true);
           this.err = false;
         },
@@ -64,6 +75,52 @@ export class HomePage implements OnInit {
     }
   }
 
+  comparePost(p1: Post, p2: Post): number{
+    let loc1: NativeGeocoderResult[] = [];
+    let loc2: NativeGeocoderResult[] = [];
+    p1.jsonDocument.forEach(jd => {
+      if(jd.nameAttribute==='location'){
+        this.nativeGeocoder.forwardGeocode(jd.value, this.options)
+          .then((result: NativeGeocoderResult[]) => loc1 = result)
+          .catch((error: any) => console.log(error));
+      }
+    });
+
+    p2.jsonDocument.forEach(jd => {
+      if(jd.nameAttribute==='location'){
+        this.nativeGeocoder.forwardGeocode(jd.value, this.options)
+          .then((result: NativeGeocoderResult[]) => loc2 = result)
+          .catch((error: any) => console.log(error));
+      }
+    });
+
+
+
+    let latUser: any = sessionStorage.getItem('latitude');
+    let longUser: any =  sessionStorage.getItem('longitude');
+
+    let dLat: any = ((loc1[0].latitude as any) - latUser) * this.degreeToRad;
+    let dLong: any = ((loc1[0].longitude as any) - longUser) * this.degreeToRad;
+
+    // eslint-disable-next-line max-len
+    let a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(latUser * this.degreeToRad) * Math.cos((loc1[0].latitude as any) * this.degreeToRad) * Math.pow(Math.sin(dLong / 2), 2);
+    let c1 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    dLat = ((loc2[0].latitude as any) - latUser) * this.degreeToRad;
+    dLong = ((loc2[0].longitude as any) - longUser) * this.degreeToRad;
+
+    // eslint-disable-next-line max-len
+    a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(latUser * this.degreeToRad) * Math.cos((loc1[0].latitude as any) * this.degreeToRad) * Math.pow(Math.sin(dLong / 2), 2);
+    let c2 = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    if (c1 > c2) {
+      return -1;
+    }else if (c1 < c2) {
+      return 1;
+    }
+    return 0;
+
+  }
 
   goToPost(post: Post) {
     this.postService.post = post;
@@ -73,7 +130,7 @@ export class HomePage implements OnInit {
 
   save(post: Post) {
     let includes=false;
-    for(let p of this.user.interestedPostList) {
+    for(const p of this.user.interestedPostList) {
       if(p.id === post.id){
         includes = true;
       }}
@@ -122,12 +179,12 @@ export class HomePage implements OnInit {
 
 
   fiterByDate() {
-    this.showingPostList = this.postList.filter(post => post.pubblicationDate > this.startDate || post.pubblicationDate<this.endDate )
+    this.showingPostList = this.postList.filter(post => post.pubblicationDate > this.startDate || post.pubblicationDate<this.endDate );
   }
 
   filter(skillSelect: IonSelect) {
     this.showingPostList = [];
-    if (skillSelect.value.length == 0){
+    if (skillSelect.value.length === 0){
       this.showingPostList = this.postList;
     }
     else {
