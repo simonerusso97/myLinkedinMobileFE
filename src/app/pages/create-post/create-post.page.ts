@@ -120,6 +120,7 @@ export class CreatePostPage implements OnInit {
     else{
       this.postService.createPost(this.post).subscribe(
         response  => {
+          this.uploadPhoto(response)
           this.message = 'Post creato con successo';
           this.presentToast();
           this.attributeList = [];
@@ -159,8 +160,8 @@ export class CreatePostPage implements OnInit {
 
   }
 
-  uploadPhoto() {
-    this.postService.update(this.file).subscribe(event => {
+  uploadPhoto(idPost: number) {
+    this.postService.update(this.file, idPost).subscribe(event => {
       console.log(event);
       if (event instanceof HttpResponse) {
         console.log('OK');
@@ -183,7 +184,6 @@ export class CreatePostPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.file = 'data:image/jpeg;base64,' + imageData;
-      this.uploadPhoto();
     }, (err) => {
       // Handle error
     });

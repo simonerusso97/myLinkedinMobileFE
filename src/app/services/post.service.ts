@@ -31,8 +31,8 @@ export class PostService {
 
   }
 
-  createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8080/post/save', post, this.httpOptions);
+  createPost(post: Post): number {
+    return this.http.post<number>('http://localhost:8080/post/save', post, this.httpOptions);
   }
 
   getPostSaved(user: Regular): Observable<Post[]>{
@@ -57,11 +57,11 @@ export class PostService {
     return this.http.post<Commento>('http://localhost:8080/post/UpdateCommentList/'+post.id, comment, this.httpOptions);
   }
 
-  update(file: any) {
+  update(file: any, idPost: number) {
     const blob = this.convertBase64ToBlob(file);
     const formData: FormData = new FormData();
     formData.append('file', blob);
-    return this.http.post<HttpEvent<any>>('http://localhost:8080/api/attachment/uploadFile', formData, {responseType: 'text'} as any);
+    return this.http.post<HttpEvent<any>>('http://localhost:8080/api/attachment/uploadFile/'+idPost, formData, {responseType: 'text'} as any);
   }
 
   private convertBase64ToBlob(base64: string) {
