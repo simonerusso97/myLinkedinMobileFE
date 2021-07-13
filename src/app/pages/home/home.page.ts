@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
         response => {
 
           this.postList = response.filter( p => p.hide = true);
-          this.postList.sort((p1, p2) => this.comparePost(p1, p2));
+          this.postList.sort(/*(p1, p2) => this.comparePost(p1, p2)*/);
           this.showingPostList = response.filter( p => p.hide = true);
           this.err = false;
         },
