@@ -5,12 +5,16 @@ import {Router} from '@angular/router';
 import {PostService} from '../../services/post.service';
 import {Structure} from '../../models/structure';
 import {Attribute} from '../../models/attribute';
-import {IonSelect, ToastController} from '@ionic/angular';
+import {IonSelect, Platform, ToastController} from '@ionic/angular';
 import {Post} from '../../models/post';
 import {Skill} from '../../models/skill';
 import {JsonDocument} from '../../models/json-document';
 import {HttpResponse} from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {IOSFilePicker} from "@ionic-native/file-picker/ngx";
+import {FileChooser} from "@ionic-native/file-chooser/ngx";
+import { File } from '@ionic-native/file/ngx';
+
 
 
 @Component({
@@ -28,14 +32,15 @@ export class CreatePostPage implements OnInit {
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
-  file: any;
+  image: any;
+  uri: string;
   private message: string;
-  private verfiedError = false;
+  verfiedError = false;
 
 
   constructor(private routes: Router, private postService: PostService,  public toastController: ToastController,
-  private camera: Camera) {
-  }
+  private camera: Camera, public platform: Platform, private filePicker: IOSFilePicker, private fileChooser: FileChooser,
+              private file: File) {}
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -161,7 +166,19 @@ export class CreatePostPage implements OnInit {
   }
 
   uploadPhoto(idPost: number) {
-    this.postService.update(this.file, idPost).subscribe(event => {
+    this.postService.update(this.image, idPost).subscribe(event => {
+      console.log(event);
+      if (event instanceof HttpResponse) {
+        console.log('OK');
+      }
+    }, err => {
+      console.log('Could not upload the file!');
+      console.log(err.message);
+    });
+  }
+
+  uploadPDF(idPost: number) {
+    this.postService.update(this.uri, idPost).subscribe(event => {
       console.log(event);
       if (event instanceof HttpResponse) {
         console.log('OK');
@@ -183,9 +200,53 @@ export class CreatePostPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.file = 'data:image/jpeg;base64,' + imageData;
+      this.image = 'data:image/jpeg;base64,' + imageData;
+
     }, (err) => {
       // Handle error
     });
+  }
+
+  getFile() {
+    if(this.platform.is('ios')) {
+      this.filePicker.pickFile()
+        .then(uri => {
+          console.log("ok")
+          let pathsplit = uri.split('/');
+
+
+         this.file.readAsDataURL( uri, pathsplit[pathsplit.length-1])
+            .then(imgData => {
+            console.log('Image Data');
+            })
+            .catch(e => console.log("error read:", e));
+
+        })
+        .catch(err => console.log('Error', err));
+    }
+    else{
+      this.fileChooser.open()
+        .then(uri => console.log(uri))
+        .catch(e => console.log(e));
+    }
+  }
+
+   getBase64Image (img) {
+    // Create an empty canvas element
+    var canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to
+    // guess the original format, but be aware the using 'image/jpg'
+    // will re-encode the image.
+    var dataURL = canvas.toDataURL('image/png');
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   }
 }

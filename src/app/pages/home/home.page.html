@@ -39,7 +39,9 @@
     <ion-card *ngFor="let post of showingPostList" class="m-2 mb-3" button="true" color="light">
       <ion-card-header class="text-center" (click)="goToPost(post)">
         <ion-card-title>{{post.name}}</ion-card-title>
-        <ion-card-subtitle>{{post.createdBy.name}} {{post.createdBy.surname}} <span *ngIf="user.type=='applicant'">{{post.createdBy.company.name}}</span> {{post.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+        <ion-card-subtitle>{{post.createdBy.name}} {{post.createdBy.surname}}
+<!--          <span *ngIf="user.type=='offeror'">{{(post.createdBy.company.name}}</span> -->
+          {{post.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
 
       </ion-card-header>
       <ion-card-content (click)="goToPost(post)">

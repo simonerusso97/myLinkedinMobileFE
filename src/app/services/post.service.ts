@@ -31,7 +31,7 @@ export class PostService {
 
   }
 
-  createPost(post: Post): number {
+  createPost(post: Post):Observable<number> {
     return this.http.post<number>('http://localhost:8080/post/save', post, this.httpOptions);
   }
 
