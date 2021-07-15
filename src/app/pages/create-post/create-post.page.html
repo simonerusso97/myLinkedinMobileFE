@@ -58,17 +58,15 @@
                        [(ngModel)]="jsonDocuments[myIndex].value"
                        name="value"
             ></ion-input>
-            
-            <ion-input required type="file" accept="Image/*" *ngIf="attribute.type === 'Image'"
-                       (click)="getPhotoFromLib()"
-                       name="value"
-            ></ion-input>
 
-            <ion-input required type="file" accept="PDF/*" *ngIf="attribute.type === 'PDF'"
-                       [(ngModel)]="jsonDocuments[myIndex].value"
-                       (click)="getFile()"
+            <ion-button size="block" *ngIf="attribute.type === 'Image'"
+                       (click)="getPhotoFromLib(myIndex)"
                        name="value"
-            ></ion-input>
+            >scegli file</ion-button>
+
+            <ion-button size="block" *ngIf="attribute.type === 'PDF'"
+                       (click)="getFile(myIndex)"
+            >scegli file</ion-button>
 
 
           </ion-item>

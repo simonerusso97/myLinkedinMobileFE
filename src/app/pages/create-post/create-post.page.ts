@@ -14,6 +14,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import {IOSFilePicker} from "@ionic-native/file-picker/ngx";
 import {FileChooser} from "@ionic-native/file-chooser/ngx";
 import { File } from '@ionic-native/file/ngx';
+import {FilePath} from "@ionic-native/file-path/ngx";
 
 
 
@@ -32,7 +33,7 @@ export class CreatePostPage implements OnInit {
   skillList: Skill[] = [];
   postSkillList: Skill[] = [];
   button = false;
-  image: any;
+  f: any;
   uri: string;
   private message: string;
   verfiedError = false;
@@ -40,7 +41,7 @@ export class CreatePostPage implements OnInit {
 
   constructor(private routes: Router, private postService: PostService,  public toastController: ToastController,
   private camera: Camera, public platform: Platform, private filePicker: IOSFilePicker, private fileChooser: FileChooser,
-              private file: File) {}
+              private file: File, private filePath: FilePath) {}
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -104,10 +105,12 @@ export class CreatePostPage implements OnInit {
     this.attributeList = structure.attributeList;
     this.attributeList.forEach(
       attr => {
-        this.jsonDocuments.push({
-          nameAttribute: attr.name,
-          value: null,
-        }) ;
+        if(attr.name != 'immagini' && attr.name!='curriculum') {
+          this.jsonDocuments.push({
+            nameAttribute: attr.name,
+            value: null,
+          });
+        }
       });
   }
 
@@ -166,7 +169,7 @@ export class CreatePostPage implements OnInit {
   }
 
   uploadPhoto(idPost: number) {
-    this.postService.update(this.image, idPost).subscribe(event => {
+    this.postService.update(this.f, idPost).subscribe(event => {
       console.log(event);
       if (event instanceof HttpResponse) {
         console.log('OK');
@@ -200,10 +203,10 @@ export class CreatePostPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.image = 'data:image/jpeg;base64,' + imageData;
-
+      this.f = 'data:image/jpeg;base64,' + imageData;
+      console.log("OK");
     }, (err) => {
-      // Handle error
+      console.log("ERROR", err);
     });
   }
 
@@ -211,14 +214,17 @@ export class CreatePostPage implements OnInit {
     if(this.platform.is('ios')) {
       this.filePicker.pickFile()
         .then(uri => {
-          console.log("ok")
-          let pathsplit = uri.split('/');
+          console.log("ok");
 
-
-         this.file.readAsDataURL( uri, pathsplit[pathsplit.length-1])
-            .then(imgData => {
-            console.log('Image Data');
-            })
+          let correctPath = uri.substr(0, uri.lastIndexOf('/') + 1);
+          let currentName = uri.substring(uri.lastIndexOf('/') + 1);
+          console.log("correctPath:", "file:///"+correctPath);
+          console.log("currentName:", currentName);
+         this.file.readAsDataURL( "file:///" + correctPath, currentName)
+            .then(data => {
+              this.f = data;
+              }
+            )
             .catch(e => console.log("error read:", e));
 
         })
@@ -226,27 +232,53 @@ export class CreatePostPage implements OnInit {
     }
     else{
       this.fileChooser.open()
-        .then(uri => console.log(uri))
-        .catch(e => console.log(e));
+        .then(uri => {
+          console.log(uri);
+          this.filePath.resolveNativePath(uri)
+            .then(filePath => {
+              console.log(filePath);
+            })
+            .catch(err => console.log("Errore:", err));
+
+          /*this.file.resolveLocalFilesystemUrl(uri)
+            .then(filePath => {
+              console.log(filePath);
+              let correctPath = filePath.fullPath.substr(filePath.fullPath.indexOf('/'), filePath.fullPath.lastIndexOf('/') + 1 - filePath.fullPath.indexOf('/'));
+              let currentName = filePath.name;
+              /!*console.log("correctPath:", "file://" + correctPath);
+              this.file.listDir("content:///com.android.providers.media.documents/document", "document")
+                .then((listing) => {
+                console.log("Directory listing below");
+                console.log(listing);
+                return listing;
+              }).catch(err => console.log(err));*!/
+              console.log("currentName:", currentName);
+              console.log("correctPath:", correctPath);
+              this.file.resolveDirectoryUrl("content://" + correctPath)
+                .then(path => {
+                  console.log(path);
+                })
+                  /!*this.file.listDir(path, "document")
+                    .then((listing) => {
+                      console.log("Directory listing below");
+                      console.log(listing);
+                      return listing;
+                    })
+                    .catch(err => console.log(err));
+                    })
+*!/
+              /!*this.file.readAsDataURL( "file://" + correctPath, currentName)
+                .then(data => {
+                    this.f = data;
+                  }
+                )
+                .catch(e => console.log("error read:", e));
+*!/
+
+            })
+            .catch(err => console.log(err));*/
+        })
+        .catch(e => console.log("Error:", e));
     }
-  }
-
-   getBase64Image (img) {
-    // Create an empty canvas element
-    var canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to
-    // guess the original format, but be aware the using 'image/jpg'
-    // will re-encode the image.
-    var dataURL = canvas.toDataURL('image/png');
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   }
 }
