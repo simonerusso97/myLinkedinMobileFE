@@ -6,6 +6,8 @@ import {Skill} from './skill';
 import {JsonDocument} from "./json-document";
 import {Offeror} from "./offeror";
 import {Commento} from "./commento";
+import {Attached} from "./attached";
+
 
 export interface Post {
   id: number;
@@ -18,4 +20,5 @@ export interface Post {
   skillList: Skill[];
   createdBy: Applicant | Offeror;
   commentList: Commento[];
+  attached: Attached[];
 }

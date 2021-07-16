@@ -6,6 +6,9 @@ import { PostService } from 'src/app/services/post.service';
 
 import { Applicant } from 'src/app/models/applicant';
 import { Commento } from 'src/app/models/commento';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file/ngx';
+
 
 
 
@@ -17,7 +20,8 @@ import { Commento } from 'src/app/models/commento';
 })
 export class PostDetailsPage implements OnInit {
 
-  constructor(private postService:PostService, private routes:Router) { }
+  constructor(private postService:PostService, private routes:Router, private file: File,
+              private filePath: FilePath) { }
 
 
   post:Post={}as Post;
@@ -33,6 +37,7 @@ export class PostDetailsPage implements OnInit {
         replaceUrl : true
       });      }
     this.post=this.postService.post;
+
   }
 
 
@@ -54,5 +59,19 @@ export class PostDetailsPage implements OnInit {
       error => {
         this.err = true;
       });
+  }
+
+  download(){
+    let cont = 0;
+    this.post.attached.forEach(attached => {
+      let blob;
+      this.postService.getFile(attached.id).subscribe(response =>{
+        blob = response;
+      })
+      this.file.writeFile(this.file.documentsDirectory, "allegato"+cont, blob)
+        .then(status => {
+          cont++;
+        })
+    })
   }
 }

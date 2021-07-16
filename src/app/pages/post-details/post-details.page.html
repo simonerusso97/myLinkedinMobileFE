@@ -20,6 +20,7 @@
       <div *ngFor="let json of post.jsonDocument">
         <ion-card-subtitle  style="text-align: left" >{{json.nameAttribute}}: {{json.value}}</ion-card-subtitle>
       </div>
+      <ion-button size="block" (click)="download()">Scarica allegati</ion-button>
 
       <div *ngIf="user.type =='applicant'">
         <div style="text-align: left"  class="mt-5 mb-5"> Commenti:</div>

@@ -37,6 +37,7 @@ export class CreatePostPage implements OnInit {
   uri: string;
   private message: string;
   verfiedError = false;
+  type: string;
 
 
   constructor(private routes: Router, private postService: PostService,  public toastController: ToastController,
@@ -128,7 +129,7 @@ export class CreatePostPage implements OnInit {
     else{
       this.postService.createPost(this.post).subscribe(
         response  => {
-          this.uploadPhoto(response)
+          this.uploadFile(response)
           this.message = 'Post creato con successo';
           this.presentToast();
           this.attributeList = [];
@@ -168,20 +169,8 @@ export class CreatePostPage implements OnInit {
 
   }
 
-  uploadPhoto(idPost: number) {
-    this.postService.update(this.f, idPost).subscribe(event => {
-      console.log(event);
-      if (event instanceof HttpResponse) {
-        console.log('OK');
-      }
-    }, err => {
-      console.log('Could not upload the file!');
-      console.log(err.message);
-    });
-  }
-
-  uploadPDF(idPost: number) {
-    this.postService.update(this.uri, idPost).subscribe(event => {
+  uploadFile(idPost: number) {
+    this.postService.update(this.f, idPost, this.type).subscribe(event => {
       console.log(event);
       if (event instanceof HttpResponse) {
         console.log('OK');
@@ -193,6 +182,7 @@ export class CreatePostPage implements OnInit {
   }
 
   getPhotoFromLib() {
+    this.type = "image"
     const options: CameraOptions = {
       quality: 70,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -211,6 +201,7 @@ export class CreatePostPage implements OnInit {
   }
 
   getFile() {
+    this.type = "pdf";
     if(this.platform.is('ios')) {
       this.filePicker.pickFile()
         .then(uri => {
@@ -236,47 +227,20 @@ export class CreatePostPage implements OnInit {
           console.log(uri);
           this.filePath.resolveNativePath(uri)
             .then(filePath => {
-              console.log(filePath);
+              let correctPath = filePath.substring(0, filePath.lastIndexOf('/') + 1);
+              let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
+              console.log("correctPath:", correctPath);
+              console.log("currentName:", currentName);
+              this.file.readAsText(correctPath, currentName)
+                .then( data => {
+
+                  console.log(data);
+                  this.f = data;
+                })
+                .catch(err => console.log("ERRORE", err))
             })
             .catch(err => console.log("Errore:", err));
 
-          /*this.file.resolveLocalFilesystemUrl(uri)
-            .then(filePath => {
-              console.log(filePath);
-              let correctPath = filePath.fullPath.substr(filePath.fullPath.indexOf('/'), filePath.fullPath.lastIndexOf('/') + 1 - filePath.fullPath.indexOf('/'));
-              let currentName = filePath.name;
-              /!*console.log("correctPath:", "file://" + correctPath);
-              this.file.listDir("content:///com.android.providers.media.documents/document", "document")
-                .then((listing) => {
-                console.log("Directory listing below");
-                console.log(listing);
-                return listing;
-              }).catch(err => console.log(err));*!/
-              console.log("currentName:", currentName);
-              console.log("correctPath:", correctPath);
-              this.file.resolveDirectoryUrl("content://" + correctPath)
-                .then(path => {
-                  console.log(path);
-                })
-                  /!*this.file.listDir(path, "document")
-                    .then((listing) => {
-                      console.log("Directory listing below");
-                      console.log(listing);
-                      return listing;
-                    })
-                    .catch(err => console.log(err));
-                    })
-*!/
-              /!*this.file.readAsDataURL( "file://" + correctPath, currentName)
-                .then(data => {
-                    this.f = data;
-                  }
-                )
-                .catch(e => console.log("error read:", e));
-*!/
-
-            })
-            .catch(err => console.log(err));*/
         })
         .catch(e => console.log("Error:", e));
     }

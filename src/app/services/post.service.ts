@@ -57,13 +57,17 @@ export class PostService {
     return this.http.post<Commento>('http://localhost:8080/post/UpdateCommentList/'+post.id, comment, this.httpOptions);
   }
 
-  update(file: any, idPost: number) {
+  update(file: any, idPost: number, type: string) {
     const blob = this.convertBase64ToBlob(file);
     const formData: FormData = new FormData();
     formData.append('file', blob);
-    return this.http.post<HttpEvent<any>>('http://localhost:8080/api/attachment/uploadFile/'+idPost, formData, {responseType: 'text'} as any);
+    return this.http.post<HttpEvent<any>>('http://localhost:8080/api/attachment/uploadFile/'+idPost+'/'+type, formData, {responseType: 'text'} as any);
   }
 
+  getFile(id: number): Observable<Blob>{
+    return this.http.get<Blob>('http://localhost:8080/api/attachment/getFile/'+id);
+
+  }
   private convertBase64ToBlob(base64: string) {
     const info = this.getInfoFromBase64(base64);
     const sliceSize = 512;

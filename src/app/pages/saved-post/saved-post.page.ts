@@ -148,8 +148,8 @@ export class SavedPostPage implements OnInit {
           var utf8=new Uint8Array(buffer);
           var binaryArray=utf8.buffer;
           var blob= new Blob([binaryArray], {type:'application/pdf'});
-          this.file.writeFile(this.file.dataDirectory,"myoffer.pdf", blob, {replace:true}).then(fileEntry =>{
-            this.fileOpener.open(this.file.dataDirectory +'myoffer.pdf', 'application/pdf')
+          this.file.writeFile(this.file.documentsDirectory,"myoffer.pdf", blob, {replace:true}).then(fileEntry =>{
+            this.fileOpener.open(this.file.documentsDirectory +'myoffer.pdf', 'application/pdf')
           })
         });
       }else{
