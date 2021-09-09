@@ -53,10 +53,14 @@ export class HomePage implements OnInit {
       }
       this.postService.getPost(this.user).subscribe(
         response => {
-
-          this.postList = response.filter( p => p.hide = true);
+          console.log("response", response);
+          this.postList = response.filter( p => p.hide === false);
           this.postList.sort(/*(p1, p2) => this.comparePost(p1, p2)*/);
-          this.showingPostList = response.filter( p => p.hide = true);
+          this.showingPostList = response.filter( p => p.hide === false);
+          console.log("response", response);
+          console.log("this.postList", this.postList);
+          console.log("this.showingPostList", this.showingPostList );
+
           this.err = false;
         },
         error => {

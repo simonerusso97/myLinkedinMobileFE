@@ -45,7 +45,7 @@ export class RegularLoginComponent implements OnInit {
         }
         else{
           sessionStorage.setItem('user', JSON.stringify(response));
-          this.presentLoading()
+          this.presentLoading();
         }
       },
       error => {

@@ -60,12 +60,12 @@
             ></ion-input>
 
             <ion-button size="block" *ngIf="attribute.type === 'Image'"
-                       (click)="getPhotoFromLib(myIndex)"
+                       (click)="getPhotoFromLib()"
                        name="value"
-            >scegli file</ion-button>
+            >scegli file ({{img.length}})</ion-button>
 
-            <ion-button size="block" *ngIf="attribute.type === 'PDF'"
-                       (click)="getFile(myIndex)"
+            <ion-button size="block" *ngIf="attribute.type === 'pdf'"
+                       (click)="getFile()"
             >scegli file</ion-button>
 
 

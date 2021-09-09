@@ -28,7 +28,7 @@
     "@ionic-native/core": "^5.33.1",
     "@ionic-native/file": "^5.34.0",
     "@ionic-native/file-chooser": "^5.34.0",
-    "@ionic-native/file-opener": "^5.34.0",
+    "@ionic-native/file-opener": "^5.36.0",
     "@ionic-native/file-path": "^5.34.0",
     "@ionic-native/file-picker": "^5.34.0",
     "@ionic-native/geolocation": "^5.33.1",
@@ -62,7 +62,7 @@
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "cordova-android": "^9.1.0",
-    "cordova-ios": "^6.2.0",
+    "cordova-ios": "6.2.0",
     "cordova-pdf-generator": "^2.1.1",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-camera": "^5.0.2",
@@ -117,7 +117,8 @@
       "cordova-plugin-filepicker": {},
       "cordova-plugin-filechooser": {},
       "cordova-plugin-file": {},
-      "cordova-plugin-filepath": {}
+      "cordova-plugin-filepath": {},
+      "cordova-plugin-file-opener2": {}
     },
     "platforms": [
       "ios",

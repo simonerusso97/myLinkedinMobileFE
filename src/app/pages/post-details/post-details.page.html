@@ -20,7 +20,18 @@
       <div *ngFor="let json of post.jsonDocument">
         <ion-card-subtitle  style="text-align: left" >{{json.nameAttribute}}: {{json.value}}</ion-card-subtitle>
       </div>
-      <ion-button size="block" (click)="download()">Scarica allegati</ion-button>
+      <!--<ion-button size="block" (click)="download()">Scarica allegati</ion-button>-->
+
+      <div *ngFor="let att of attachedList">
+        <img *ngIf="att.type=='image'" src="data:image/jpeg;base64,{{att.code}}" />
+      </div>
+
+      <div *ngFor="let att of attachedList">
+        <ion-button *ngIf="att.type=='pdf'" (click)="saveAndOpenPdf(att.code, att.filename)">APRI ALLEGATO</ion-button>
+      </div>
+
+
+
 
       <div *ngIf="user.type =='applicant'">
         <div style="text-align: left"  class="mt-5 mb-5"> Commenti:</div>

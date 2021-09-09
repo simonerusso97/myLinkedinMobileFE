@@ -9,6 +9,7 @@ import {User} from '../models/user';
 import {Structure} from '../models/structure';
 import {Skill} from '../models/skill';
 import {Commento} from '../models/commento';
+import {Attached} from "../models/attached";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,15 @@ export class PostService {
     })
   };
 
+  httpOptionsPlain = {
+    headers: new HttpHeaders({
+      'Accept': 'text/plain',
+      'Content-Type': 'text/plain'
+    }),
+    'responseType': 'text'
+  };
+
+
 
   constructor(private http: HttpClient) { }
 
@@ -31,7 +41,7 @@ export class PostService {
 
   }
 
-  createPost(post: Post):Observable<number> {
+  createPost(post: Post): Observable<number> {
     return this.http.post<number>('http://localhost:8080/post/save', post, this.httpOptions);
   }
 
@@ -68,6 +78,9 @@ export class PostService {
     return this.http.get<Blob>('http://localhost:8080/api/attachment/getFile/'+id);
 
   }
+  findAttached(id: number): Observable<Attached[]> {
+    return this.http.get<Attached[]>('http://localhost:8080/api/attachment/getAttached/'+id);
+  }
   private convertBase64ToBlob(base64: string) {
     const info = this.getInfoFromBase64(base64);
     const sliceSize = 512;
@@ -96,4 +109,6 @@ export class PostService {
       rawBase64
     };
   }
+
+
 }

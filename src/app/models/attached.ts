@@ -1,5 +1,6 @@
 export interface Attached{
   id: number;
   type: string;
-  filename: string
+  filename: string;
+  code: string;
 }

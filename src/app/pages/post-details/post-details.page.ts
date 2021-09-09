@@ -8,6 +8,9 @@ import { Applicant } from 'src/app/models/applicant';
 import { Commento } from 'src/app/models/commento';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
+import {Attached} from "../../models/attached";
+import {FileOpener} from "@ionic-native/file-opener/ngx";
+import {Platform} from "@ionic/angular";
 
 
 
@@ -19,16 +22,15 @@ import { File } from '@ionic-native/file/ngx';
   styleUrls: ['./post-details.page.scss'],
 })
 export class PostDetailsPage implements OnInit {
-
-  constructor(private postService:PostService, private routes:Router, private file: File,
-              private filePath: FilePath) { }
-
-
-  post:Post={}as Post;
-  comment:Commento={} as Commento;
+  post: Post={}as Post;
+  comment: Commento={} as Commento;
 
   user: Applicant;
-  err:boolean=false;
+  err = false;
+  attachedList: Attached[] = [];
+  constructor(private postService: PostService, private routes: Router, private file: File,
+              private filePath: FilePath, private opener: FileOpener, private plt: Platform) { }
+
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -37,6 +39,16 @@ export class PostDetailsPage implements OnInit {
         replaceUrl : true
       });      }
     this.post=this.postService.post;
+    this.postService.findAttached(this.post.id).subscribe(
+      response => {
+        this.attachedList = response;
+        console.log(response);
+      },
+      error => {
+        console.log('NON POSSO CARICARE GLI ALLEGATI');
+        console.log(error.message);
+      }
+    );
 
   }
 
@@ -61,17 +73,38 @@ export class PostDetailsPage implements OnInit {
       });
   }
 
-  download(){
-    let cont = 0;
-    this.post.attached.forEach(attached => {
-      let blob;
-      this.postService.getFile(attached.id).subscribe(response =>{
-        blob = response;
+  saveAndOpenPdf(pdf: string, filename: string) {
+    const writeDirectory = this.plt.is('ios') ? this.file.dataDirectory : this.file.externalDataDirectory;
+
+    this.file.writeFile(writeDirectory, filename, this.convertBase64ToBlob(pdf, 'data:application/pdf'), {replace: true})
+      .then(() => {
+        this.opener.open(writeDirectory + filename, 'application/pdf')
+
+          .catch(() => {
+            console.log('Error opening pdf file');
+          });
       })
-      this.file.writeFile(this.file.documentsDirectory, "allegato"+cont, blob)
-        .then(status => {
-          cont++;
-        })
-    })
+      .catch(() => {
+        console.error('Error writing pdf file');
+      });
+  }
+
+  convertBase64ToBlob(b64Data, contentType): Blob {
+    contentType = contentType || '';
+    const sliceSize = 512;
+    b64Data = b64Data.replace(/^[^,]+,/, '');
+    b64Data = b64Data.replace(/\s/g, '');
+    const byteCharacters = window.atob(b64Data);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, {type: contentType});
   }
 }

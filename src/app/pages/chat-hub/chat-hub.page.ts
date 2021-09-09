@@ -23,7 +23,9 @@ export class ChatHubPage implements OnInit {
     if (this.user == null) {
       this.routes.navigateByUrl('/login',{
         replaceUrl : true
-      });      } else {
+      });
+    }
+    else {
       this.userService.user = {} as User;
       this.userService.findAll().subscribe(
         response => {
@@ -36,7 +38,7 @@ export class ChatHubPage implements OnInit {
       );
       this.userService.findAllMessages(this.user).subscribe(
         response => {
-          this.user.messageList = response
+          this.user.messageList = response;
         },
         error => {
           this.message = 'Si è verificato un errore, riprova';

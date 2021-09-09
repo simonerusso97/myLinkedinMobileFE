@@ -6,7 +6,7 @@ import { Offeror } from 'src/app/models/offeror';
 import { PostService } from 'src/app/services/post.service';
 import {Post} from '../../models/post';
 import {UserService} from '../../services/user.service';
-import {PDFGenerator} from "@ionic-native/pdf-generator/ngx";
+import {PDFGenerator} from '@ionic-native/pdf-generator/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -32,8 +32,8 @@ export class SavedPostPage implements OnInit {
   private message: string;
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
-              private userService: UserService, private pdfGenerator: PDFGenerator, private plt:Platform,
-              private file:File, private fileOpener:FileOpener) {
+              private userService: UserService, private pdfGenerator: PDFGenerator, private plt: Platform,
+              private file: File, private fileOpener: FileOpener) {
   }
 
   ngOnInit() {
@@ -142,6 +142,7 @@ export class SavedPostPage implements OnInit {
       this.docDefinition.content.push(c);
 
       this.pdfObj=pdfMake.createPdf(this.docDefinition);
+
 
       if(this.plt.is('cordova')){
         this.pdfObj.getBuffer((buffer)=>{
