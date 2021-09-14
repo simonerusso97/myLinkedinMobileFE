@@ -1,0 +1,49 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="ion-text-center">Login</ion-card-title>
+    <!--<ion-card-subtitle class="m-4">oppure <a class="blue" href="/signup">registrati</a></ion-card-subtitle>-->
+  </ion-card-header>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="loginError.error">
+    {{loginError.message}}
+  </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="localizationError.error">
+    {{localizationError.error}}
+  </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="disabledError.error">
+    {{disabledError.message}}
+  </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="bannedError.error">
+    {{bannedError.message}}
+  </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="adminError.error">
+    {{adminError.message}}
+  </div>
+  <ion-card-content>
+    <form>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input required type="email"
+                   [(ngModel)]="regular.email"
+                   name="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">password</ion-label>
+        <ion-input required type="password"
+                   [(ngModel)]="regular.password"
+                   name="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" style="margin-top: 30px" (click)="login()"> Login </ion-button>
+      <ion-card-content class="ion-text-center">
+        <ion-label>
+          Oppure
+        </ion-label>
+      </ion-card-content>
+      <ion-button expand="block" (click)="navigateTo('/signup')"> Registrati </ion-button>
+
+    </form>
+  </ion-card-content>
+</ion-card>

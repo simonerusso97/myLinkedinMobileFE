@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="large-title-fix">
+    <ion-title>MyLinkedin</ion-title>
+    <ion-icon></ion-icon>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type">
+      <ion-segment-button value="applicant" >
+        <ion-label>Applicant</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="offeror">
+        <ion-label>Offeror</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="company">
+        <ion-label>Company</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+
+
+  <div id="container">
+    <app-applicant-sign-up *ngIf="type==='applicant'"></app-applicant-sign-up>
+
+    <app-offeror-sign-up *ngIf="type==='offeror'"></app-offeror-sign-up>
+
+    <app-company-sign-up *ngIf="type==='company'"></app-company-sign-up>
+  </div>
+
+</ion-content>

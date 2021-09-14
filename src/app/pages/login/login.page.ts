@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
+  type: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.type = 'user';
+    //TODO: rimuovere commento
+    /*if(sessionStorage.getItem('user') !== null) {
+      this.routes.navigateByUrl('/tabs',{
+        replaceUrl : true
+      });
+    }*/
   }
 
 }
