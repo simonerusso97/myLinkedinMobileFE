@@ -1,3 +1,112 @@
-<p>
-  offeror-sign-up works!
-</p>
+
+<ion-card>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="regError.error">
+    {{regError.message}}
+  </div>
+  <ion-card-content>
+    <form>
+      <ion-item>
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input required type="text"
+                   [(ngModel)]="offeror.name"
+                   name="name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Surname</ion-label>
+        <ion-input required type="text"
+                   [(ngModel)]="offeror.surname"
+                   name="name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input required type="email"
+                   [(ngModel)]="offeror.email"
+                   name="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+
+        <ion-label position="stacked">Data di nascita</ion-label>
+        <ion-datetime displayFormat="D-M-YYYY" value=""
+                      required type="date"
+                      [(ngModel)]="offeror.birthDate"
+                      name="birthDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">password</ion-label>
+        <ion-input required type="password"
+                   [(ngModel)]="offeror.password"
+                   name="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Conferma password</ion-label>
+        <ion-input required type="password"
+                   [(ngModel)]="confirmPassword"
+                   name="confirmPassword"
+        ></ion-input>
+      </ion-item>
+
+      <div class="alert alert-danger m-3" role="alert" *ngIf="pwdError.error">
+        {{pwdError.message}}
+      </div>
+
+      <ion-item>
+        <ion-label position="stacked">Indirizzo</ion-label>
+        <ion-input required type="text"
+                   [(ngModel)]="offeror.address"
+                   name="address"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Titolo di studio</ion-label>
+        <ion-input  type="text"
+                    [(ngModel)]="offeror.degree"
+                    name="degree"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Posizione ricoperta</ion-label>
+        <ion-input  type="text"
+                    [(ngModel)]="offeror.position"
+                    name="position"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Società</ion-label>
+        <ion-select placeholder="------" #companySelect (ionChange)="setCompany(companySelect.value)">
+          <ion-select-option
+            *ngFor="let company of companyList"
+            [value]="company"
+          >{{company.name}}</ion-select-option>
+        </ion-select>
+        <ion-input  type="text"
+                    [(ngModel)]="offeror.company.name"
+                    name="name"
+        ></ion-input>
+      </ion-item>
+
+
+
+      <ion-button expand="block" style="margin-top: 30px" (click)="signup()"> Registrati </ion-button>
+      <ion-card-content class="ion-text-center">
+        <ion-label>
+          Oppure
+        </ion-label>
+      </ion-card-content>
+      <ion-button expand="block" (click)="navigateTo('/login')"> Login </ion-button>
+    </form>
+
+
+  </ion-card-content>
+</ion-card>
