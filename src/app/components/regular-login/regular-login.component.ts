@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {LoadingController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -40,8 +40,9 @@ export class RegularLoginComponent implements OnInit {
   private regularLoginForm: FormGroup;
 
   private validationMessages = {
-    name: [
-      {type: 'required', message: 'Non può essere vuoto'}
+    email: [
+      {type: 'required', message: 'Non può essere vuoto'},
+      {type: 'email', message: 'Formato non valido'}
     ],
     password: [
       {type: 'required', message: 'Non può essere vuoto'}

@@ -1,9 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>companyHome</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+  <app-toolbar></app-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
+  <ion-card *ngFor="let offeror of offerorList" class="m-2 mb-3" button="true" color="light">
+    <ion-card-header class="text-center" >
+      <ion-card-title>{{offeror.name}} {{offeror.surname}}</ion-card-title>
+    </ion-card-header>
+
+
+    <ion-row class="card-footer">
+      <ion-col>
+        <div class="text-center" (click)="accept(offeror)">
+          <ion-button fill="clear" size="small">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button><br>
+          Accetta
+        </div>
+
+        <!--</ion-col>
+        <ion-col>
+          <div class="text-center" (click)="discard(user)">
+            <ion-button fill="clear" size="small">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </ion-button><br>
+            Rifiuta
+          </div>-->
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

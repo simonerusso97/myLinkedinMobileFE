@@ -16,7 +16,7 @@ export class CompanyLoginComponent implements OnInit {
   };
 
   submit = false;
-  comapny: Company = {} as Company;
+  company: Company = {} as Company;
 
   private companyLoginForm: FormGroup;
 
@@ -30,29 +30,30 @@ export class CompanyLoginComponent implements OnInit {
   };
 
   constructor(private route: Router, private companyService: CompanyService, public formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
     this.companyLoginForm = new FormGroup({
-      email: new FormControl('', Validators.compose(
+      name: new FormControl('', Validators.compose(
         [
-          Validators.required,
-          Validators.email
+          Validators.required
         ])),
       password: new FormControl('', Validators.required),
     });
   }
 
-  ngOnInit() {}
-
   login() {
     this.submit = true;
-    this.comapny = this.companyLoginForm.value;
+    this.company = this.companyLoginForm.value;
+    console.log(this.company);
     if(this.companyLoginForm.valid) {
-      this.companyService.login(this.comapny).subscribe(
+      this.companyService.login(this.company).subscribe(
         response => {
           this.loginError.error = false;
           sessionStorage.setItem('company', JSON.stringify(response));
-          /*this.route.navigateByUrl('/tabs',{
+          this.route.navigateByUrl('/companyHome',{
             replaceUrl : true
-          });*/
+          });
         },
         error => {
           this.loginError.error = true;

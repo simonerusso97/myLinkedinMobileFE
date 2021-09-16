@@ -3,11 +3,11 @@
     {{loginError.message}}
   </div>
   <ion-card-content>
-    <form (ngSubmit)="login()">
+    <form (ngSubmit)="login()" [formGroup]="companyLoginForm">
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
-        <ion-input required type="email"
-                   formControlName="email"
+        <ion-input required type="text"
+                   formControlName="name"
         ></ion-input>
         <div *ngFor="let validation of validationMessages.name">
           <div class="alert alert-danger" *ngIf="companyLoginForm.get('name').hasError(validation.type) && submit">{{validation.message}}

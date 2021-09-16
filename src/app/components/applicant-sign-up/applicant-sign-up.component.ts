@@ -76,7 +76,6 @@ export class ApplicantSignUpComponent implements OnInit {
 
 
   ngOnInit() {
-    //TODO: controllare sessionstorage di ogni login e signup
   }
 
   signup() {

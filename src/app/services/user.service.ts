@@ -4,6 +4,7 @@ import {Offeror} from '../models/offeror';
 import {Observable} from 'rxjs';
 import {Applicant} from '../models/applicant';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Company} from '../models/company';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,13 @@ export class UserService {
 
   offerorSignUp(offeror: Offeror): Observable<Offeror> {
     return this.http.post<Offeror>('http://localhost:8080/user/offerorSignUp', offeror, this.httpOptions);
+  }
+
+  findOfferorNotVerifed(company: Company): Observable<Offeror[]> {
+    return this.http.get<Offeror[]>('http://localhost:8080/user/findOfferorNotVerifed/' + company.id);
+  }
+
+  acceptOfferor(offeror: Offeror) {
+    return this.http.patch<Offeror>('http://localhost:8080/user/acceptOfferor', offeror);
   }
 }
