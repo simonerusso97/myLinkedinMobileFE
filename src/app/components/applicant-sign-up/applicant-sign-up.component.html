@@ -7,77 +7,98 @@
     {{regError.message}}
   </div>
   <ion-card-content>
-    <form>
+    <form [formGroup]="applicantSignUpForm" (ngSubmit)="signup()">
       <ion-item>
         <ion-label position="stacked">Nome</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="applicant.name"
-                   name="name"
+                   formControlName="name"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.name">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('name').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Surname</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="applicant.surname"
-                   name="surname"
+                   formControlName="surname"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.surname">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('surname').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
         <ion-input required type="email"
-                   [(ngModel)]="applicant.email"
-                   name="email"
+                   formControlName="email"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.email">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('email').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Data di nascita</ion-label>
         <ion-datetime displayFormat="D-M-YYYY" value=""
                       required type="date"
-                      [(ngModel)]="applicant.birthDate"
-                      name="birthDate"></ion-datetime>
+                      formControlName="birthDate"></ion-datetime>
+        <div *ngFor="let validation of validationMessages.birthDate">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('birthDate').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
 
       <ion-item>
         <ion-label position="stacked">password</ion-label>
         <ion-input required type="password"
-                   [(ngModel)]="applicant.password"
-                   name="password"
+                   formControlName="password"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.password">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('password').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Conferma password</ion-label>
         <ion-input required type="password"
-                   [(ngModel)]="confirmPassword"
-                   name="confirmPassword"
+                   formControlName="confirmPassword"
         ></ion-input>
+        <div class="alert alert-danger m-3" role="alert" *ngIf="pwdError.error">
+          {{pwdError.message}}
+        </div>
       </ion-item>
 
-      <div class="alert alert-danger m-3" role="alert" *ngIf="pwdError.error">
-        {{pwdError.message}}
-      </div>
+
 
       <ion-item>
         <ion-label position="stacked">Indirizzo</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="applicant.address"
-                   name="address"
+                   formControlName="address"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.address">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('address').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Titolo di studio</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="applicant.degree"
-                   name="degree"
+                   formControlName="degree"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.degree">
+          <div class="alert alert-danger" *ngIf="applicantSignUpForm.get('degree').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
-      <ion-button expand="block" style="margin-top: 30px" (click)="signup()"> Registrati </ion-button>
+      <ion-button expand="block" style="margin-top: 30px" type="submit"> Registrati </ion-button>
       <ion-card-content class="ion-text-center">
         <ion-label>
           Oppure

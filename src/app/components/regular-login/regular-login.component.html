@@ -19,24 +19,30 @@
     {{adminError.message}}
   </div>
   <ion-card-content>
-    <form>
+    <form (ngSubmit)="login()" [formGroup]="regularLoginForm">
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
         <ion-input required type="email"
-                   [(ngModel)]="regular.email"
-                   name="email"
+                   formControlName="email"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.name">
+          <div class="alert alert-danger" *ngIf="regularLoginForm.get('name').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">password</ion-label>
         <ion-input required type="password"
-                   [(ngModel)]="regular.password"
-                   name="password"
+                   formControlName="password"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.password">
+          <div class="alert alert-danger" *ngIf="regularLoginForm.get('password').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
-      <ion-button expand="block" style="margin-top: 30px" (click)="login()"> Login </ion-button>
+      <ion-button expand="block" style="margin-top: 30px" type="submit"> Login </ion-button>
       <ion-card-content class="ion-text-center">
         <ion-label>
           Oppure

@@ -17,6 +17,8 @@ export class UserService {
     })
   };
 
+
+
   constructor(private http: HttpClient) { }
 
   login(regular: Regular): Observable<Offeror | Applicant> {

@@ -4,27 +4,32 @@
   </div>
 
   <ion-card-content>
-    <form>
+    <form (ngSubmit)="signup()" [formGroup]="companySignUpForm">
       <ion-item>
         <ion-label position="stacked">Nome</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="company.name"
-                   name="name"></ion-input>
+                   formControlName="name"></ion-input>
+        <div *ngFor="let validation of validationMessages.name">
+          <div class="alert alert-danger" *ngIf="companySignUpForm.get('name').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">password</ion-label>
         <ion-input required type="password"
-                   [(ngModel)]="company.password"
-                   name="password"
+                   formControlName="password"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.password">
+          <div class="alert alert-danger" *ngIf="companySignUpForm.get('password').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Conferma password</ion-label>
         <ion-input required type="password"
-                   [(ngModel)]="confirmPassword"
-                   name="confirmPassword"
+                   formControlName="confirmPassword"
         ></ion-input>
       </ion-item>
 
@@ -35,20 +40,26 @@
       <ion-item>
         <ion-label position="stacked">Settore</ion-label>
         <ion-input required type="text"
-                   [(ngModel)]="company.sector"
-                   name="sector"
+                   formControlName="sector"
         ></ion-input>
+        <div *ngFor="let validation of validationMessages.sector">
+          <div class="alert alert-danger" *ngIf="companySignUpForm.get('sector').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Descrizione</ion-label>
         <ion-textarea required
-                      [(ngModel)]="company.description"
-                      name="description"
+                      formControlName="description"
         ></ion-textarea>
+        <div *ngFor="let validation of validationMessages.description">
+          <div class="alert alert-danger" *ngIf="companySignUpForm.get('description').hasError(validation.type) && submit">{{validation.message}}
+          </div>
+        </div>
       </ion-item>
 
-      <ion-button expand="block" style="margin-top: 30px" (click)="signup()"> Registrati </ion-button>
+      <ion-button expand="block" style="margin-top: 30px" type="submit"> Registrati </ion-button>
       <ion-card-content class="ion-text-center">
         <ion-label>
           Oppure

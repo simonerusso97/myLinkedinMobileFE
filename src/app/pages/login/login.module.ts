@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -11,12 +11,13 @@ import {RegularLoginComponent} from "../../components/regular-login/regular-logi
 import {CompanyLoginComponent} from "../../components/company-login/company-login.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    LoginPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        LoginPageRoutingModule,
+        ReactiveFormsModule
+    ],
   declarations: [LoginPage, RegularLoginComponent, CompanyLoginComponent]
 })
 export class LoginPageModule {}
