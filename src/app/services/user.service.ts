@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Applicant} from '../models/applicant';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Company} from '../models/company';
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,9 @@ export class UserService {
 
   acceptOfferor(offeror: Offeror) {
     return this.http.patch<Offeror>('http://localhost:8080/user/acceptOfferor', offeror);
+  }
+
+  updateInterested(user: Regular): Observable<User> {
+    return this.http.patch<User>('http://localhost:8080/user/updateInterestedList', user, this.httpOptions);
   }
 }

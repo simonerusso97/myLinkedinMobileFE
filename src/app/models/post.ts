@@ -3,10 +3,10 @@ import {Company} from './company';
 import {Regular} from './regular';
 import {Applicant} from './applicant';
 import {Skill} from './skill';
-import {JsonDocument} from "./json-document";
-import {Offeror} from "./offeror";
-import {Commento} from "./commento";
-import {Attached} from "./attached";
+import {JsonDocument} from './json-document';
+import {Offeror} from './offeror';
+import {Commento} from './commento';
+import {Attached} from './attached';
 
 
 export interface Post {

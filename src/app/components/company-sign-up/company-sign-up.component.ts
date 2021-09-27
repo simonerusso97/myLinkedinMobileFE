@@ -49,7 +49,7 @@ export class CompanySignUpComponent implements OnInit {
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      sector: new FormControl('', Validators.required)
+      sector: new FormControl('', Validators.required),
     });
   }
 
@@ -64,11 +64,13 @@ export class CompanySignUpComponent implements OnInit {
   signup() {
     this.submit = true;
     this.company = this.companySignUpForm.value;
+    this.confirmPassword = this.companySignUpForm.value.confirmPassword;
 
     if (this.company.password !== this.confirmPassword){
       this.pwdError.error = true;
     }
     else if(this.companySignUpForm.valid){
+      console.log(this.company);
       this.pwdError.error = false;
       this.companyService.companySignUp(this.company).subscribe(
         response => {
@@ -78,7 +80,7 @@ export class CompanySignUpComponent implements OnInit {
         },
         error => {
           this.regError.error = true;
-          this.regError.message = 'Si è verificato un errore' + error;
+          this.regError.message = 'Si è verificato un errore' + error.message;
         });
     }
   }

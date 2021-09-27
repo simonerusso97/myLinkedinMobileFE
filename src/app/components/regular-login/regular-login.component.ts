@@ -87,7 +87,7 @@ export class RegularLoginComponent implements OnInit {
         },
         error => {
           this.loginError.error = true;
-          this.loginError.message = 'Errore durante il login: \n' + error;
+          this.loginError.message = 'Errore durante il login: \n' + error.error.message;
         });
     }
   }
@@ -112,11 +112,11 @@ export class RegularLoginComponent implements OnInit {
         //TODO: se serve l'import di geo modifica
         sessionStorage.setItem('coordinates', JSON.stringify(response.coords));
         loading.dismiss();
-        /*this.route.navigateByUrl(
+        this.route.navigateByUrl(
           '/tabs',
           {
             replaceUrl : true
-          });*/
+          });
       })
       .catch((error) => {
         loading.dismiss();
