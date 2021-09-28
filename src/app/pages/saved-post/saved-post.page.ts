@@ -11,8 +11,6 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import * as pdfMake from 'pdfmake/build/pdfmake';
-import {User} from "../../models/user";
-import {Regular} from "../../models/regular";
 
 @Component({
   selector: 'app-saved-post',
@@ -24,6 +22,7 @@ export class SavedPostPage implements OnInit {
   post: Post = {} as Post;
   user: Offeror | Applicant;
   checkList: {post: Post; checked: boolean}[] = [];
+  interestedPostList: Post[] = [];
 
   postPdf: Post={} as Post;
   sizeAtt: number;
@@ -47,39 +46,59 @@ export class SavedPostPage implements OnInit {
       });
     }
     else {
-      if ((typeof this.user.interestedPostList) == 'undefined') {
-        this.user.interestedPostList = [];
-      }
-      console.log('this.user.interestedPostList: ', this.user.interestedPostList);
-      this.user.interestedPostList.forEach(
-        post => {
-          this.checkList.push({
-            post,
-            checked: false
-          });
-        });
+      this.userService.findAllInterestedPost(this.user).subscribe(
+        response => {
+          this.interestedPostList = response;
+          this.interestedPostList.forEach(
+            post => {
+              this.checkList.push({
+                post,
+                checked: false
+              });
+            });
+        },
+        error => {
+          this.message = 'Si è verificato un errore' + error.error.message;
+          this.presentToast();
+        }
+      );
+
     }
   }
 
   delete(post: Post) {
-    const index = this.user.interestedPostList.indexOf(post, 0);
-    if (index > -1) {
-      this.user.interestedPostList.splice(index, 1);
-      this.checkList.splice(index, 1);
-    }
-
-    this.userService.updateInterested(this.user).subscribe(
-      response => {
-        sessionStorage.setItem('user', JSON.stringify(this.user));
-        this.message = 'Eliminato correttamente';
-        this.presentToast();
-      },
-      error => {
-        this.message = 'Si è verificato un errore' + error.error.message;
-        this.presentToast();
-        this.user.interestedPostList.unshift(post);
+    let index = -1;
+    let cont = 0;
+    this.interestedPostList.forEach(
+      p =>{
+        if (p.id === post.id){
+          index = cont;
+        }
+        cont++;
       }
     );
+    if (index > -1) {
+      this.interestedPostList.splice(index, 1);
+      this.checkList.splice(index, 1);
+      this.userService.updateInterested(this.user, this.interestedPostList).subscribe(
+        response => {
+          sessionStorage.setItem('user', JSON.stringify(this.user));
+          this.message = 'Eliminato correttamente';
+          this.presentToast();
+        },
+        error => {
+          this.message = 'Si è verificato un errore' + error.error.message;
+          this.presentToast();
+          this.interestedPostList.unshift(post);
+        }
+      );
+    }
+    else {
+      this.message = 'Si è verificato un errore';
+      this.presentToast();
+    }
+
+
   }
 
   async presentToast() {

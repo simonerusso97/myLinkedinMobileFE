@@ -52,13 +52,13 @@
 
     <ion-row class="card-footer">
       <ion-col>
-        <div class="text-center" (click)="save(post)" *ngIf="">
+        <div class="text-center" (click)="save(post)" *ngIf="!includes(post)">
           <ion-button fill="clear" size="small">
             <ion-icon name="save-outline"></ion-icon>
           </ion-button><br>
           Salva
         </div>
-        <div class="text-center" (click)="delete(post)" *ngIf="">
+        <div class="text-center" (click)="delete(post)" *ngIf="includes(post)">
           <ion-button fill="clear" size="small">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button><br>

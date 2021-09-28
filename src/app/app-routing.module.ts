@@ -32,12 +32,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'chat-hub',
+    path: 'chatHub',
     loadChildren: () => import('./pages/chat-hub/chat-hub.module').then( m => m.ChatHubPageModule)
   },
   {
-    path: 'saved-post',
+    path: 'savedPost',
     loadChildren: () => import('./pages/saved-post/saved-post.module').then( m => m.SavedPostPageModule)
+  },
+  {
+    path: 'postDetail',
+    loadChildren: () => import('./pages/post-detail/post-detail.module').then( m => m.PostDetailPageModule)
   },
 ];
 

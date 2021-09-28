@@ -9,6 +9,4 @@ export interface User {
   birthDate: Date;
   password: string;
   type: string;
-  messageList: Message[];
-
 }

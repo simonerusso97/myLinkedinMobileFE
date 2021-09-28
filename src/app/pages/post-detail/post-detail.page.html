@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button size="small" (click)="back()">
+      <ion-title>Back</ion-title>
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+  <ion-card class="m-2 mb-3" button="false" color="light">
+    <ion-card-header class="text-center" >
+      <ion-card-title style="text-align: left"> {{post.name}}</ion-card-title>
+      <ion-card-subtitle style="text-align: left">{{post.createdBy.name +' '+ post.createdBy.surname}}
+      </ion-card-subtitle>
+      <ion-card-subtitle  style="text-align: left" >pubblicato il: {{post.pubblicationDate | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item  *ngFor="let json of post.jsonDocument">
+        <ion-label>{{json.nameAttribute}}</ion-label>
+        {{json.value}}
+      </ion-item>
+
+      <!--<ion-item *ngFor="let att of post.attachedList">
+        <ion-label *ngIf="att.type==='pdf'">{{att.filename}}</ion-label>
+        <ion-button fill="outline" slot="end" *ngIf="att.type==='pdf'" (click)="openPdf(att.code, att.filename)">Apri allegato</ion-button>
+      </ion-item>-->
+
+      <ion-item class="align-items-center"  *ngFor="let att of post.attachedList">
+        <img style="margin-top: 10px; margin-bottom: 4px" *ngIf="att.type==='image'" src="data:image/jpeg;base64,{{att.code}}" />
+        <ion-label *ngIf="att.type==='pdf'">{{att.filename}}</ion-label>
+        <ion-button fill="outline" slot="end" *ngIf="att.type==='pdf'" (click)="openPdf(att.code, att.filename)">Apri allegato</ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h1>Commenti</h1>
+        </ion-label>
+      </ion-item>
+
+
+
+        <ion-item *ngFor="let comment of post.commentList; index as index">
+          <ion-label>
+            <h2>{{comment.applicant.name}}  {{comment.applicant.surname}}</h2>
+            <h4>{{comment.date}}</h4>
+            <p>{{comment.text}}</p>
+
+            <!--TODO: RISPOSTE AI MESSAGGI-->
+            <!--<ion-text (click)="showTextArea(index)">Rispondi</ion-text>
+
+              <ion-label *ngFor="let answer of comment.answerList" style="margin-left: 10px">
+                <h2>{{answer.applicant.name}}  {{answer.applicant.surname}}</h2>
+                <h4>{{answer.date}}</h4>
+                <p>{{answer.text}}</p>
+              </ion-label>
+
+            <ion-item *ngIf="this.replyStatus[index]">
+
+              <ion-textarea placeholder="Rispondi a {{comment.applicant.name}}"
+                            name="text"
+                            [(ngModel)]="replyComment.text"
+              >
+                <ion-button fill="clear" size="small" style="float: right;" (click)="sendReply()">
+                  <ion-icon name="send"></ion-icon>
+                </ion-button>
+              </ion-textarea>
+            </ion-item>-->
+          </ion-label>
+        </ion-item>
+
+        <ion-item class="mt-2 mb-3">
+          <ion-textarea placeholder="Inserisci il commento.."
+                        name="text"
+                        [(ngModel)]="comment.text"
+          >
+            <ion-button fill="clear" size="small" style="float: right;" (click)="sendComment()">
+              <ion-icon name="send"></ion-icon>
+            </ion-button>
+          </ion-textarea>
+        </ion-item>
+
+
+    </ion-card-content>
+
+
+      <!--<div *ngIf="user.type =='applicant'">
+
+
+      </div>-->
+  </ion-card>
+</ion-content>

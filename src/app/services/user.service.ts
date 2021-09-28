@@ -6,6 +6,7 @@ import {Applicant} from '../models/applicant';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Company} from '../models/company';
 import {User} from "../models/user";
+import {Post} from "../models/post";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,12 @@ export class UserService {
     return this.http.patch<Offeror>('http://localhost:8080/user/acceptOfferor', offeror);
   }
 
-  updateInterested(user: Regular): Observable<User> {
-    return this.http.patch<User>('http://localhost:8080/user/updateInterestedList', user, this.httpOptions);
+  updateInterested(user: Regular, interestedPostList: Post[]): Observable<Post> {
+    return this.http.patch<Post>('http://localhost:8080/user/updateInterestedList/' + user.id, interestedPostList, this.httpOptions);
+  }
+
+  findAllInterestedPost(user: Regular): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:8080/user/findAllInterestedPost/' + user.id);
+
   }
 }

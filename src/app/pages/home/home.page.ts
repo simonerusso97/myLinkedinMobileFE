@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+// noinspection NonAsciiCharacters,JSNonASCIINames
+
+import {Component, OnInit} from '@angular/core';
 import {IonSelect, ToastController} from '@ionic/angular';
-import {User} from '../../models/user';
 import {NavigationExtras, Router} from '@angular/router';
 import {PostService} from '../../services/post.service';
 import {Post} from '../../models/post';
@@ -22,6 +23,7 @@ export class HomePage implements OnInit {
   postList: Post[] = [];
   user: Regular = {} as Regular;
   coordinate: Coordinates;
+  interestedPostList: Post[] = [];
   private message: string;
 
   constructor(private route: Router, private postService: PostService, public toastController: ToastController,
@@ -33,7 +35,6 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
-    console.log(this.user);
     if (this.user == null) {
       this.route.navigateByUrl('/login', {
         replaceUrl: true
@@ -55,6 +56,16 @@ export class HomePage implements OnInit {
           // TODO: this.postList = response.sort((p1: Post, p2: Post) => this.comparePost(p1, p2));
           this.postList = response;
           this.showingPostList = this.postList;
+        },
+        error => {
+          this.message = 'Si è verificato un errore' + error.error.message;
+          this.presentToast();
+        }
+      );
+      this.userService.findAllInterestedPost(this.user).subscribe(
+        response => {
+          this.interestedPostList = [];
+          this.interestedPostList = response;
         },
         error => {
           this.message = 'Si è verificato un errore' + error.error.message;
@@ -116,44 +127,71 @@ export class HomePage implements OnInit {
       }
     };
     this.route.navigateByUrl('/postDetail', navigationExtras);
+
   }
 
   save(post: Post) {
-    this.user.interestedPostList.unshift(post);
-    this.userService.updateInterested(this.user).subscribe(
-      response => {
-        sessionStorage.setItem('user', JSON.stringify(this.user));
+    this.interestedPostList.unshift(post);
+    this.userService.updateInterested(this.user, this.interestedPostList).subscribe(
+      () => {
         this.message = 'Post salvato con successo';
         this.presentToast();
       },
       error => {
         this.message = 'Si è verificato un errore' + error.error.message;
         this.presentToast();
-        const index = this.user.interestedPostList.indexOf(post, 0);
+        const index = this.interestedPostList.indexOf(post, 0);
         if (index > -1) {
-          this.user.interestedPostList.splice(index, 1);
+          this.interestedPostList.splice(index, 1);
         }
       }
     );
   }
 
   delete(post: Post) {
-    const index = this.user.interestedPostList.indexOf(post, 0);
-    if (index > -1) {
-      this.user.interestedPostList.splice(index, 1);
-    }
-    this.userService.updateInterested(this.user).subscribe(
-      response => {
-        sessionStorage.setItem('user', JSON.stringify(this.user));
-        this.message = 'Salvato eliminato correttamente';
-        this.presentToast();
-      },
-      error => {
-        this.message = 'Si è verificato un errore' + error.error.message;
-        this.presentToast();
-        this.user.interestedPostList.unshift(post);
+    let index = -1;
+    let cont = 0;
+    this.interestedPostList.forEach(
+      p =>{
+        if (p.id === post.id){
+          index = cont;
+        }
+        cont++;
       }
     );
+    if (index > -1) {
+      this.interestedPostList.splice(index, 1);
+      this.userService.updateInterested(this.user, this.interestedPostList).subscribe(
+        () => {
+          this.message = 'Salvato eliminato correttamente';
+          this.presentToast();
+        },
+        error => {
+          this.message = 'Si è verificato un errore' + error.error.message;
+          this.presentToast();
+          this.interestedPostList.unshift(post);
+        }
+      );
+    }
+    else{
+      this.message = 'Si è verificato un errore';
+      this.presentToast();
+      this.interestedPostList.unshift(post);
+    }
+
+
+  }
+
+  includes(post: Post): boolean {
+    let found = false;
+    this.interestedPostList.forEach(
+      p => {
+        if(p.id === post.id){
+          found = true;
+        }
+      }
+    );
+    return found;
   }
 
   private calculateDistance(coordUser: Coordinates, coordPost: Coordinates): number{
@@ -169,8 +207,9 @@ export class HomePage implements OnInit {
       Math.sin(dλ/2) * Math.sin(dλ/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    const d = R * c; // in metres
-    return d;
+
+     // in metres
+    return R * c;
 
   }
 
@@ -191,7 +230,6 @@ export class HomePage implements OnInit {
 
     return p1Value - p2Value;
   }
-
 
 
 }

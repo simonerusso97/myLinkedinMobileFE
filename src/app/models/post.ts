@@ -16,9 +16,8 @@ export interface Post {
   name: string;
   structure: Structure;
   jsonDocument: JsonDocument[];
-  interestedUserList: Applicant[];
   skillList: Skill[];
   createdBy: Applicant | Offeror;
   commentList: Commento[];
-  attached: Attached[];
+  attachedList: Attached[];
 }

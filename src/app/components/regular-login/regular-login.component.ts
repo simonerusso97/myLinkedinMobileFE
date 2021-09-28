@@ -109,7 +109,6 @@ export class RegularLoginComponent implements OnInit {
       enableHighAccuracy: true
     })
       .then((response) => {
-        //TODO: se serve l'import di geo modifica
         sessionStorage.setItem('coordinates', JSON.stringify(response.coords));
         loading.dismiss();
         this.route.navigateByUrl(

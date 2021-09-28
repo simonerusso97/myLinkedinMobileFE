@@ -6,5 +6,4 @@ export interface Regular extends User{
   banned: boolean;
   disabled: boolean;
   degree: string;
-  interestedPostList: Post[];
 }

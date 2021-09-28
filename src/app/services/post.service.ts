@@ -7,6 +7,7 @@ import {Skill} from '../models/skill';
 import {Post} from "../models/post";
 import {Regular} from "../models/regular";
 import {User} from "../models/user";
+import {Commento} from "../models/commento";
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,15 @@ export class PostService {
   }
 
 
+  findPost(post: Post): Observable<Post> {
+    return this.http.get<Post>('http://localhost:8080/post/findPostById/' + post.id);
+  }
 
+  sendComment(post: Post, comment: Commento): Observable<Commento> {
+    return this.http.patch<Commento>('http://localhost:8080/post/saveComment/' + post.id , comment);
+  }
+
+  sendAnswer(post: Post, answer: Commento, parentId): Observable<Commento> {
+    return this.http.patch<Commento>('http://localhost:8080/post/saveComment/' + post.id + '/' + parentId , answer);
+  }
 }

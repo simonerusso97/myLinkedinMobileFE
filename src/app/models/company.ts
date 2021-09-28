@@ -6,5 +6,4 @@ export interface Company {
   password: string;
   sector: string;
   description: string;
-  offerorList: Offeror[];
 }

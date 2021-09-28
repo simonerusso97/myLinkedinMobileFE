@@ -18,9 +18,9 @@ export class CompanyLoginComponent implements OnInit {
   submit = false;
   company: Company = {} as Company;
 
-  private companyLoginForm: FormGroup;
+  companyLoginForm: FormGroup;
 
-  private validationMessages = {
+  validationMessages = {
     name: [
       {type: 'required', message: 'Non può essere vuoto'}
     ],
