@@ -5,8 +5,9 @@ import {Observable} from 'rxjs';
 import {Applicant} from '../models/applicant';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Company} from '../models/company';
-import {User} from "../models/user";
-import {Post} from "../models/post";
+import {User} from '../models/user';
+import {Post} from '../models/post';
+import {Message} from '../models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,18 @@ export class UserService {
   findAllInterestedPost(user: Regular): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:8080/user/findAllInterestedPost/' + user.id);
 
+  }
+
+  getAllMessage(user: User): Observable<Message[]> {
+    return this.http.get<Message[]>('http://localhost:8080/user/getAllMessage/' + user.id);
+  }
+
+  findAllUser(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:8080/user/getAllUser');
+
+  }
+
+  sendMessage(message: Message): Observable<Message> {
+    return this.http.post<Message>('http://localhost:8080/user/sendMessage', message, this.httpOptions);
   }
 }

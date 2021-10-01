@@ -9,6 +9,10 @@ import {Coordinates} from '@ionic-native/geolocation';
 import {Skill} from '../../models/skill';
 import {Regular} from '../../models/regular';
 import {UserService} from '../../services/user.service';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
+import {NativeGeocoderOptions, NativeGeocoderResult} from '@ionic-native/native-geocoder';
+
 
 @Component({
   selector: 'app-home',
@@ -24,13 +28,16 @@ export class HomePage implements OnInit {
   user: Regular = {} as Regular;
   coordinate: Coordinates;
   interestedPostList: Post[] = [];
+  options: NativeGeocoderOptions = {
+    useLocale: true,
+    maxResults: 5
+  };
   private message: string;
 
   constructor(private route: Router, private postService: PostService, public toastController: ToastController,
-              private userService: UserService) { }
+              private userService: UserService, private nativeGeocoder: NativeGeocoder) { }
 
   ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
   }
 
   ionViewDidEnter() {
@@ -53,8 +60,29 @@ export class HomePage implements OnInit {
       );
       this.postService.findAllPostByUserType(this.user.type).subscribe(
         response => {
+          let pList1: Post[] = [];
+          let pList2: Post[] = [];
+
+          response.forEach(
+            post => {
+              post.jsonDocument.forEach(
+                jd => {
+                  if (jd.nameAttribute === 'indirizzo web') {
+                    pList1.push(post);
+                  }
+                  else if(jd.nameAttribute === 'indirizzo web o fisico'){
+                    this.nativeGeocoder.forwardGeocode(jd.value as string, this.options)
+                      .then(() => pList2.push(post))
+                      .catch(() => pList1.push(post));
+                  }
+                  else{
+                    pList2.push(post);
+                  }
+              });
+            }
+          );
           // TODO: this.postList = response.sort((p1: Post, p2: Post) => this.comparePost(p1, p2));
-          this.postList = response;
+          this.postList = pList2.sort((p1: Post, p2: Post) => this.comparePost(p1, p2));
           this.showingPostList = this.postList;
         },
         error => {
@@ -116,15 +144,15 @@ export class HomePage implements OnInit {
 
   fiterByDate() {
     this.showingPostList = this.showingPostList.filter(
-      post => post.pubblicationDate > this.startDate || post.pubblicationDate<this.endDate
-    );
+      post => post.pubblicationDate.getTime() > this.startDate.getTime() && post.pubblicationDate.getTime() < this.endDate.getTime());
   }
 
   goToPost(post: Post) {
     const navigationExtras: NavigationExtras = {
       state: {
         post,
-      }
+      },
+      replaceUrl: true
     };
     this.route.navigateByUrl('/postDetail', navigationExtras);
 
@@ -217,13 +245,13 @@ export class HomePage implements OnInit {
     let p1Value;
     let p2Value;
     p1.jsonDocument.forEach(jd => {
-      if (jd.nameAttribute === 'location') {
+      if (jd.nameAttribute === 'indirizzo' || jd.nameAttribute ==='indirizzo web o fisico') {
         p1Value = this.calculateDistance(this.coordinate, jd.value);
       }
     });
 
     p2.jsonDocument.forEach(jd => {
-      if (jd.nameAttribute === 'location') {
+      if (jd.nameAttribute === 'indirizzo' || jd.nameAttribute ==='indirizzo web o fisico') {
         p2Value = this.calculateDistance(this.coordinate, jd.value);
       }
     });

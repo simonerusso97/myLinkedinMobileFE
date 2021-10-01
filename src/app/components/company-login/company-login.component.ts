@@ -45,7 +45,6 @@ export class CompanyLoginComponent implements OnInit {
   login() {
     this.submit = true;
     this.company = this.companyLoginForm.value;
-    console.log(this.company);
     if(this.companyLoginForm.valid) {
       this.companyService.login(this.company).subscribe(
         response => {

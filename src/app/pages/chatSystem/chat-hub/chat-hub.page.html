@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="chatHub">
+  <ion-list>
+    <ion-item class="align-items-center">
+      <ion-searchbar  placeholder="Cerca" debounce="500" (ionChange)="search($event)"></ion-searchbar>
+      <ion-icon  name="chatbubbles-outline" (click)="newChat()"></ion-icon>
+    </ion-item>
+    <ion-item *ngFor="let user of showingList; index as index" (click)="openChat(user)">
+      <ion-label>
+        <h2>{{user.name}} {{user.surname}} ({{user.type}})</h2>
+        <p>{{this.lastMessageList[index].text}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-content *ngIf="!chatHub">
+  <ion-list>
+    <ion-item class="align-items-center">
+      <ion-searchbar  placeholder="Cerca" debounce="500" (ionChange)="search($event)"></ion-searchbar>
+      <ion-icon name="arrow-back-outline" (click)="back()"></ion-icon>
+    </ion-item>
+    <ion-item *ngFor="let user of showingList;" (click)="openChat(user)">
+      <ion-label>
+        <h2>{{user.name}} {{user.surname}} ({{user.type}})</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

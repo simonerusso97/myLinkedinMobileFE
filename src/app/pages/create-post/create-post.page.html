@@ -5,17 +5,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-item>
+  <ion-label>Tipo di post</ion-label>
+  <ion-select placeholder="------" #structureSelect (ionChange)="showAttribute(structureSelect.value)">
+    <ion-select-option
+      *ngFor="let structure of structureList"
+      [value]="structure"
+    >{{structure.name}}</ion-select-option>
+  </ion-select>
+</ion-item>
+
+<ion-content *ngIf="!verfiedError">
   <ion-card>
-    <ion-item>
-      <ion-label>Tipo di post</ion-label>
-      <ion-select placeholder="------" #structureSelect (ionChange)="showAttribute(structureSelect.value)">
-        <ion-select-option
-          *ngFor="let structure of structureList"
-          [value]="structure"
-        >{{structure.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
     <ion-card-content>
       <form (ngSubmit)="onSubmit(structureSelect)">
         <ion-item>

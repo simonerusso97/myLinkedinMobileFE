@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,16 +10,15 @@ export class LoginPage implements OnInit {
 
   type: string;
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit() {
     this.type = 'user';
-    //TODO: rimuovere commento
-    /*if(sessionStorage.getItem('user') !== null) {
-      this.routes.navigateByUrl('/tabs',{
+    if(sessionStorage.getItem('user') !== null) {
+      this.route.navigateByUrl('/tabs',{
         replaceUrl : true
       });
-    }*/
+    }
   }
 
 }

@@ -14,13 +14,11 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {
     this.type = 'applicant';
-
-    //TODO: rimuovere commento
-    /*if(sessionStorage.getItem('user') !== null) {
+    if(sessionStorage.getItem('user') !== null) {
       this.routes.navigateByUrl('/tabs',{
         replaceUrl : true
       });
-    }*/
+    }
 
   }
 

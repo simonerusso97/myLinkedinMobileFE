@@ -18,6 +18,9 @@
   <div class="alert alert-danger m-3" role="alert" *ngIf="adminError.error">
     {{adminError.message}}
   </div>
+  <div class="alert alert-danger m-3" role="alert" *ngIf="virifiedError.error">
+    {{virifiedError.message}}
+  </div>
   <ion-card-content>
     <form (ngSubmit)="login()" [formGroup]="regularLoginForm">
       <ion-item>

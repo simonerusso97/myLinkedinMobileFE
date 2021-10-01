@@ -18,17 +18,17 @@ const routes: Routes = [
       },
       {
         path: 'chatHub',
-        loadChildren: () => import('../chat-hub/chat-hub.module').then(m => m.ChatHubPageModule)
+        loadChildren: () => import('../chatSystem/chat-hub/chat-hub.module').then(m => m.ChatHubPageModule)
       },
       {
         path: 'savedPost',
         loadChildren: () => import('../saved-post/saved-post.module').then(m => m.SavedPostPageModule)
       },
       {
-        path: '',
+        path: 'tabs',
         redirectTo: 'tabs/home',
         pathMatch: 'full'
-      }
+      },
     ]
   },
   {

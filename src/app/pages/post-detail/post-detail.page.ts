@@ -48,7 +48,7 @@ export class PostDetailPage implements OnInit {
       response => {
         this.post = {} as Post;
         this.post = response;
-        this.post.attachedList.sort((a, b) => this.sortFunct(a, b));
+        this.post.attachedList = this.sortFunct(this.post.attachedList);
         this.post.commentList.forEach(
           c => {
             this.replyStatus.push(false);
@@ -58,7 +58,6 @@ export class PostDetailPage implements OnInit {
       },
       error => {
         this.message = 'Si è verificato un errore' + error.error.message;
-        console.log(error);
         this.presentToast();
       }
     );
@@ -94,19 +93,21 @@ export class PostDetailPage implements OnInit {
       });
   }
 
-  //todo: da verificare
-  sortFunct(a: Attached, b: Attached): number{
-    if(a.type==='pdf'){
-      return 1;
-    }
-    else if(b.type==='pfd'){
-      return -1;
-    }
-    else{
-      return 0;
-    }
-
-
+  sortFunct(list: Attached[]): Attached[]{
+    let sortedList: Attached[] = [];
+    list.forEach(
+      attached => {
+        if(attached.type === 'PDF'){
+          sortedList.push(attached);
+        }
+      });
+    list.forEach(
+      attached => {
+        if(attached.type === 'Image'){
+          sortedList.push(attached);
+        }
+      });
+    return sortedList;
   }
 
   convertBase64ToBlob(b64Data, contentType): Blob {
@@ -165,7 +166,6 @@ export class PostDetailPage implements OnInit {
     this.replyComment.applicant = this.user;
     this.replyComment.date = new Date();
     (this.post.commentList[index].answerList as Commento[]).push(this.replyComment);
-    //TODO: ripartire da qui
     this.postService.sendAnswer(this.post, this.comment, this.post.commentList[index].id).subscribe(
       ()=>{
         this.replyComment = {} as Commento;

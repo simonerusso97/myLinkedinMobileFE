@@ -20,12 +20,17 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-item button (click)="fiterByDate()" detail="">
-    <ion-label>
-      Filtra per data
-    </ion-label>
-    <ion-item>
-      <ion-label></ion-label>
+  <ion-item button (click)="fiterByDate()">
+    <ion-datetime displayFormat="DD MM YY" placeholder="inizio"
+                  [(ngModel)]="startDate"
+                  name="startDate"></ion-datetime>
+    <ion-datetime displayFormat="DD MM YY" placeholder="{{endDate | date: 'dd-mm-yy'}}"
+                  [(ngModel)]="endDate"
+                  value="{{endDate}}}"
+                  name="endDate"></ion-datetime>
+    <ion-label> Filtra per data</ion-label>
+
+    <!--<ion-item>
       <ion-datetime displayFormat="DD MM YY" placeholder="inizio"
                     [(ngModel)]="startDate"
                     name="startDate"></ion-datetime>
@@ -36,7 +41,7 @@
                     [(ngModel)]="endDate"
                     value="{{endDate}}}"
                     name="endDate"></ion-datetime>
-    </ion-item>
+    </ion-item>-->
   </ion-item>
 
   <ion-card *ngFor="let post of showingPostList" class="m-2 mb-3" button="true" color="light">

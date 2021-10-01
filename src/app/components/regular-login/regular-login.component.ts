@@ -5,6 +5,7 @@ import {UserService} from '../../services/user.service';
 import {LoadingController} from '@ionic/angular';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Offeror} from '../../models/offeror';
 
 
 @Component({
@@ -34,6 +35,10 @@ export class RegularLoginComponent implements OnInit {
   adminError = {
     error: false,
     message: 'Non ti è consentito l\'accesso a questa interfaccia'
+  };
+  virifiedError = {
+    error: false,
+    message: 'La tua compagnia non ha ancora verificato il tuo account',
   };
   submit = false;
   regular: Regular = {} as Regular;
@@ -73,6 +78,7 @@ export class RegularLoginComponent implements OnInit {
           this.loginError.error = false;
           this.disabledError.error = false;
           this.bannedError.error = false;
+          this.virifiedError.error = false;
 
           if (response.disabled) {
             this.disabledError.error = true;
@@ -80,7 +86,11 @@ export class RegularLoginComponent implements OnInit {
             this.bannedError.error = true;
           } else if (response.type === 'admin') {
             this.adminError.error = true;
-          } else {
+          } else if(response.type === 'offeror'){
+            if( !(response as Offeror).verified){
+              this.virifiedError.error = true;
+            }
+          }else {
             sessionStorage.setItem('user', JSON.stringify(response));
             this.presentLoading();
           }
