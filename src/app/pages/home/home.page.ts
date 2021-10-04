@@ -60,29 +60,41 @@ export class HomePage implements OnInit {
       );
       this.postService.findAllPostByUserType(this.user.type).subscribe(
         response => {
-          let pList1: Post[] = [];
-          let pList2: Post[] = [];
+          let pList1: Post[] = []; //Senza indirizzo fisico
+          let pList2: Post[] = []; //Con indirizzo fisico
 
           response.forEach(
             post => {
-              post.jsonDocument.forEach(
+              let added = false;
+              post.jsonDocument?.forEach(
                 jd => {
                   if (jd.nameAttribute === 'indirizzo web') {
                     pList1.push(post);
+                    added = true;
                   }
                   else if(jd.nameAttribute === 'indirizzo web o fisico'){
                     this.nativeGeocoder.forwardGeocode(jd.value as string, this.options)
                       .then(() => pList2.push(post))
                       .catch(() => pList1.push(post));
+                    added = true;
                   }
-                  else{
+                  else if(jd.nameAttribute === 'indirizzo') {
                     pList2.push(post);
+                    added = true;
                   }
               });
+              if(!added){
+                pList1.push(post);
+              }
             }
           );
-          // TODO: this.postList = response.sort((p1: Post, p2: Post) => this.comparePost(p1, p2));
+
           this.postList = pList2.sort((p1: Post, p2: Post) => this.comparePost(p1, p2));
+          pList1.forEach(
+            post => {
+              this.postList.push(post);
+            }
+          );
           this.showingPostList = this.postList;
         },
         error => {
