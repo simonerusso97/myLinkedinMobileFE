@@ -67,4 +67,8 @@ export class UserService {
   sendMessage(message: Message): Observable<Message> {
     return this.http.post<Message>('http://localhost:8080/user/sendMessage', message, this.httpOptions);
   }
+
+  saveToken(user: User, token: string) {
+    return this.http.post<Message>('http://localhost:8080/user/saveToken/'+user.id, token, this.httpOptions);
+  }
 }

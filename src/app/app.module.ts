@@ -16,14 +16,13 @@ import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {DatePicker} from '@ionic-native/date-picker/ngx';
-
-
+import { FirebaseX } from '@awesome-cordova-plugins/firebase-x/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [Geolocation, FileOpener, File, Camera, NativeGeocoder, IOSFilePicker, FileChooser, DatePicker, FilePath,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
+  providers: [Geolocation, FileOpener, File, Camera, NativeGeocoder, IOSFilePicker, FileChooser, DatePicker, FilePath, FirebaseX,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

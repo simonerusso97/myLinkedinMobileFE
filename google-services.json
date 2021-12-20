@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "790198058464",
+    "project_id": "mylinked-5bda1",
+    "storage_bucket": "mylinked-5bda1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790198058464:android:07d0657f6068960910bf85",
+        "android_client_info": {
+          "package_name": "russo.unisalento.mylinkedin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790198058464-1fo5b7ugst6thmt7shri8l2qttg4hb6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPQdwdNiyXUrJjePRTKhiEawmGstRESZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790198058464-1fo5b7ugst6thmt7shri8l2qttg4hb6i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "790198058464-fbs0l2pod249ls2iisdgmcvbi3nm9rlu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "russo.unisalento.mylinkedin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

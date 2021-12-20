@@ -1,6 +1,3 @@
-import {Message} from "./message";
-
-
 export interface User {
   id: number;
   name: string;
@@ -9,4 +6,5 @@ export interface User {
   birthDate: Date;
   password: string;
   type: string;
+  token?: string;
 }
