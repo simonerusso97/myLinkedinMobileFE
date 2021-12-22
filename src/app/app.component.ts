@@ -9,9 +9,6 @@ import { FirebaseX } from '@awesome-cordova-plugins/firebase-x/ngx';
 export class AppComponent implements OnInit{
   constructor(private firebaseX: FirebaseX) { }
 
-
-
-
   ngOnInit(): void {
     this.firebaseX.onMessageReceived()
       .subscribe(data => console.log(`User opened a notification ${data}`));

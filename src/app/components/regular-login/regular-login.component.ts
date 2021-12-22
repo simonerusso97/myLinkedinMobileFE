@@ -90,6 +90,10 @@ export class RegularLoginComponent implements OnInit {
             if( !(response as Offeror).verified){
               this.virifiedError.error = true;
             }
+            else{
+              sessionStorage.setItem('user', JSON.stringify(response));
+              this.presentLoading();
+            }
           }else {
             sessionStorage.setItem('user', JSON.stringify(response));
             this.presentLoading();

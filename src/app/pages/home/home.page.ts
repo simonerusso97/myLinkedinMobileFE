@@ -12,7 +12,7 @@ import {UserService} from '../../services/user.service';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
 import {NativeGeocoderOptions, NativeGeocoderResult} from '@ionic-native/native-geocoder';
-import {FirebaseX} from "@awesome-cordova-plugins/firebase-x/ngx";
+import {FirebaseX} from '@awesome-cordova-plugins/firebase-x/ngx';
 
 
 @Component({
@@ -61,17 +61,31 @@ export class HomePage implements OnInit {
           this.presentToast();
         }
       );
-      if(this.user.token == null){
-        this.firebaseX.onTokenRefresh().subscribe(
-          token => {
-            console.log("catched");
+
+      this.firebaseX.onTokenRefresh().subscribe(
+        token => {
+          if(this.user.token !== token) {
             this.user.token = token;
-            this.userService.saveToken(this.user, token).subscribe( response =>
+            this.userService.saveToken(this.user, token).subscribe(response =>
               console.log(response)
             );
           }
-        );
-      }
+          console.log(token);
+        }
+      );
+
+      this.firebaseX.getToken().then(
+        token => {
+          if(this.user.token !== token) {
+            this.user.token = token;
+            this.userService.saveToken(this.user, token).subscribe(response =>
+              console.log(response)
+            );
+          }
+          console.log(token);
+        }
+      );
+
       this.postService.findAllPostByUserType(this.user.type).subscribe(
         response => {
           let pList1: Post[] = []; //Senza indirizzo fisico
@@ -200,6 +214,9 @@ export class HomePage implements OnInit {
         }
       }
     );
+    this.userService.sendNotification(post.createdBy, this.user.name, this.user.surname).subscribe(response =>{
+      console.log(response);
+    });
   }
 
   delete(post: Post) {

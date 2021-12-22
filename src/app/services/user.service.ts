@@ -71,4 +71,8 @@ export class UserService {
   saveToken(user: User, token: string) {
     return this.http.post<Message>('http://localhost:8080/user/saveToken/'+user.id, token, this.httpOptions);
   }
+
+  sendNotification(user: User, name: string, surname: string) {
+    return this.http.get<Message>('http://localhost:8080/user/sendNotification/'+user.id+'/'+name+'/'+surname);
+  }
 }
