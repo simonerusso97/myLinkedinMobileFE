@@ -38,9 +38,6 @@ export class ChatPage implements OnInit {
     this.otherUser = extras.user;
     this.messageList = extras.extrasList;
 
-    console.log(this.messageList);
-    console.log(this.user);
-    console.log(this.otherUser);
   }
 
   back() {

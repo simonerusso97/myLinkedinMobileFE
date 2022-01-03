@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="large-title-fix">
+    <ion-title>MyLinkedin</ion-title>
+    <ion-icon></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let tpn of tnps" class="m-2 mb-3" button="true" color="light">
+    <ion-card-header  class="text-center"
+    >
+      <ion-card-title>{{tpn.post.name}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="text-center">
+      {{tpn.post.pubblicationDate | date: 'dd-MM-yyyy'}}
+    </ion-card-content>
+
+    <ion-row class="card-footer">
+       <div>
+        Utenti interessati: 
+      </div>
+      <div *ngFor="let user of tpn.users">
+        {{user.name}} {{user.surname}},
+      </div>
+    </ion-row>
+  </ion-card>
+</ion-content>
