@@ -226,7 +226,7 @@ export class CreatePostPage implements OnInit {
               const currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
               console.log('correctPath:', correctPath);
               console.log('currentName:', currentName);
-              this.file.readAsText(correctPath, currentName)
+              this.file.readAsDataURL(correctPath, currentName)
                 .then(data => {
                   console.log(data);
                   this.pdf = data;
