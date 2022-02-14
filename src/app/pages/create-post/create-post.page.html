@@ -55,10 +55,14 @@
                       name="value"
           >scegli file ({{img.length}})</ion-button>
 
-          <ion-button size="block" *ngIf="attribute.type === 'PDF'"
+
+         <!-- <ion-button size="block" *ngIf="attribute.type === 'PDF'"
                       (click)="getFile()"
           >scegli file</ion-button>
-
+-->
+          <ion-input type="file" *ngIf="attribute.type === 'PDF'"
+                     (change)="onFileSelect($event, attribute.id)">
+          </ion-input>
 
         </ion-item>
 

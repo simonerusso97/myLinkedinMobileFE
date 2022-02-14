@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
         }
       );
 
-      this.postService.findAllPostByUserType(this.user.type).subscribe(
+      /*this.postService.findAllPostByUserType(this.user.type).subscribe(
         response => {
           let pList1: Post[] = []; //Senza indirizzo fisico
           let pList2: Post[] = []; //Con indirizzo fisico
@@ -129,7 +129,16 @@ export class HomePage implements OnInit {
           this.message = 'Si è verificato un errore' + error.error.message;
           this.presentToast();
         }
-      );
+      );*/
+      this.postService.findAllPostByUserType(this.user.type).subscribe(
+        response => {
+          this.postList = [];
+          this.showingPostList = [];
+          this.showingPostList = response;
+          this.postList = response;
+          console.log('');
+        }
+      )
       this.userService.findAllInterestedPost(this.user).subscribe(
         response => {
           this.interestedPostList = [];
@@ -152,7 +161,7 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  getItems(event: any) {
+  filterByOfferor(event: any) {
     const val = event.target.value;
     if (val && val.trim() !== ''){
       this.showingPostList = this.showingPostList.filter(post =>
@@ -164,7 +173,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  filter(skillSelect: IonSelect) {
+  filterBySkill(skillSelect: IonSelect) {
     this.showingPostList = [];
     if(skillSelect.value.length === 0){
       this.showingPostList = this.postList;
@@ -173,9 +182,12 @@ export class HomePage implements OnInit {
       skillSelect.value.forEach(
         skill => {
           this.postList.forEach( post => {
-            if(post.skillList.includes(skill) && !this.showingPostList.includes(post)){
-              this.showingPostList.unshift(post);
+            post.skillList.find( (s) => {
+                if (s.id === skill.id && !this.showingPostList.includes(post)){
+                  this.showingPostList.unshift(post);
+                }
             }
+            );
           });
         }
       );

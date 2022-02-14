@@ -123,7 +123,8 @@ export class RegularLoginComponent implements OnInit {
       enableHighAccuracy: true
     })
       .then((response) => {
-        sessionStorage.setItem('coordinates', JSON.stringify(response.coords));
+        sessionStorage.setItem('latitude', JSON.stringify(response.coords.latitude));
+        sessionStorage.setItem('longitude', JSON.stringify(response.coords.longitude));
         loading.dismiss();
         this.route.navigateByUrl(
           '/tabs',

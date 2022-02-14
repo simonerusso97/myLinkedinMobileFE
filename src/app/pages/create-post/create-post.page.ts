@@ -15,6 +15,7 @@ import {IOSFilePicker} from '@ionic-native/file-picker/ngx';
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import { File } from '@ionic-native/file/ngx';
 import {FilePath} from '@ionic-native/file-path/ngx';
+import {AndroidPermissions} from '@awesome-cordova-plugins/android-permissions/ngx';
 
 @Component({
   selector: 'app-create-post',
@@ -32,7 +33,7 @@ export class CreatePostPage implements OnInit {
   postSkillList: Skill[] = [];
   button = false;
   img: any[] = [];
-  pdf: any = '';
+  pdf: any;
   uri: string;
   verfiedError = false;
   private message: string;
@@ -40,10 +41,11 @@ export class CreatePostPage implements OnInit {
 
   constructor(private routes: Router, private postService: PostService, public toastController: ToastController,
               private camera: Camera, public platform: Platform, private filePicker: IOSFilePicker, private fileChooser: FileChooser,
-              private file: File, private filePath: FilePath) {
+              private file: File, private filePath: FilePath, private androidPermissions: AndroidPermissions) {
   }
 
   ngOnInit() {
+
   }
 
   ionViewDidEnter() {
@@ -125,7 +127,6 @@ export class CreatePostPage implements OnInit {
           );
           if (this.pdf !== '') {
             this.uploadFile(response, this.pdf, 'pdf');
-
           }
           this.message = 'Post creato con successo';
           this.presentToast();
@@ -191,52 +192,16 @@ export class CreatePostPage implements OnInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
       this.img.unshift('data:image/jpeg;base64,' + imageData);
-      console.log('OK - 198');
+      console.log('OK - 198 ' +imageData);
     }, (err) => {
       console.log('ERROR - 200', err);
     });
   }
 
-  getFile() {
-    if (this.platform.is('ios')) {
-      this.filePicker.pickFile()
-        .then(uri => {
-          console.log('ok');
-
-          const correctPath = uri.substr(0, uri.lastIndexOf('/') + 1);
-          const currentName = uri.substring(uri.lastIndexOf('/') + 1);
-          console.log('correctPath:', 'file:///' + correctPath);
-          console.log('currentName:', currentName);
-          this.file.readAsDataURL('file:///' + correctPath, currentName)
-            .then(data => {
-                this.pdf = data;
-              }
-            )
-            .catch(e => console.log('error read:', e));
-
-        })
-        .catch(err => console.log('Error', err));
-    } else {
-      this.fileChooser.open()
-        .then(uri => {
-          console.log(uri);
-          this.filePath.resolveNativePath(uri)
-            .then(filePath => {
-              const correctPath = filePath.substring(0, filePath.lastIndexOf('/') + 1);
-              const currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
-              console.log('correctPath:', correctPath);
-              console.log('currentName:', currentName);
-              this.file.readAsDataURL(correctPath, currentName)
-                .then(data => {
-                  console.log(data);
-                  this.pdf = data;
-                })
-                .catch(err => console.log('ERRORE', err));
-            })
-            .catch(err => console.log('Errore:', err));
-
-        })
-        .catch(e => console.log('Error:', e));
-    }
+  public onFileSelect(event: any, id: number) {
+    const file: File = event.target.files[0];
+    console.log(file);
+    this.pdf = file;
+    console.log(this.pdf);
   }
 }

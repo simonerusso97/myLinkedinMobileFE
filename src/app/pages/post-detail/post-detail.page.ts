@@ -49,6 +49,9 @@ export class PostDetailPage implements OnInit {
         this.post = {} as Post;
         this.post = response;
         this.post.attachedList = this.sortFunct(this.post.attachedList);
+        if(this.post.commentList === undefined || this.post.commentList === null){
+          this.post.commentList = [];
+        }
         this.post.commentList.forEach(
           c => {
             this.replyStatus.push(false);
@@ -97,7 +100,7 @@ export class PostDetailPage implements OnInit {
     let sortedList: Attached[] = [];
     list.forEach(
       attached => {
-        if(attached.type === 'PDF'){
+        if(attached.type === 'pdf'){
           sortedList.push(attached);
         }
       });

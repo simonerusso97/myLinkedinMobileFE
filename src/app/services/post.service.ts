@@ -58,9 +58,15 @@ export class PostService {
   }
 
   upload(file: any, idPost: number, type: string) {
-    const blob = this.convertBase64ToBlob(file);
     const formData: FormData = new FormData();
-    formData.append('file', blob);
+
+    if(type === 'pdf'){
+      formData.append('file', file);
+    }
+    else{
+      const blob = this.convertBase64ToBlob(file);
+      formData.append('file', blob);
+    }
     return this.http.post<HttpEvent<any>>('http://localhost:8080/api/attachment/uploadFile/'+idPost+'/'+type, formData, {responseType: 'text'} as any);
   }
 
@@ -92,4 +98,6 @@ export class PostService {
       rawBase64
     };
   }
+
+
 }

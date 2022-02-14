@@ -184,13 +184,15 @@ export class SavedPostPage implements OnInit {
               console.log('pdfObj after getBuffer but before writeFile: ', pdfObj);
               blob = new Blob([new Uint8Array(buffer).buffer], {type: 'application/pdf'});
               console.log('filename after getBuffer but before writeFile: ', filename);
-              this.file.writeFile(this.file.documentsDirectory, filename, blob)
+              console.log('this.file.documentsDirectory:' + this.file.dataDirectory);
+
+              this.file.writeFile(this.file.dataDirectory, filename, blob)
                 .then(
                   () => {
                     console.log('pdfObj after writefile: ', pdfObj);
                     console.log('filename after writefile: ', filename);
 
-                    this.fileOpener.open(this.file.documentsDirectory + filename, 'application/pdf');
+                    this.fileOpener.open(this.file.dataDirectory + filename, 'application/pdf');
                   }
                 );
             });
